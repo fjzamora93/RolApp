@@ -20,7 +20,7 @@ ToDoList es una aplicación de gestión de tareas que permite a los usuarios cre
 
 1. **Clona este repositorio**:
    ```sh
-   git clone https://github.com/tuusuario/todolist.git
+   git clone https://github.com/alejandroArcasDev/ToDo-App-Jetpack-Compose-Kotlin-DaggerHIlt-CleanArchitecture-Room-SQLite.git
 
 2. **Abre el proyecto en Android Studio.**
 3. **Sincroniza el proyecto con Gradle.**
