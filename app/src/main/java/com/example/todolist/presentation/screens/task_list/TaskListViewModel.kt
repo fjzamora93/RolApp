@@ -9,8 +9,10 @@ import com.example.todolist.domain.usecases.CreateTaskUseCase
 import com.example.todolist.domain.usecases.DeleteTaskUseCase
 import com.example.todolist.domain.usecases.GetAllTaskUseCase
 import com.example.todolist.domain.usecases.UpdateTaskUseCase
+import com.example.todolist.presentation.screens.task_list.model.TaskListUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,12 +25,15 @@ class TaskListViewModel @Inject constructor(
     private val createTaskUseCase: CreateTaskUseCase,
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow<TaskListUiState>(TaskListUiState.LOADING)
+    val uiState: StateFlow<TaskListUiState> = _uiState
+
     // StateFlow for the list of tasks
-    private val _taskList = MutableStateFlow(mutableListOf<Task>())
+    private val _taskList = MutableStateFlow(listOf<Task>())
     val taskList = _taskList.asStateFlow()
 
     // StateFlow for the list of completed tasks
-    private val _taskListCompleted = MutableStateFlow(mutableListOf<Task>())
+    private val _taskListCompleted = MutableStateFlow(listOf<Task>())
     val taskListCompleted = _taskListCompleted.asStateFlow()
 
     // StateFlow for showing the add task dialog
@@ -82,11 +87,18 @@ class TaskListViewModel @Inject constructor(
 
     // Function to load the tasks list
     private fun loadTasksList() {
+        _uiState.value = TaskListUiState.LOADING
         viewModelScope.launch {
             _taskList.value = getAllTasksUseCase()
             _taskListCompleted.value = getAllTasksUseCase()
-            _taskList.value = _taskList.value.filter { !it.taskCompleted }.toMutableList()
-            _taskListCompleted.value = _taskListCompleted.value.filter { it.taskCompleted }.toMutableList()
+            _taskList.value = _taskList.value.filter { !it.taskCompleted }
+            _taskListCompleted.value = _taskListCompleted.value.filter { it.taskCompleted }
+
+            if (_taskList.value.isEmpty() && _taskListCompleted.value.isEmpty()) {
+                _uiState.value = TaskListUiState.EMPTY
+            } else {
+                _uiState.value = TaskListUiState.SUCCESS
+            }
         }
     }
 
@@ -99,7 +111,6 @@ class TaskListViewModel @Inject constructor(
     private fun validateTaskName(name: String) {
         _taskNameErrorText.value = when {
             name.isEmpty() -> "This field cannot be empty"
-            name.length > 25 -> "Max 25 characters allowed"
             else -> ""
         }
     }
@@ -144,7 +155,7 @@ class TaskListViewModel @Inject constructor(
                         TaskPriority.LOW -> 2
                         TaskPriority.NO_PRIORITY -> 3
                     }
-                }.toMutableList()
+                }
                 _taskListCompleted.value = _taskListCompleted.value.sortedBy { task ->
                     when (task.taskPriority) {
                         TaskPriority.HIGH -> 0
@@ -152,7 +163,7 @@ class TaskListViewModel @Inject constructor(
                         TaskPriority.LOW -> 2
                         TaskPriority.NO_PRIORITY -> 3
                     }
-                }.toMutableList()
+                }
             }
         }
     }

@@ -10,7 +10,7 @@ import com.example.todolist.data.local.model.Task
 @Dao
 interface TaskDao {
     @Query("SELECT * FROM taskTable")
-    suspend fun getAllTasks(): MutableList<Task>
+    suspend fun getAllTasks(): List<Task>
 
     @Query("SELECT * FROM taskTable WHERE taskId = :taskId")
     suspend fun getTaskById(taskId: Int): Task?

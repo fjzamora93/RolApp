@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAllTaskUseCase @Inject constructor(
     private val taskRepository: TaskRepository
 ) {
-    suspend operator fun invoke(): MutableList<Task> {
+    suspend operator fun invoke(): List<Task> {
         return taskRepository.getAllTasks()
     }
 }

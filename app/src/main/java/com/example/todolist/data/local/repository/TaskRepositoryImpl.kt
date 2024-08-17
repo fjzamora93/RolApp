@@ -8,7 +8,7 @@ import javax.inject.Inject
 class TaskRepositoryImpl(
     private val taskDao: TaskDao
 ): TaskRepository {
-    override suspend fun getAllTasks(): MutableList<Task> {
+    override suspend fun getAllTasks(): List<Task> {
         return taskDao.getAllTasks()
     }
 

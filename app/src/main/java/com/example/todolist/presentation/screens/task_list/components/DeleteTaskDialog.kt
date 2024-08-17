@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -69,7 +70,7 @@ fun DeleteTaskDialog(taskListViewModel: TaskListViewModel, deleteTask: Task) {
                 Spacer(modifier = Modifier.height(25.dp))
                 Row(
                     modifier = Modifier
-                        .padding(bottom = 20.dp, end = 20.dp)
+                        .padding(end = 20.dp)
                 ) {
                     Text(
                         modifier = Modifier
@@ -89,6 +90,7 @@ fun DeleteTaskDialog(taskListViewModel: TaskListViewModel, deleteTask: Task) {
                         color = Color(0xFF3684BD)
                     )
                 }
+                Spacer(modifier = Modifier.height(20.dp))
             }
         }
     }

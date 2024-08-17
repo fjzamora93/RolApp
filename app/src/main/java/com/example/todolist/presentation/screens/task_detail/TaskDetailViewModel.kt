@@ -7,8 +7,10 @@ import com.example.todolist.data.local.model.TaskPriority
 import com.example.todolist.domain.usecases.DeleteTaskUseCase
 import com.example.todolist.domain.usecases.GetSpecificTaskUseCase
 import com.example.todolist.domain.usecases.UpdateTaskUseCase
+import com.example.todolist.presentation.screens.task_detail.model.TaskDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +21,9 @@ class TaskDetailViewModel @Inject constructor(
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val deleteTaskUseCase: DeleteTaskUseCase
 ) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<TaskDetailUiState>(TaskDetailUiState.LOADING)
+    val uiState: StateFlow<TaskDetailUiState> = _uiState
 
     // StateFlow to hold the current task details
     private var _currentTask = MutableStateFlow(Task())
@@ -44,8 +49,13 @@ class TaskDetailViewModel @Inject constructor(
     // Function to load a specific task by ID
     suspend fun loadTask(taskId: Int) {
         viewModelScope.launch {
-            _currentTask.value = getSpecificTaskUseCase(taskId)!!
-            setUpPriority()
+            val response = getSpecificTaskUseCase(taskId)
+            if (response == null) _uiState.value = TaskDetailUiState.ERROR(message = "Task not found")
+            else {
+                _currentTask.value = response
+                setUpPriority()
+                _uiState.value = TaskDetailUiState.SUCCESS
+            }
         }
     }
 

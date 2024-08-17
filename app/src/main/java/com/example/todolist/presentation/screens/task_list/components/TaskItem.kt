@@ -84,7 +84,7 @@ fun TaskItem(
                 modifier = Modifier
                     .fillMaxWidth(0.6f)
                     .padding(horizontal = 16.dp),
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Normal,
@@ -146,8 +146,4 @@ fun TaskItem(
             }
         }
     }
-}
-
-private fun String.containsUppercase(): Boolean {
-    return this.any { it.isUpperCase() }
 }
