@@ -5,7 +5,7 @@ import com.example.todolist.data.local.model.Task
 import com.example.todolist.domain.repository.TaskRepository
 import javax.inject.Inject
 
-class TaskRepositoryImpl(
+class TaskRepositoryImpl @Inject constructor(
     private val taskDao: TaskDao
 ): TaskRepository {
     override suspend fun getAllTasks(): List<Task> {

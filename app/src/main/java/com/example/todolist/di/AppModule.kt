@@ -3,7 +3,9 @@ package com.example.todolist.di
 import android.app.Application
 import androidx.room.Room
 import com.example.todolist.data.local.database.MyDatabase
+import com.example.todolist.data.local.repository.CharacterRepositoryImpl
 import com.example.todolist.data.local.repository.TaskRepositoryImpl
+import com.example.todolist.domain.repository.CharacterRepository
 import com.example.todolist.domain.repository.TaskRepository
 import com.example.todolist.util.Constants.MY_DATA_BASE
 import dagger.Module
@@ -30,5 +32,11 @@ object  AppModule {
     @Singleton
     fun provideTaskRepository(database: MyDatabase): TaskRepository {
         return TaskRepositoryImpl(database.getTaskDao())
+    }
+
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(database: MyDatabase): CharacterRepository {
+        return CharacterRepositoryImpl(database.characterDao())
     }
 }
