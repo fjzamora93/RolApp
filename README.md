@@ -1,15 +1,13 @@
 # ToDoList App
 
-ToDoList es una aplicación de gestión de tareas que permite a los usuarios crear, actualizar, eliminar y organizar tareas. Este proyecto utiliza Kotlin y Jetpack Compose para la interfaz de usuario, y está estructurado siguiendo el patrón de arquitectura MVVM (Model-View-ViewModel). La inyección de dependencias se maneja con Dagger Hilt.
+RolApp es una aplicación para manejo de juegos de Rol que permite a los usuarios crear, actualizar, eliminar y organizar los personajes y las campañas. Este proyecto utiliza Kotlin y Jetpack Compose para la interfaz de usuario, y está estructurado siguiendo el patrón de arquitectura MVVM (Model-View-ViewModel). La inyección de dependencias se maneja con Dagger Hilt.
 
 ## Características
 
-- Crear nuevas tareas
-- Actualizar tareas existentes
-- Eliminar tareas
-- Filtrar tareas por prioridad
-- Marcar tareas como completadas o incompletas
-- Interfaz de usuario moderna utilizando Jetpack Compose
+- Crear, editar y eliminar personajes
+- Crear eventos para las campañas
+- Guardar los stats, inventario y cualquier dato relevante.
+- Almacenar datos de sesión.
 
 ## Requisitos
 
@@ -20,7 +18,7 @@ ToDoList es una aplicación de gestión de tareas que permite a los usuarios cre
 
 1. **Clona este repositorio**:
    ```sh
-   git clone https://github.com/alejandroArcasDev/ToDo-App-Jetpack-Compose-Kotlin-DaggerHIlt-CleanArchitecture-Room-SQLite.git
+   git clone https://github.com/fjzamora93/RolApp
 
 2. **Abre el proyecto en Android Studio.**
 3. **Sincroniza el proyecto con Gradle.**
