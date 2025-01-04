@@ -1,17 +1,13 @@
 package com.example.todolist.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.todolist.presentation.screens.task_detail.TaskDetailScreen
-import com.example.todolist.presentation.screens.task_detail.TaskDetailViewModel
-import com.example.todolist.presentation.screens.task_list.TaskListScreen
-import com.example.todolist.presentation.screens.task_list.TaskListViewModel
+import com.example.todolist.ui.screens.task_detail.TaskDetailScreen
+import com.example.todolist.ui.screens.task_list.TaskListScreen
 
 @Composable
 fun NavGraph(
