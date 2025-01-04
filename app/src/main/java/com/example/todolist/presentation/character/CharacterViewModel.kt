@@ -46,6 +46,9 @@ class CharacterViewModel @Inject constructor(
         viewModelScope.launch {
             characterRepository.insertCharacter(rolCharacter)
             println("Personaje insertado: $rolCharacter")
+            // Fetch the updated list of characters
+            val updatedCharacters = characterRepository.getAllCharacters()
+            _characters.value = updatedCharacters
         }
     }
 

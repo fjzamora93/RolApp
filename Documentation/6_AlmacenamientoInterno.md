@@ -56,7 +56,7 @@ com.example.app
 Puesto que la arquitectura de la App, como vemos, es bastante grande, debemos saber en qué orden hay que seguir los pasos:
 
 
-1. Agregar las dependencias (solo la primera vez).
+1. Agregar las dependencias al graddle.
 2. Crear un modelo en data.local.model.
 3. Crear el dao correspondiente al modelo en data.local.database
 4. Crear una interface independiente en domain.repository

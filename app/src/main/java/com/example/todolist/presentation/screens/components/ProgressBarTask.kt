@@ -1,4 +1,4 @@
-package com.example.todolist.presentation.screens.generic_components
+package com.example.todolist.presentation.screens.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

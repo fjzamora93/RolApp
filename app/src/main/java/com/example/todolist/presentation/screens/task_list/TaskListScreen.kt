@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.List
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -48,7 +47,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.todolist.navigation.Screens
-import com.example.todolist.presentation.screens.generic_components.ProgressBarTask
+import com.example.todolist.presentation.screens.components.ProgressBarTask
 import com.example.todolist.presentation.screens.task_list.components.AddTaskBottomSheet
 import com.example.todolist.presentation.screens.task_list.components.AddTaskFloatingButton
 import com.example.todolist.presentation.screens.task_list.components.DeleteTaskDialog
