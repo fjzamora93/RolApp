@@ -26,12 +26,12 @@ RolApp es una aplicación para manejo de juegos de Rol que permite a los usuario
 
 ## Arquitectura del Proyecto
 
-El proyecto está estructurado utilizando la arquitectura MVVM, lo cual facilita la separación de preocupaciones y mejora la testabilidad del código.
+El proyecto está estructurado utilizando la arquitectura MVVM(Modelo-Vista-VistaModelo) , lo cual facilita la separación de preocupaciones y mejora la testabilidad del código.
 
 ### Directorios Principales
 
 - **data**: Contiene los modelos de datos y el acceso a datos locales.
   - **local**: Contiene los modelos de datos y la implementación de la base de datos local (Room).
 - **domain**: Contiene los casos de uso que encapsulan la lógica de negocio.
-- **presentation**: Contiene las pantallas de la aplicación y sus respectivos ViewModels.
+- **ui**: Contiene las pantallas de la aplicación y sus respectivos ViewModels.
 
