@@ -2,7 +2,9 @@ package com.example.todolist.ui.character
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,10 +13,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -25,9 +37,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.todolist.data.local.model.Item
+import com.example.todolist.data.local.model.Race
+import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
+import com.example.todolist.data.local.model.RolClass
 
 // Importación de otros componentes
 import com.example.todolist.ui.screens.components.Footer
@@ -56,47 +73,189 @@ fun CharacterScreen(
 fun Body(modifier:Modifier){
     Column(modifier = modifier.fillMaxWidth()){
         CharacterDetail()
-        StatsForm()
+        CharacterCreatorForm()
         CharacterList(Modifier.align(Alignment.CenterHorizontally))
     }
 }
 
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StatsForm(){
-    val characterViewModel:CharacterViewModel = viewModel()
-    var selectedCharacter = characterViewModel.selectedCharacter.value
+fun CharacterCreatorForm(){
+    val characterViewModel: CharacterViewModel = viewModel()
+    var selectedCharacter by remember { mutableStateOf(characterViewModel.selectedCharacter.value) }
 
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
-    var completed by remember { mutableStateOf(false) }
-    Column (
+    var rolClass by remember { mutableStateOf(RolClass.NINGUNA) }
+    var race by remember { mutableStateOf(Race.NINGUNA) }
+    var height by remember { mutableStateOf(Range.MEDIO) }
+    var weight by remember { mutableStateOf(Range.MEDIO) }
+    var age by remember { mutableStateOf(18) }
+    var selectedItems by remember { mutableStateOf<List<Item>>(emptyList()) }
+    var selectedWeight by remember { mutableStateOf(Range.BAJO) }
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-    ){
+            .verticalScroll(rememberScrollState()) // Hacer el formulario desplazable
+    ) {
+        // Nombre
         TextField(
             value = name,
             onValueChange = { name = it },
             label = { Text("Name") }
         )
+
+        // Descripción
         TextField(
             value = description,
             onValueChange = { description = it },
             label = { Text("Description") }
         )
-        Checkbox(
-            checked = completed,
-            onCheckedChange = { completed = it },
+
+
+        // Altura
+        DropdownSelector(
+            label = "Height",
+            selectedValue = height,
+            onValueChange = { height = it },
+            values = Range.values()
         )
-        Button(onClick = {val newCharacter = RolCharacter(name = name, description = description, completed = completed)
+
+        // Peso
+        DropdownSelector(
+            label = "Weight",
+            selectedValue = weight,
+            onValueChange = { weight = it },
+            values = Range.values()
+        )
+
+        // Edad
+        TextField(
+            value = age.toString(),
+            onValueChange = { age = it.toIntOrNull() ?: age },
+            label = { Text("Age") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+        // Rol Class
+        Text("Role Class")
+        RolClass.values().forEach { role ->
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = rolClass == role,
+                    onClick = { rolClass = role }
+                )
+                Text(role.name, modifier = Modifier.padding(start = 2.dp))
+            }
+        }
+
+        // Raza
+        Text("Race")
+        Race.values().forEach { r ->
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(
+                    selected = race == r,
+                    onClick = { race = r }
+                )
+                Text(r.name, modifier = Modifier.padding(start = 8.dp))
+            }
+        }
+
+
+
+
+        // Selección de Items
+        Text("Items")
+        // Aquí tendrías que implementar un selector de items, por ejemplo un Dropdown o un Multiselect.
+        // Aquí se simula la selección de items. Vamos a suponer que tienes un ViewModel para obtener los Items.
+        val items = characterViewModel.getItems() // Implementa un método que obtenga los Items
+        items.forEach { item ->
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Checkbox(
+                    checked = selectedItems.contains(item),
+                    onCheckedChange = {
+                        if (it) {
+                            selectedItems = selectedItems + item
+                        } else {
+                            selectedItems = selectedItems - item
+                        }
+                    }
+                )
+                Text(item.name, modifier = Modifier.padding(start = 8.dp))
+            }
+        }
+
+        // Botón para guardar
+        Button(onClick = {
+            val newCharacter = RolCharacter(
+                name = name,
+                description = description,
+                rolClass = rolClass,
+                race = race,
+                height = height,
+                weight = weight,
+                age = age,
+            )
+
+            val items = characterViewModel.getItems()
+
             characterViewModel.insertCharacter(newCharacter)
         }) {
-            Text("Insert")
+            Text("Insert Character")
         }
     }
 }
+
+@Composable
+fun DropdownSelector(
+    label: String,
+    selectedValue: Range, // Usamos Range como ejemplo, pero puedes usar cualquier tipo de dato
+    onValueChange: (Range) -> Unit,
+    values: Array<Range>, // Array de las opciones a mostrar
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = Modifier.fillMaxWidth()) {
+        TextField(
+            value = selectedValue.name,
+            onValueChange = {},
+            readOnly = true,
+            label = { Text(label) },
+            trailingIcon = {
+                Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown", modifier = Modifier.clickable { expanded = !expanded })
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            values.forEach { selectionOption ->
+                DropdownMenuItem(
+                    onClick = {
+                        onValueChange(selectionOption) // Actualiza el valor seleccionado
+                        expanded = false
+                    },
+                    text = { Text(selectionOption.name) }
+                )
+            }
+        }
+    }
+}
+
+
 
 @Composable
 fun CharacterDetail(){

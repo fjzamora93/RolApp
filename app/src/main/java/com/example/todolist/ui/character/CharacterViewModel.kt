@@ -8,6 +8,7 @@ import com.example.todolist.data.local.model.RolCharacter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
+import com.example.todolist.data.local.model.Item
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,6 +45,12 @@ class CharacterViewModel @Inject constructor(
             _selectedCharacter.value = rolCharacter
             println("Personaje encontrado: $_selectedCharacter.value")
         }
+    }
+
+    // TODO: Retorna una lista de objetos
+    fun getItems(): List<Item>  {
+        println("Buscando objetos")
+        return emptyList()
     }
 
     // Función para insertar un nuevo personaje
