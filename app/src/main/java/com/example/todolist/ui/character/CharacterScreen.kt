@@ -88,7 +88,7 @@ fun CharacterCreatorForm(){
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var rolClass by remember { mutableStateOf(RolClass.NINGUNA) }
-    var race by remember { mutableStateOf(Race.NINGUNA) }
+    var race by remember { mutableStateOf(Race.HUMANO) }
     var height by remember { mutableStateOf(Range.MEDIO) }
     var weight by remember { mutableStateOf(Range.MEDIO) }
     var age by remember { mutableStateOf(18) }
@@ -99,14 +99,41 @@ fun CharacterCreatorForm(){
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()) // Hacer el formulario desplazable
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Nombre
-        TextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Name") }
-        )
+
+        // Mensaje de alerta
+        Text("Los datos introducidos se utilizará para calcular automáticamente tus stats (fuerza, inteligencia, tamaño, etc.  " +
+                "Más adelante podrás modificarlos manualmente" +
+                "Cualquier información adicional, siempre puedes incluirla en la DESCRIPCIÓN." )
+
+
+        // Nombre y edad
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Column(
+                Modifier.weight(3f)
+            ) {
+                TextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Nombre") }
+                )
+            }
+            Column(
+                Modifier.weight(1f)
+            ) {
+                TextField(
+                    value = age.toString(),
+                    onValueChange = { age = it.toIntOrNull() ?: age },
+                    label = { Text("Edad") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+            }
+        }
 
         // Descripción
         TextField(
@@ -116,86 +143,64 @@ fun CharacterCreatorForm(){
         )
 
 
-        // Altura
-        DropdownSelector(
-            label = "Height",
-            selectedValue = height,
-            onValueChange = { height = it },
-            values = Range.values()
-        )
 
-        // Peso
-        DropdownSelector(
-            label = "Weight",
-            selectedValue = weight,
-            onValueChange = { weight = it },
-            values = Range.values()
-        )
-
-        // Edad
-        TextField(
-            value = age.toString(),
-            onValueChange = { age = it.toIntOrNull() ?: age },
-            label = { Text("Age") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-        )
-
-        // Rol Class
-        Text("Role Class")
-        RolClass.values().forEach { role ->
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = rolClass == role,
-                    onClick = { rolClass = role }
+        // Altura y peso
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Column(
+                Modifier.weight(1f)
+            ){
+                DropdownSelector(
+                    label = "Altura",
+                    selectedValue = height,
+                    onValueChange = { height = it },
+                    values = Range.values(),
                 )
-                Text(role.name, modifier = Modifier.padding(start = 2.dp))
             }
-        }
-
-        // Raza
-        Text("Race")
-        Race.values().forEach { r ->
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(
-                    selected = race == r,
-                    onClick = { race = r }
+            Column(
+                Modifier.weight(1f)
+            ){
+                DropdownSelector(
+                    label = "Peso",
+                    selectedValue = weight,
+                    onValueChange = { weight = it },
+                    values = Range.values(),
                 )
-                Text(r.name, modifier = Modifier.padding(start = 8.dp))
             }
         }
 
 
-
-
-        // Selección de Items
-        Text("Items")
-        // Aquí tendrías que implementar un selector de items, por ejemplo un Dropdown o un Multiselect.
-        // Aquí se simula la selección de items. Vamos a suponer que tienes un ViewModel para obtener los Items.
-        val items = characterViewModel.getItems() // Implementa un método que obtenga los Items
-        items.forEach { item ->
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Checkbox(
-                    checked = selectedItems.contains(item),
-                    onCheckedChange = {
-                        if (it) {
-                            selectedItems = selectedItems + item
-                        } else {
-                            selectedItems = selectedItems - item
-                        }
-                    }
+        // Raza y clase
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Column(
+                Modifier.weight(1f)
+            ){
+                DropdownSelector(
+                    label = "Clase",
+                    selectedValue = rolClass,
+                    onValueChange = { rolClass = it },
+                    values = RolClass.values(),
                 )
-                Text(item.name, modifier = Modifier.padding(start = 8.dp))
+            }
+            Column(
+                Modifier.weight(1f)
+            ){
+                DropdownSelector(
+                    label = "Raza",
+                    selectedValue = race,
+                    onValueChange = { race = it },
+                    values = Race.values(),
+                )
             }
         }
+
 
         // Botón para guardar
         Button(onClick = {
@@ -208,9 +213,7 @@ fun CharacterCreatorForm(){
                 weight = weight,
                 age = age,
             )
-
             val items = characterViewModel.getItems()
-
             characterViewModel.insertCharacter(newCharacter)
         }) {
             Text("Insert Character")
@@ -218,42 +221,42 @@ fun CharacterCreatorForm(){
     }
 }
 
+// DROP DOWN
 @Composable
-fun DropdownSelector(
+fun <T> DropdownSelector(
     label: String,
-    selectedValue: Range, // Usamos Range como ejemplo, pero puedes usar cualquier tipo de dato
-    onValueChange: (Range) -> Unit,
-    values: Array<Range>, // Array de las opciones a mostrar
-) {
+    selectedValue: T, // Usamos Range como ejemplo, pero puedes usar cualquier tipo de dato
+    onValueChange: (T) -> Unit,
+    values: Array<T>, // Array de las opciones a mostrar
+) where T : Enum<T> {
     var expanded by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxWidth()) {
-        TextField(
-            value = selectedValue.name,
-            onValueChange = {},
-            readOnly = true,
-            label = { Text(label) },
-            trailingIcon = {
-                Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown", modifier = Modifier.clickable { expanded = !expanded })
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            values.forEach { selectionOption ->
-                DropdownMenuItem(
-                    onClick = {
-                        onValueChange(selectionOption) // Actualiza el valor seleccionado
-                        expanded = false
-                    },
-                    text = { Text(selectionOption.name) }
-                )
-            }
+    TextField(
+        value = selectedValue.name,
+        onValueChange = {},
+        readOnly = true,
+        label = { Text(label) },
+        trailingIcon = {
+            Icon(Icons.Default.ArrowDropDown, contentDescription = "Dropdown", modifier = Modifier.clickable { expanded = !expanded })
+        },
+    )
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = { expanded = false }
+    ) {
+        values.forEach { selectionOption ->
+            DropdownMenuItem(
+                onClick = {
+                    onValueChange(selectionOption) // Actualiza el valor seleccionado
+                    expanded = false
+                },
+                text = { Text(selectionOption.name) }
+            )
         }
     }
+
 }
+
 
 
 
