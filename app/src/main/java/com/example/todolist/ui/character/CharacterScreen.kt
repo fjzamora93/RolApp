@@ -1,6 +1,7 @@
 package com.example.todolist.ui.character
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,11 +42,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.Race
 import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.RolClass
+import com.example.todolist.navigation.Screens
 
 // Importación de otros componentes
 import com.example.todolist.ui.screens.components.Footer
@@ -52,8 +61,14 @@ import com.example.todolist.ui.screens.components.Header
 
 @Composable
 fun CharacterScreen(
-    characterViewModel: CharacterViewModel = viewModel()  // Usamos `viewModel()` para obtener el ViewModel
+    characterViewModel: CharacterViewModel = viewModel(),
+    navController: NavHostController
 ) {
+    LaunchedEffect(Unit) {
+        // Esto se ejecuta al montar el Composable
+        Log.d("CharacterScreen", "NavController está listo")
+    }
+
     Column(
         Modifier
             .fillMaxSize()
@@ -64,16 +79,33 @@ fun CharacterScreen(
                 .fillMaxWidth()
                 .weight(1f) // ocupar todo el espacio disponible
         )
+
+        CharacterCreatorForm()
+        Button(onClick = {
+            // Verifica si el NavController no es null antes de navegar
+            if (navController.currentDestination != null) {
+                navController.navigate(Screens.CharacterDetailScreen.route)
+            } else {
+                Log.e("NavigationError", "NavController no está listo para navegar.")
+            }
+        }) {
+            Text("Ir a otro destino")
+        }
+
+
+        }
+
         Footer(Modifier.fillMaxWidth())
     }
-}
+
 
 
 @Composable
 fun Body(modifier:Modifier){
     Column(modifier = modifier.fillMaxWidth()){
-        CharacterDetail()
-        CharacterCreatorForm()
+        CharacterDetailSample()
+        //CharacterCreatorForm()
+
         CharacterList(Modifier.align(Alignment.CenterHorizontally))
     }
 }
@@ -201,25 +233,35 @@ fun CharacterCreatorForm(){
             }
         }
 
-
-        // Botón para guardar
-        Button(onClick = {
-            val newCharacter = RolCharacter(
+        InsertCharacterButton(
+            RolCharacter(
                 name = name,
                 description = description,
                 rolClass = rolClass,
                 race = race,
                 height = height,
                 weight = weight,
-                age = age,
-            )
-            val items = characterViewModel.getItems()
-            characterViewModel.insertCharacter(newCharacter)
-        }) {
-            Text("Insert Character")
-        }
+                age = age
+            ),
+            characterViewModel)
     }
 }
+
+
+@Composable
+fun InsertCharacterButton(
+    newCharacter: RolCharacter,
+    characterViewModel : CharacterViewModel,
+){
+    Button(onClick = {
+        characterViewModel.insertCharacter(newCharacter)
+        var characterId = newCharacter.id
+    }) {
+        Text("Insert Character")
+    }
+}
+
+
 
 // DROP DOWN
 @Composable
@@ -261,7 +303,7 @@ fun <T> DropdownSelector(
 
 
 @Composable
-fun CharacterDetail(){
+fun CharacterDetailSample(){
     val characterViewModel: CharacterViewModel = viewModel()
     var selectedCharacter = characterViewModel.selectedCharacter.value
 

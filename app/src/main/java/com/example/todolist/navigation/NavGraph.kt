@@ -6,35 +6,29 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.todolist.ui.character.CharacterCreatorForm
+import com.example.todolist.ui.character.CharacterDetailScreen
+import com.example.todolist.ui.character.CharacterScreen
+import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.screens.task_detail.TaskDetailScreen
 import com.example.todolist.ui.screens.task_list.TaskListScreen
 
 @Composable
 fun NavGraph(
-    startDestination: String,
-    navHostController: NavHostController,
+    navController: NavHostController,
+    characterViewModel: CharacterViewModel
 ) {
-
     NavHost(
-        navController = navHostController,
-        startDestination = startDestination,
+        navController = navController,
+        startDestination = Screens.CharacterScreen.route // Definimos la pantalla inicial
     ) {
-
-        composable(Screens.TaskListScreen.route) {
-            TaskListScreen(
-                navHostController = navHostController
-            )
+        composable(Screens.CharacterScreen.route) {
+            // Aquí iría la lógica para la pantalla CharacterScreen
+            CharacterScreen(navController = navController)
         }
-        composable(
-            route = Screens.TaskDetailScreen.route,
-            arguments = listOf(navArgument("taskId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val taskId = backStackEntry.arguments?.getInt("taskId") ?: 0
-            TaskDetailScreen(
-                taskId = taskId,
-                navHostController = navHostController
-            )
+        composable(Screens.CharacterDetailScreen.route) {
+            // Aquí iría la lógica para la pantalla CharacterDetailScreen
+            CharacterDetailScreen(navController = navController)
         }
-
     }
 }

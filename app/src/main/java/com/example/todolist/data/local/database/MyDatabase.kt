@@ -10,7 +10,7 @@ import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.Skill
 import com.example.todolist.data.local.model.Task
 
-@Database(entities = [Task::class, RolCharacter::class, Skill::class, Item::class], version = 2)
+@Database(entities = [Task::class, RolCharacter::class, Skill::class, Item::class], version = 3)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getTaskDao(): TaskDao
     abstract fun characterDao(): CharacterDao
