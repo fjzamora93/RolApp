@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.todolist.navigation.Screens
+import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.ProgressBarTask
 import com.example.todolist.ui.screens.task_list.components.AddTaskBottomSheet
 import com.example.todolist.ui.screens.task_list.components.AddTaskFloatingButton
@@ -210,7 +210,7 @@ fun TaskListContent(taskListViewModel: TaskListViewModel, navHostController: Nav
                             .height(60.dp)
                             .clickable {
                                 navHostController.navigate(
-                                    Screens.TaskDetailScreen.createRoute(
+                                    ScreensRoutes.TaskDetailScreen.createRoute(
                                         taskList[task].taskId
                                     )
                                 )
@@ -281,7 +281,7 @@ fun TaskListContent(taskListViewModel: TaskListViewModel, navHostController: Nav
                             .height(60.dp)
                             .clickable {
                                 navHostController.navigate(
-                                    Screens.TaskDetailScreen.createRoute(
+                                    ScreensRoutes.TaskDetailScreen.createRoute(
                                         taskListCompleted[task].taskId
                                     )
                                 )

@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,15 +18,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -41,19 +36,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.Race
 import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.RolClass
-import com.example.todolist.navigation.Screens
+import com.example.todolist.navigation.ScreensRoutes
 
 // Importación de otros componentes
 import com.example.todolist.ui.screens.components.Footer
@@ -61,9 +52,10 @@ import com.example.todolist.ui.screens.components.Header
 
 @Composable
 fun CharacterScreen(
-    characterViewModel: CharacterViewModel = viewModel(),
     navController: NavHostController
 ) {
+    val characterViewModel: CharacterViewModel = hiltViewModel()
+
     LaunchedEffect(Unit) {
         // Esto se ejecuta al montar el Composable
         Log.d("CharacterScreen", "NavController está listo")
@@ -75,16 +67,17 @@ fun CharacterScreen(
             .padding(16.dp)){
         Header(Modifier.fillMaxWidth())
         Body(
+            characterViewModel = characterViewModel,
             Modifier
                 .fillMaxWidth()
                 .weight(1f) // ocupar todo el espacio disponible
         )
 
-        CharacterCreatorForm()
+        CharacterCreatorForm(characterViewModel = characterViewModel)
         Button(onClick = {
             // Verifica si el NavController no es null antes de navegar
             if (navController.currentDestination != null) {
-                navController.navigate(Screens.CharacterDetailScreen.route)
+                navController.navigate(ScreensRoutes.CharacterDetailScreen.route)
             } else {
                 Log.e("NavigationError", "NavController no está listo para navegar.")
             }
@@ -101,20 +94,27 @@ fun CharacterScreen(
 
 
 @Composable
-fun Body(modifier:Modifier){
+fun Body(
+    characterViewModel: CharacterViewModel,
+    modifier:Modifier
+){
     Column(modifier = modifier.fillMaxWidth()){
-        CharacterDetailSample()
+        CharacterDetailSample(characterViewModel = characterViewModel)
         //CharacterCreatorForm()
 
-        CharacterList(Modifier.align(Alignment.CenterHorizontally))
+        CharacterList(
+            characterViewModel = characterViewModel,
+            Modifier.align(Alignment.CenterHorizontally)
+        )
     }
 }
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterCreatorForm(){
-    val characterViewModel: CharacterViewModel = viewModel()
+fun CharacterCreatorForm(
+    characterViewModel: CharacterViewModel,
+){
     var selectedCharacter by remember { mutableStateOf(characterViewModel.selectedCharacter.value) }
 
     var name by remember { mutableStateOf("") }
@@ -234,7 +234,7 @@ fun CharacterCreatorForm(){
         }
 
         InsertCharacterButton(
-            RolCharacter(
+            newCharacter = RolCharacter(
                 name = name,
                 description = description,
                 rolClass = rolClass,
@@ -243,7 +243,7 @@ fun CharacterCreatorForm(){
                 weight = weight,
                 age = age
             ),
-            characterViewModel)
+            characterViewModel = characterViewModel)
     }
 }
 
@@ -303,8 +303,7 @@ fun <T> DropdownSelector(
 
 
 @Composable
-fun CharacterDetailSample(){
-    val characterViewModel: CharacterViewModel = viewModel()
+fun CharacterDetailSample(characterViewModel: CharacterViewModel){
     var selectedCharacter = characterViewModel.selectedCharacter.value
 
     selectedCharacter?.let { character ->
@@ -327,8 +326,10 @@ fun CharacterDetailSample(){
 
 // LISTA DE PERSONAJES -> NO UTILIZAR DE MOMENTO
 @Composable
-fun CharacterList(modifier: Modifier) {
-    val characterViewModel: CharacterViewModel = viewModel()
+fun CharacterList(
+    characterViewModel: CharacterViewModel,
+    modifier: Modifier
+) {
     val scrollState = rememberScrollState()
 
     Column(

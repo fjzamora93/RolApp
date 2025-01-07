@@ -31,7 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.todolist.data.local.model.Task
-import com.example.todolist.navigation.Screens
+import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.ProgressBarTask
 import com.example.todolist.ui.screens.task_detail.components.CompleteChipButton
 import com.example.todolist.ui.screens.task_detail.components.DeleteChipButton
@@ -116,8 +116,8 @@ fun TaskDetailContent(taskDetailViewModel: TaskDetailViewModel, navHostControlle
                         modifier = Modifier
                             .padding(start = 10.dp)
                             .clickable {
-                                navHostController.navigate(Screens.TaskListScreen.route) {
-                                    popUpTo(Screens.TaskDetailScreen.route) {
+                                navHostController.navigate(ScreensRoutes.TaskListScreen.route) {
+                                    popUpTo(ScreensRoutes.TaskDetailScreen.route) {
                                         inclusive = true
                                     }
                                 }

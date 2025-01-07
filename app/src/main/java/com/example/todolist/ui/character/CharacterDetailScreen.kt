@@ -43,7 +43,7 @@ fun CharacterDetailScreen(
 @Composable
 fun DetailCharacterBody(modifier:Modifier){
     Column(modifier = modifier.fillMaxWidth()){
-        CharacterList(Modifier.align(Alignment.CenterHorizontally))
+        Text("HOla!")
     }
 }
 

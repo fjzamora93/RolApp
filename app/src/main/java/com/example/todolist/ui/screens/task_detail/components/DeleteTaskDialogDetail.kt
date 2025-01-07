@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
 import com.example.todolist.data.local.model.Task
-import com.example.todolist.navigation.Screens
+import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.task_detail.TaskDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,8 +84,8 @@ fun DeleteTaskDialogDetail(taskDetailViewModel: TaskDetailViewModel, currentTask
                             .clickable {
                                 taskDetailViewModel.showTaskPopupDelete(false)
                                 taskDetailViewModel.deleteTaskOnTrashClick(currentTask)
-                                navHostController.navigate(Screens.TaskListScreen.route) {
-                                    popUpTo(Screens.TaskDetailScreen.route) {
+                                navHostController.navigate(ScreensRoutes.TaskListScreen.route) {
+                                    popUpTo(ScreensRoutes.TaskDetailScreen.route) {
                                         inclusive = true
                                     }
                                 }
