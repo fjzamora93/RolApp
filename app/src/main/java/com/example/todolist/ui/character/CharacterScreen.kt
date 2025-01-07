@@ -75,14 +75,9 @@ fun CharacterScreen(
 
         CharacterCreatorForm(characterViewModel = characterViewModel)
         Button(onClick = {
-            // Verifica si el NavController no es null antes de navegar
-            if (navController.currentDestination != null) {
-                navController.navigate(ScreensRoutes.CharacterDetailScreen.route)
-            } else {
-                Log.e("NavigationError", "NavController no está listo para navegar.")
-            }
+            navController.navigate(ScreensRoutes.CharacterDetailScreen.route)
         }) {
-            Text("Ir a otro destino")
+            Text("Navegar a otra ruta")
         }
 
 

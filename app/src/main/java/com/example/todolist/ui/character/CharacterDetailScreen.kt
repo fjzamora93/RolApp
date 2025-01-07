@@ -30,7 +30,7 @@ fun CharacterDetailScreen(
                 .weight(1f) // ocupar todo el espacio disponible
         )
         Button(onClick = {
-            // Si quieres navegar hacia atrás, usas navController.popBackStack()
+            // Método para volver atrás
             navController.popBackStack()
         }) {
             Text(text = "Back to Character Screen")
