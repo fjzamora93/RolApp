@@ -1,6 +1,10 @@
 package com.example.todolist.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -8,37 +12,48 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todolist.ui.character.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
-
 @Composable
 fun NavGraph(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = ScreensRoutes.CharacterCreatorScreen.route // Definimos la pantalla inicial
-    ) {
-        // Aquí iría la lógica para la pantalla CharacterScreen
-        composable(
-            ScreensRoutes.CharacterCreatorScreen.route
+    // Proveer el NavigationViewModel en todo el árbol de composables dentro de NavGraph
+    val navigationViewModel: NavigationViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+
+    CompositionLocalProvider(LocalNavigationViewModel provides navigationViewModel) {
+        // Observa los eventos de navegación
+        val navigationEvent by navigationViewModel.navigationEvent.observeAsState()
+
+        // Este LaunchedEffect se ejecutará cuando haya un nuevo evento de navegación
+        LaunchedEffect(navigationEvent) {
+            println("Navegando a la ruta: $navigationEvent")
+            navigationEvent?.let { route ->
+                navController.navigate(route) {
+                    popUpTo(navController.graph.startDestinationId) { saveState = true }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+                navigationViewModel.clearNavigationEvent()
+            }
+        }
+
+        // Aquí va el NavHost, donde defines las rutas de las pantallas
+        NavHost(
+            navController = navController,
+            startDestination = ScreensRoutes.CharacterCreatorScreen.route // Pantalla inicial
         ) {
-            CharacterCreatorScreen(
-                navController = navController
-            )
+            // Pantalla de creación del personaje
+            composable(ScreensRoutes.CharacterCreatorScreen.route) {
+                CharacterCreatorScreen() // Ya no necesitas pasarle el NavigationViewModel
+            }
+
+            // Pantalla de detalle del personaje
+            composable(
+                ScreensRoutes.CharacterDetailScreen.route,
+                arguments = listOf(navArgument("characterId") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val characterId = backStackEntry.arguments?.getInt("characterId") ?: 0
+                CharacterDetailScreen(characterId = characterId)
+            }
         }
-
-        // Aquí iría la lógica para la pantalla CharacterDetailScreen
-        composable(
-            ScreensRoutes.CharacterDetailScreen.route,
-            arguments = listOf(navArgument("characterId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            var characterId = backStackEntry.arguments?.getInt("characterId") ?: 0
-            CharacterDetailScreen(
-                characterId = characterId,
-                navController = navController
-            )
-
-        }
-
-
     }
 }

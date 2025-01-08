@@ -12,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.Footer
 import com.example.todolist.ui.screens.components.Header
 
 @Composable
 fun CharacterDetailScreen(
-    characterId : Int, // QUe por defecto saque el personaje 1
-    navController: NavHostController
+    characterId : Int,
 ){
+    val navigationViewModel = LocalNavigationViewModel.current
+    println("Character ID recibido: $characterId")  // Verificación
     Column(
         Modifier
             .fillMaxSize()
@@ -33,7 +36,8 @@ fun CharacterDetailScreen(
         )
         Button(onClick = {
             // Método para volver atrás
-            navController.popBackStack()
+            navigationViewModel.navigate(ScreensRoutes.CharacterCreatorScreen.route)
+
         }) {
             Text(text = "Back to Character Screen")
         }

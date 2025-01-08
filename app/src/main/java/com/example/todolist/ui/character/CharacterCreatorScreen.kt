@@ -43,6 +43,8 @@ import com.example.todolist.data.local.model.Race
 import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.RolClass
+import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 
 // Importación de otros componentes
@@ -51,9 +53,10 @@ import com.example.todolist.ui.screens.components.Header
 
 @Composable
 fun CharacterCreatorScreen(
-    navController: NavHostController
+
 ) {
     val characterViewModel: CharacterViewModel = hiltViewModel()
+    val navigationViewModel = LocalNavigationViewModel.current
 
     LaunchedEffect(Unit) {
         // Esto se ejecuta al montar el Composable
@@ -72,21 +75,12 @@ fun CharacterCreatorScreen(
                 .weight(1f) // ocupar todo el espacio disponible
         )
 
-        CharacterCreatorForm(characterViewModel = characterViewModel)
-        Button(onClick = {
-            navController.navigate(
-                ScreensRoutes.CharacterDetailScreen.createRoute(
-                    characterViewModel.selectedCharacter.value?.id ?: 1
-                )
-            )
-        }) {
-            Text("Navegar a otra ruta")
-        }
-
-
-        }
+        CharacterCreatorForm(
+            characterViewModel = characterViewModel,
+        )
 
         Footer(Modifier.fillMaxWidth())
+        }
     }
 
 
@@ -241,7 +235,8 @@ fun CharacterCreatorForm(
                 weight = weight,
                 age = age
             ),
-            characterViewModel = characterViewModel)
+            characterViewModel = characterViewModel,
+        )
     }
 }
 
@@ -251,11 +246,18 @@ fun InsertCharacterButton(
     newCharacter: RolCharacter,
     characterViewModel : CharacterViewModel,
 ){
+    // Utilizamos nuestro viewMOdel de navegación para navegar sin tener que estás pasando navegador como parámetro
+    val navigationViewModel = LocalNavigationViewModel.current
+
     Button(onClick = {
         characterViewModel.insertCharacter(newCharacter)
-        var characterId = newCharacter.id
+        var idNewCharacter = characterViewModel.characters.value.lastOrNull()?.id ?: 0
+        println("ID del último personaje insertado: $idNewCharacter")
+        navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(
+            idNewCharacter
+        ))
     }) {
-        Text("Insert Character")
+        Text("Insertar y navegar")
     }
 }
 

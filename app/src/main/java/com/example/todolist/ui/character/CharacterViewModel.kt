@@ -54,16 +54,22 @@ class CharacterViewModel @Inject constructor(
     }
 
     // Función para insertar un nuevo personaje
+    // Función para insertar un nuevo personaje
     fun insertCharacter(rolCharacter: RolCharacter) {
         viewModelScope.launch {
+            // Completar el personaje (por ejemplo, asignar valores predeterminados)
             rolCharacter.completeCharacter()
             characterRepository.insertCharacter(rolCharacter)
             println("Personaje insertado: $rolCharacter")
+
             // Fetch the updated list of characters
             val updatedCharacters = characterRepository.getAllCharacters()
             _characters.value = updatedCharacters
+
         }
     }
+
+
 
     // Función para actualizar un personaje
     fun updateCharacter(rolCharacter: RolCharacter) {
