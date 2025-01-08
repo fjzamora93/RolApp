@@ -1,8 +1,12 @@
 package com.example.todolist.navigation
 
 sealed class ScreensRoutes(val route: String) {
-    object CharacterScreen : ScreensRoutes("CharacterScreen")
-    object CharacterDetailScreen : ScreensRoutes("CharacterDetailScreen")
+    object CharacterCreatorScreen : ScreensRoutes("CharacterCreatorScreen")
+    object CharacterDetailScreen : ScreensRoutes("CharacterDetailScreen/{characterId}") {
+        fun createRoute(characterId: Int) = "CharacterDetailScreen/$characterId"
+    }
+
+
 
     // TASKS, ANTIGUO
     object TaskListScreen: ScreensRoutes("TaskListScreen")

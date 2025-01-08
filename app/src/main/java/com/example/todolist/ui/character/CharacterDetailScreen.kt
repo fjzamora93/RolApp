@@ -17,6 +17,7 @@ import com.example.todolist.ui.screens.components.Header
 
 @Composable
 fun CharacterDetailScreen(
+    characterId : Int, // QUe por defecto saque el personaje 1
     navController: NavHostController
 ){
     Column(
@@ -25,6 +26,7 @@ fun CharacterDetailScreen(
             .padding(16.dp)){
         Header(Modifier.fillMaxWidth())
         DetailCharacterBody(
+            characterId = characterId,
             Modifier
                 .fillMaxWidth()
                 .weight(1f) // ocupar todo el espacio disponible
@@ -41,9 +43,12 @@ fun CharacterDetailScreen(
 }
 
 @Composable
-fun DetailCharacterBody(modifier:Modifier){
+fun DetailCharacterBody(
+    characterId: Int,
+    modifier:Modifier
+){
     Column(modifier = modifier.fillMaxWidth()){
-        Text("HOla!")
+        Text("HOla! ${characterId}")
     }
 }
 

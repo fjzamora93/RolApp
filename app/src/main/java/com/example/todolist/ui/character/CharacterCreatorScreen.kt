@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.Race
@@ -51,7 +50,7 @@ import com.example.todolist.ui.screens.components.Footer
 import com.example.todolist.ui.screens.components.Header
 
 @Composable
-fun CharacterScreen(
+fun CharacterCreatorScreen(
     navController: NavHostController
 ) {
     val characterViewModel: CharacterViewModel = hiltViewModel()
@@ -75,7 +74,11 @@ fun CharacterScreen(
 
         CharacterCreatorForm(characterViewModel = characterViewModel)
         Button(onClick = {
-            navController.navigate(ScreensRoutes.CharacterDetailScreen.route)
+            navController.navigate(
+                ScreensRoutes.CharacterDetailScreen.createRoute(
+                    characterViewModel.selectedCharacter.value?.id ?: 1
+                )
+            )
         }) {
             Text("Navegar a otra ruta")
         }
