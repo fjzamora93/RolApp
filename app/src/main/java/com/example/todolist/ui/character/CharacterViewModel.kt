@@ -22,12 +22,13 @@ class CharacterViewModel @Inject constructor(
     private val _characters = mutableStateOf<List<RolCharacter>>(emptyList())
     val characters: State<List<RolCharacter>> get() = _characters
 
+    // Generalmente usaríamos State para ambos, pero en este caso LiveData funciona mejor (con State no va a cambiar bien)
     private val _selectedCharacter = MutableLiveData<RolCharacter?>()
     val selectedCharacter: LiveData<RolCharacter?> = _selectedCharacter
 
 
     init {
-        getAllCharacters() // Llamamos a la función para cargar los personajes al inicio
+        getAllCharacters()
     }
 
     // Función para obtener todos los personajes
