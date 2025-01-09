@@ -57,12 +57,6 @@ fun CharacterCreatorScreen(
 
 ) {
     val characterViewModel: CharacterViewModel = hiltViewModel()
-    val navigationViewModel = LocalNavigationViewModel.current
-
-    LaunchedEffect(Unit) {
-        // Esto se ejecuta al montar el Composable
-        Log.d("CharacterScreen", "NavController está listo")
-    }
 
     Column(
         Modifier
@@ -85,7 +79,6 @@ fun CharacterCreatorScreen(
     }
 
 
-
 @Composable
 fun Body(
     characterViewModel: CharacterViewModel,
@@ -102,13 +95,45 @@ fun Body(
     }
 }
 
+@Composable
+fun InsertCharacterButton(
+    newCharacter: RolCharacter,
+    characterViewModel: CharacterViewModel,
+) {
+    val navigationViewModel = LocalNavigationViewModel.current
+    val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
+    var isNavigating by remember { mutableStateOf(false) }
+    Button(
+        onClick = {
+            characterViewModel.insertCharacter(newCharacter)
+            isNavigating = true
+        }
+    ) {
+        Text("Insertar y navegar")
+    }
 
-@OptIn(ExperimentalMaterial3Api::class)
+    // Utiliza LaunchedEffect para esperar a que selectedCharacter se actualice
+    LaunchedEffect(isNavigating, selectedCharacter) {
+        // Aseguramos que solo se navega cuando isNavigating es true y selectedCharacter tiene un valor válido. SI no lo hacemos, no nos dejará volver atrás.
+        if (isNavigating && selectedCharacter?.id != null) {
+            selectedCharacter?.id?.let { idNewCharacter ->
+                // Ahora que selectedCharacter tiene una id válida, navegamos
+                println("ID del último personaje insertado: $idNewCharacter")
+                navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(idNewCharacter))
+                isNavigating = false // Después de la navegación, desactivamos el flag
+            }
+        }
+    }
+}
+
+
+
 @Composable
 fun CharacterCreatorForm(
     characterViewModel: CharacterViewModel,
 ){
     var selectedCharacter by remember { mutableStateOf(characterViewModel.selectedCharacter.value) }
+
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var rolClass by remember { mutableStateOf(RolClass.NINGUNA) }
@@ -125,12 +150,6 @@ fun CharacterCreatorForm(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-
-        // Mensaje de alerta
-        Text("Los datos introducidos se utilizará para calcular automáticamente tus stats (fuerza, inteligencia, tamaño, etc.  " +
-                "Más adelante podrás modificarlos manualmente" +
-                "Cualquier información adicional, siempre puedes incluirla en la DESCRIPCIÓN." )
-
 
         // Nombre y edad
         Row(
@@ -164,8 +183,6 @@ fun CharacterCreatorForm(
             onValueChange = { description = it },
             label = { Text("Description") }
         )
-
-
 
         // Altura y peso
         Row(
@@ -240,28 +257,7 @@ fun CharacterCreatorForm(
 }
 
 
-@Composable
-fun InsertCharacterButton(
-    newCharacter: RolCharacter,
-    characterViewModel : CharacterViewModel,
-){
-    // Utilizamos nuestro viewMOdel de navegación para navegar sin tener que estás pasando navegador como parámetro
-    val navigationViewModel = LocalNavigationViewModel.current
-    val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
 
-    Button(onClick = {
-        characterViewModel.insertCharacter(newCharacter)
-
-
-        // Espera a que se haya actualizado selectedCharacter
-        selectedCharacter?.id?.let { idNewCharacter ->
-            println("ID del último personaje insertado: $idNewCharacter")
-            navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(idNewCharacter))
-        }
-    }) {
-        Text("Insertar y navegar")
-    }
-}
 
 
 

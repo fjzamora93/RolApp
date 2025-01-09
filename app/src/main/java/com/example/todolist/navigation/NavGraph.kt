@@ -12,6 +12,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todolist.ui.character.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
+import com.example.todolist.ui.main.MainScreen
+
 @Composable
 fun NavGraph(
     navController: NavHostController
@@ -51,11 +53,17 @@ fun NavGraph(
         // Aquí va el NavHost, donde defines las rutas de las pantallas
         NavHost(
             navController = navController,
-            startDestination = ScreensRoutes.CharacterCreatorScreen.route
+            startDestination = ScreensRoutes.MainScreen.route
         ) {
+
+            // Pantalla de inicio
+            composable(ScreensRoutes.MainScreen.route) {
+                MainScreen()
+            }
+
             // Pantalla de creación del personaje
             composable(ScreensRoutes.CharacterCreatorScreen.route) {
-                CharacterCreatorScreen() // Ya no necesitas pasarle el NavigationViewModel
+                CharacterCreatorScreen()
             }
 
             // Pantalla de detalle del personaje
