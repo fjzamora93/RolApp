@@ -28,6 +28,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -108,7 +109,6 @@ fun CharacterCreatorForm(
     characterViewModel: CharacterViewModel,
 ){
     var selectedCharacter by remember { mutableStateOf(characterViewModel.selectedCharacter.value) }
-
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var rolClass by remember { mutableStateOf(RolClass.NINGUNA) }
@@ -117,7 +117,6 @@ fun CharacterCreatorForm(
     var weight by remember { mutableStateOf(Range.MEDIO) }
     var age by remember { mutableStateOf(18) }
     var selectedItems by remember { mutableStateOf<List<Item>>(emptyList()) }
-    var selectedWeight by remember { mutableStateOf(Range.BAJO) }
 
     Column(
         modifier = Modifier
@@ -248,14 +247,17 @@ fun InsertCharacterButton(
 ){
     // Utilizamos nuestro viewMOdel de navegación para navegar sin tener que estás pasando navegador como parámetro
     val navigationViewModel = LocalNavigationViewModel.current
+    val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
 
     Button(onClick = {
         characterViewModel.insertCharacter(newCharacter)
-        var idNewCharacter = characterViewModel.characters.value.lastOrNull()?.id ?: 0
-        println("ID del último personaje insertado: $idNewCharacter")
-        navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(
-            idNewCharacter
-        ))
+
+
+        // Espera a que se haya actualizado selectedCharacter
+        selectedCharacter?.id?.let { idNewCharacter ->
+            println("ID del último personaje insertado: $idNewCharacter")
+            navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(idNewCharacter))
+        }
     }) {
         Text("Insertar y navegar")
     }

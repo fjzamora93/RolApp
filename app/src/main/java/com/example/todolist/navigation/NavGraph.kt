@@ -20,17 +20,29 @@ fun NavGraph(
     val navigationViewModel: NavigationViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 
     CompositionLocalProvider(LocalNavigationViewModel provides navigationViewModel) {
-        // Observa los eventos de navegación
+        // Declaramos el objeto que va a ser observado
         val navigationEvent by navigationViewModel.navigationEvent.observeAsState()
 
-        // Este LaunchedEffect se ejecutará cuando haya un nuevo evento de navegación
+        // Este LaunchedEffect es un OBSERVADOR que se disparará ante cualquier evento de navegación
         LaunchedEffect(navigationEvent) {
             println("Navegando a la ruta: $navigationEvent")
-            navigationEvent?.let { route ->
-                navController.navigate(route) {
-                    popUpTo(navController.graph.startDestinationId) { saveState = true }
-                    launchSingleTop = true
-                    restoreState = true
+            navigationEvent?.let { event ->
+                when (event) {
+                    is NavigationEvent.Navigate -> {
+                        navController.navigate(event.route) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                    is NavigationEvent.NavigateAndPopUp -> {
+                        navController.navigate(event.route) {
+                            popUpTo(event.popUpToRoute) {
+                                inclusive = event.inclusive
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 }
                 navigationViewModel.clearNavigationEvent()
             }
@@ -39,7 +51,7 @@ fun NavGraph(
         // Aquí va el NavHost, donde defines las rutas de las pantallas
         NavHost(
             navController = navController,
-            startDestination = ScreensRoutes.CharacterCreatorScreen.route // Pantalla inicial
+            startDestination = ScreensRoutes.CharacterCreatorScreen.route
         ) {
             // Pantalla de creación del personaje
             composable(ScreensRoutes.CharacterCreatorScreen.route) {

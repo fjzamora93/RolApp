@@ -36,7 +36,11 @@ fun CharacterDetailScreen(
         )
         Button(onClick = {
             // Método para volver atrás
-            navigationViewModel.navigate(ScreensRoutes.CharacterCreatorScreen.route)
+            navigationViewModel.navigateAndPopUp(
+                ScreensRoutes.CharacterCreatorScreen.route,
+                ScreensRoutes.CharacterDetailScreen.route,
+                true
+            )
 
         }) {
             Text(text = "Back to Character Screen")

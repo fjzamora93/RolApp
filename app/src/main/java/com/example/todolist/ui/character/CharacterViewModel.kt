@@ -8,6 +8,8 @@ import com.example.todolist.data.local.model.RolCharacter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.State
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.todolist.data.local.model.Item
 import javax.inject.Inject
 
@@ -20,8 +22,8 @@ class CharacterViewModel @Inject constructor(
     private val _characters = mutableStateOf<List<RolCharacter>>(emptyList())
     val characters: State<List<RolCharacter>> get() = _characters
 
-    private val _selectedCharacter = mutableStateOf<RolCharacter?>(null)
-    val selectedCharacter: State<RolCharacter?> get() = _selectedCharacter
+    private val _selectedCharacter = MutableLiveData<RolCharacter?>()
+    val selectedCharacter: LiveData<RolCharacter?> = _selectedCharacter
 
 
     init {
@@ -54,18 +56,18 @@ class CharacterViewModel @Inject constructor(
     }
 
     // Función para insertar un nuevo personaje
-    // Función para insertar un nuevo personaje
     fun insertCharacter(rolCharacter: RolCharacter) {
         viewModelScope.launch {
             // Completar el personaje (por ejemplo, asignar valores predeterminados)
             rolCharacter.completeCharacter()
             characterRepository.insertCharacter(rolCharacter)
-            println("Personaje insertado: $rolCharacter")
 
             // Fetch the updated list of characters
             val updatedCharacters = characterRepository.getAllCharacters()
             _characters.value = updatedCharacters
 
+            _selectedCharacter.value = updatedCharacters.lastOrNull()
+            println("Personaje seleccionado dentro de CharacterViewModel: ${_selectedCharacter.value}")
         }
     }
 

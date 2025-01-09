@@ -7,20 +7,22 @@ import androidx.lifecycle.ViewModel
 
 class NavigationViewModel : ViewModel() {
 
-    val LocalNavigationViewModel = compositionLocalOf<NavigationViewModel> {
-        error("NavigationViewModel no está disponible")
-    }
-
-    private val _navigationEvent = MutableLiveData<String?>()
-    val navigationEvent: LiveData<String?> = _navigationEvent
+    private val _navigationEvent = MutableLiveData<NavigationEvent?>()
+    val navigationEvent: LiveData<NavigationEvent?> = _navigationEvent
 
     fun navigate(route: String) {
-        _navigationEvent.value = route
+        _navigationEvent.value = NavigationEvent.Navigate(route)
     }
 
-
+    fun navigateAndPopUp(route: String, popUpToRoute: String, inclusive: Boolean) {
+        _navigationEvent.value = NavigationEvent.NavigateAndPopUp(route, popUpToRoute, inclusive)
+    }
 
     fun clearNavigationEvent() {
         _navigationEvent.value = null
     }
+
+
 }
+
+
