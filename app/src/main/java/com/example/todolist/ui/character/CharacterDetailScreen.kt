@@ -66,13 +66,16 @@ fun DetailCharacterBody(
     modifier: Modifier = Modifier
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
-
     // Si el personaje no está seleccionado, mostramos un texto vacío o de espera
     if (selectedCharacter == null) {
         Text("Cargando personaje...")
     } else {
+        var editableCharacter by remember { mutableStateOf(selectedCharacter!!) }
+
         LazyColumn(modifier = modifier.fillMaxWidth()) {
             item {
+                UpdateCharacterButton(editableCharacter)
+
                 // Aquí agregamos los campos del personaje dentro de la columna
                 CharacterTextField(label = "Nombre", value = selectedCharacter?.name ?: "")
                 CharacterTextField(label = "Descripción", value = selectedCharacter?.description ?: "")
@@ -82,21 +85,122 @@ fun DetailCharacterBody(
                 CharacterTextField(label = "Peso", value = selectedCharacter?.weight?.name ?: "")
                 CharacterTextField(label = "Edad", value = selectedCharacter?.age.toString())
 
-                CharacterNumberField(label = "Fuerza", initialValue = selectedCharacter?.strength ?: 0)
-                CharacterNumberField(label = "Destreza", initialValue = selectedCharacter?.dexterity ?: 0)
-                CharacterNumberField(label = "Constitución", initialValue = selectedCharacter?.constitution ?: 0)
-                CharacterNumberField(label = "Inteligencia", initialValue = selectedCharacter?.intelligence ?: 0)
-                CharacterNumberField(label = "Sabiduría", initialValue = selectedCharacter?.wisdom ?: 0)
-                CharacterNumberField(label = "Carisma", initialValue = selectedCharacter?.charisma ?: 0)
+                CharacterNumberField(
+                    label = "Fuerza",
+                    value = editableCharacter.strength,
+                    onValueChange = { editableCharacter = editableCharacter.copy(strength = it) }
+                )
+                CharacterNumberField(
+                    label = "Destreza",
+                    value = editableCharacter.dexterity,
+                    onValueChange = { editableCharacter = editableCharacter.copy(dexterity = it) }
+                )
+                CharacterNumberField(
+                    label = "Constitución",
+                    value = editableCharacter.constitution,
+                    onValueChange = { editableCharacter = editableCharacter.copy(constitution = it) }
+                )
+                CharacterNumberField(
+                    label = "Inteligencia",
+                    value = editableCharacter.intelligence,
+                    onValueChange = { editableCharacter = editableCharacter.copy(intelligence = it) }
+                )
+                CharacterNumberField(
+                    label = "Sabiduría",
+                    value = editableCharacter.wisdom,
+                    onValueChange = { editableCharacter = editableCharacter.copy(wisdom = it) }
+                )
+                CharacterNumberField(
+                    label = "Carisma",
+                    value = editableCharacter.charisma,
+                    onValueChange = { editableCharacter = editableCharacter.copy(charisma = it) }
+                )
 
-                CharacterNumberField(label = "Poder", initialValue = selectedCharacter?.power ?: 0)
-                CharacterNumberField(label = "Tamaño", initialValue = selectedCharacter?.size ?: 0)
-                CharacterNumberField(label = "Cordura", initialValue = selectedCharacter?.sanity ?: 0)
-                CharacterNumberField(label = "HP", initialValue = selectedCharacter?.hp ?: 0)
-                CharacterNumberField(label = "AP", initialValue = selectedCharacter?.ap ?: 0)
-                CharacterNumberField(label = "Nivel", initialValue = selectedCharacter?.level ?: 1)
+                CharacterNumberField(
+                    label = "Poder",
+                    value = editableCharacter.power,
+                    onValueChange = { editableCharacter = editableCharacter.copy(power = it) }
+                )
+                CharacterNumberField(
+                    label = "Tamaño",
+                    value = editableCharacter.size,
+                    onValueChange = { editableCharacter = editableCharacter.copy(size = it) }
+                )
+                CharacterNumberField(
+                    label = "Cordura",
+                    value = editableCharacter.sanity,
+                    onValueChange = { editableCharacter = editableCharacter.copy(sanity = it) }
+                )
+                CharacterNumberField(
+                    label = "HP",
+                    value = editableCharacter.hp,
+                    onValueChange = { editableCharacter = editableCharacter.copy(hp = it) }
+                )
+                CharacterNumberField(
+                    label = "AP",
+                    value = editableCharacter.ap,
+                    onValueChange = { editableCharacter = editableCharacter.copy(ap = it) }
+                )
+                CharacterNumberField(
+                    label = "Nivel",
+                    value = editableCharacter.level,
+                    onValueChange = { editableCharacter = editableCharacter.copy(level = it) }
+                )
+
             }
         }
+    }
+}
+
+
+
+
+@Composable
+fun CharacterNumberField(
+    label: String,
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var localValue by remember { mutableStateOf(value) }
+    Column(modifier = modifier.padding(4.dp)) {
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = label, style = MaterialTheme.typography.titleMedium)
+            IconButton(onClick = {
+                localValue -= 1
+                onValueChange(localValue)
+            }) {
+                Icon(imageVector = Icons.Default.Remove, contentDescription = "Decrement")
+            }
+            Text(text = localValue.toString(), style = MaterialTheme.typography.bodyMedium)
+            IconButton(onClick = {
+                localValue += 1
+                onValueChange(localValue)
+            }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Increment")
+            }
+        }
+    }
+}
+
+@Composable
+fun UpdateCharacterButton(
+    updatedCharacter: RolCharacter
+){
+    val navigationViewModel = LocalNavigationViewModel.current
+    val characterViewModel: CharacterViewModel = hiltViewModel()
+
+    Button(
+        onClick = {
+            println("Personaje a actualizar: ${updatedCharacter}")
+            characterViewModel.updateCharacter(updatedCharacter)
+            navigationViewModel.navigate(ScreensRoutes.CharacterListScreen.route)
+        }
+    ){
+        Text("Actualizar")
     }
 }
 
@@ -105,42 +209,7 @@ fun CharacterTextField(label: String, value: String, modifier: Modifier = Modifi
     Column(modifier = modifier.padding(8.dp)) {
         Text(text = label, style = MaterialTheme.typography.titleLarge)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = value, style = MaterialTheme.typography.labelSmall)
+        Text(text = value, style = MaterialTheme.typography.bodyMedium)
     }
 }
-
-@Composable
-fun CharacterNumberField(
-    label: String,
-    initialValue: Int,
-    modifier: Modifier = Modifier
-) {
-    var value by remember { mutableStateOf(initialValue) }
-
-    Column(modifier = modifier.padding(8.dp)) {
-        Text(text = label, style = MaterialTheme.typography.titleLarge)
-        Spacer(modifier = Modifier.height(4.dp))
-        Row(
-            modifier = modifier.padding(8.dp)
-        ){
-            IconButton(
-                onClick = { value -= 1 }
-            ) {
-                Icon(imageVector = Icons.Default.Remove, contentDescription = "Decrement")
-            }
-
-            Text(text = value.toString(), style = MaterialTheme.typography.labelMedium)
-
-            IconButton(
-                onClick = { value += 1 }
-            ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Increment")
-            }
-        }
-    }
-}
-
-
-
-
 
