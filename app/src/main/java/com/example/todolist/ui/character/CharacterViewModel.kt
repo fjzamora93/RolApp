@@ -31,15 +31,6 @@ class CharacterViewModel @Inject constructor(
         getAllCharacters()
     }
 
-    // Función para obtener todos los personajes
-    fun getAllCharacters() {
-        viewModelScope.launch {
-            val charactersList = characterRepository.getAllCharacters() // Obtén la lista de personajes
-            _characters.value = charactersList // Actualiza el estado con la lista obtenida
-            println("Todos los personajes: $charactersList") // Para depurar
-        }
-    }
-
     // Función para obtener un personaje por ID
     fun getCharacterById(characterId: Int) {
         viewModelScope.launch {
@@ -49,6 +40,17 @@ class CharacterViewModel @Inject constructor(
             println("Personaje encontrado: $_selectedCharacter.value")
         }
     }
+
+    // Función para obtener todos los personajes
+    fun getAllCharacters() {
+        viewModelScope.launch {
+            val charactersList = characterRepository.getAllCharacters() // Obtén la lista de personajes
+            _characters.value = charactersList // Actualiza el estado con la lista obtenida
+            println("Todos los personajes: $charactersList") // Para depurar
+        }
+    }
+
+
 
     // TODO: Retorna una lista de objetos
     fun getItems(): List<Item>  {
