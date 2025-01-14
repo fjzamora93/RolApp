@@ -17,6 +17,8 @@ import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.Body
 import com.example.todolist.ui.character.CharacterCreatorForm
 import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.screens.components.CharacterCreatorButton
+import com.example.todolist.ui.screens.components.CharacterListButton
 import com.example.todolist.ui.screens.components.Footer
 import com.example.todolist.ui.screens.components.Header
 
@@ -34,12 +36,8 @@ fun MainScreen(){
             .padding(16.dp)){
         Header(Modifier.fillMaxWidth())
 
-        Button(onClick = {
-
-            navigationViewModel.navigate(ScreensRoutes.CharacterCreatorScreen.route)
-        }) {
-            Text("Crear nuevo personaje")
-        }
+        CharacterCreatorButton()
+        CharacterListButton()
 
         Footer(Modifier.fillMaxWidth())
     }

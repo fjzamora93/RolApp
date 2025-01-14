@@ -47,6 +47,7 @@ import com.example.todolist.data.local.model.RolClass
 import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
+import com.example.todolist.ui.screens.components.BackButton
 
 // Importación de otros componentes
 import com.example.todolist.ui.screens.components.Footer
@@ -70,10 +71,6 @@ fun CharacterCreatorScreen(
                 .weight(1f) // ocupar todo el espacio disponible
         )
 
-        CharacterCreatorForm(
-            characterViewModel = characterViewModel,
-        )
-
         Footer(Modifier.fillMaxWidth())
         }
     }
@@ -85,13 +82,10 @@ fun Body(
     modifier:Modifier
 ){
     Column(modifier = modifier.fillMaxWidth()){
-        CharacterDetailSample(characterViewModel = characterViewModel)
-        //CharacterCreatorForm()
-
-        CharacterList(
+        CharacterCreatorForm(
             characterViewModel = characterViewModel,
-            Modifier.align(Alignment.CenterHorizontally)
         )
+
     }
 }
 
@@ -103,6 +97,7 @@ fun InsertCharacterButton(
     val navigationViewModel = LocalNavigationViewModel.current
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
     var isNavigating by remember { mutableStateOf(false) }
+    BackButton()
     Button(
         onClick = {
             characterViewModel.insertCharacter(newCharacter)
@@ -321,57 +316,52 @@ fun CharacterDetailSample(characterViewModel: CharacterViewModel){
 
 
 
-
-// LISTA DE PERSONAJES -> NO UTILIZAR DE MOMENTO
-@Composable
-fun CharacterList(
-    characterViewModel: CharacterViewModel,
-    modifier: Modifier
-) {
-    val scrollState = rememberScrollState()
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(scrollState) // Habilita el scroll
-    ) {
-        HorizontalDivider(
-            Modifier
-                .background(Color(0xFFEEEEEE))
-                .height(1.dp)
-                .fillMaxWidth()
-        )
-
-        // Mostrar los personajes
-        val characters = characterViewModel.characters.value
-        characters?.let {
-            it.forEach { character ->
-                Text(text = "Name: ${character.name}")
-                Text(text = "Description: ${character.description}")
-                Spacer(modifier = Modifier.height(8.dp)) // Espaciado entre elementos
-
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ){
-                    // Botón para eliminar
-                    Button(onClick = {
-                        characterViewModel.deleteCharacter(character)
-                    }) {
-                        Text("Delete")
-                    }
-
-                    // Botón ver detalles
-                    Button(onClick = {
-                        characterViewModel.getCharacterById(character.id)
-                    }) {
-                        Text("Ver detalles")
-                    }
-                }
-
-            }
-        }
-    }
-}
-
+//
+//// LISTA DE PERSONAJES -> NO UTILIZAR DE MOMENTO
+//@Composable
+//fun CharacterList(
+//    characterViewModel: CharacterViewModel,
+//    modifier: Modifier
+//) {
+//    val scrollState = rememberScrollState()
+//    val navigationViewModel = LocalNavigationViewModel.current
+//
+//    Column(
+//        horizontalAlignment = Alignment.CenterHorizontally,
+//        modifier = Modifier
+//            .padding(16.dp)
+//            .verticalScroll(scrollState) // Habilita el scroll
+//    ) {
+//
+//        // Mostrar los personajes
+//        val characters = characterViewModel.characters.value
+//        characters?.let {
+//            it.forEach { character ->
+//                Text(text = "Name: ${character.name}")
+//                Text(text = "Description: ${character.description}")
+//                Spacer(modifier = Modifier.height(8.dp)) // Espaciado entre elementos
+//
+//                Row(
+//                    modifier = Modifier.padding(16.dp),
+//                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+//                ){
+//                    // Botón para eliminar
+//                    Button(onClick = {
+//                        characterViewModel.deleteCharacter(character)
+//                    }) {
+//                        Text("Delete")
+//                    }
+//
+//                    // Botón ver detalles
+//                    Button(onClick = {
+//                        navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(character.id))
+//                    }) {
+//                        Text("Ver detalles")
+//                    }
+//                }
+//
+//            }
+//        }
+//    }
+//}
+//

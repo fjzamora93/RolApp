@@ -46,7 +46,6 @@ class CharacterViewModel @Inject constructor(
         viewModelScope.launch {
             val charactersList = characterRepository.getAllCharacters() // Obtén la lista de personajes
             _characters.value = charactersList // Actualiza el estado con la lista obtenida
-            println("Todos los personajes: $charactersList") // Para depurar
         }
     }
 

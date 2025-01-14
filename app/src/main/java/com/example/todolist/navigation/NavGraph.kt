@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todolist.ui.character.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
+import com.example.todolist.ui.character.CharacterListScreen
 import com.example.todolist.ui.main.MainScreen
 
 @Composable
@@ -27,7 +28,7 @@ fun NavGraph(
 
         // Este LaunchedEffect es un OBSERVADOR que se disparará ante cualquier evento de navegación
         LaunchedEffect(navigationEvent) {
-            println("Navegando a la ruta: $navigationEvent")
+            //println("Navegando a la ruta: $navigationEvent")
             navigationEvent?.let { event ->
                 when (event) {
                     is NavigationEvent.Navigate -> {
@@ -64,6 +65,10 @@ fun NavGraph(
             // Pantalla de creación del personaje
             composable(ScreensRoutes.CharacterCreatorScreen.route) {
                 CharacterCreatorScreen()
+            }
+
+            composable(ScreensRoutes.CharacterListScreen.route) {
+                CharacterListScreen()
             }
 
             // Pantalla de detalle del personaje

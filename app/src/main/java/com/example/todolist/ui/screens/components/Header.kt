@@ -21,12 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.navigation.NavigationViewModel
+import com.example.todolist.navigation.ScreensRoutes
 
 @Composable
 fun Header(modifier: Modifier = Modifier) {
     val activity = LocalContext.current as Activity
     val drawerState = rememberDrawerState(DrawerValue.Closed) // Controlamos el estado del Drawer
     val scope = rememberCoroutineScope() // Usamos la coroutine para manejar el Drawer
+    val navigationViewModel = LocalNavigationViewModel.current
 
     Row(
         modifier = modifier
@@ -39,7 +43,7 @@ fun Header(modifier: Modifier = Modifier) {
             imageVector = Icons.Default.Menu,
             contentDescription = "open menu",
             modifier = Modifier
-                .clickable { onClickMenu() }
+                .clickable { onClickMenu(navigationViewModel) }
         )
 
         // Cerrar la aplicación
@@ -60,6 +64,6 @@ fun Header(modifier: Modifier = Modifier) {
 }
 
 // Esto debería abrir una nueva Activity que tenga el menú
-fun onClickMenu(){
-    println("Abriendo menú")
+fun onClickMenu(navigationViewModel: NavigationViewModel){
+    navigationViewModel.navigate(ScreensRoutes.MainScreen.route)
 }
