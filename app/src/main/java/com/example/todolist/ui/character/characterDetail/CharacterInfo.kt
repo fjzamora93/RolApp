@@ -71,7 +71,7 @@ fun CharacterTextField(
         }
     } else {
         Column(modifier = modifier.padding(8.dp)) {
-            Text(text = label, style = MaterialTheme.typography.titleLarge)
+            Text(text = label, style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
             Row(
                 verticalAlignment = Alignment.CenterVertically

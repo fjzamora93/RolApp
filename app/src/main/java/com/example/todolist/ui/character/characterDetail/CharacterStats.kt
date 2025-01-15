@@ -25,9 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import com.example.todolist.data.local.model.RolCharacter
+import com.example.todolist.ui.screens.components.MinusButton
+import com.example.todolist.ui.screens.components.PlusButton
+import com.example.todolist.util.MedievalColours
 
 
 @Composable
@@ -44,7 +49,7 @@ fun StatSection(
 
     CharacterBar(
         label = "AP",
-        color = Color(0xFFADD8E6),
+        color = MedievalColours.blueGradient,
         maxValue = editableCharacter.ap,
         localValue = editableCharacter.currentAp,
         onValueChanged = { onCharacterChange(editableCharacter.copy(currentAp = it)) }
@@ -93,26 +98,27 @@ fun CharacterNumberField(
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var localValue by remember { mutableStateOf(value) }
-    Column(modifier = modifier.padding(4.dp)) {
+    Column(modifier = modifier.padding(8.dp)) {
         Row(
             modifier = modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = label, style = MaterialTheme.typography.titleMedium)
-            IconButton(onClick = {
-                localValue -= 1
-                onValueChange(localValue)
-            }) {
-                Icon(imageVector = Icons.Default.Remove, contentDescription = "Decrement")
-            }
-            Text(text = localValue.toString(), style = MaterialTheme.typography.bodyMedium)
-            IconButton(onClick = {
-                localValue += 1
-                onValueChange(localValue)
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Increment")
-            }
+            Text(text = label, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(end = 16.dp))
+            MinusButton(
+                localValue= value,
+                onValueChanged = onValueChange,
+                style = "Square"
+            )
+
+            Text(text = value.toString(), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(horizontal = 18.dp))
+
+            PlusButton(
+                localValue= value,
+                onValueChanged = onValueChange,
+                style = "Square"
+            )
+
+
         }
     }
 }
@@ -121,7 +127,7 @@ fun CharacterNumberField(
 @Composable
 fun CharacterBar(
     label: String = "",
-    color: Color = Color.Green,
+    color: Brush = MedievalColours.greenGradient,
     maxValue: Int = 20,
     localValue: Int = 10,
     onValueChanged: (Int) -> Unit
@@ -141,19 +147,16 @@ fun CharacterBar(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ){
-        Text(text = "$label: $localValue/$maxValue", style = MaterialTheme.typography.titleMedium)
+        Text(text = "$label: $localValue/$maxValue", style = MaterialTheme.typography.bodyMedium)
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = {
-                if (localValue > 0) {
-                    onValueChanged(localValue - 1)
-                }
-            }) {
-                Icon(imageVector = Icons.Default.Remove, contentDescription = "Decrement")
-            }
+            MinusButton(
+                localValue= localValue,
+                onValueChanged = onValueChanged,
+            )
 
             // Barra de progreso
             Box(
@@ -170,15 +173,11 @@ fun CharacterBar(
                         .background(color, shape = RoundedCornerShape(8.dp))
                 )
             }
-
-            IconButton(onClick = {
-                println("Valor actual: $localValue - Valor máximo: $maxValue")
-                if (localValue < maxValue) {
-                    onValueChanged(localValue + 1)
-                }
-            }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Increment")
-            }
+            PlusButton(
+                localValue= localValue,
+                maxValue = maxValue,
+                onValueChanged = onValueChanged,
+            )
         }
     }
 

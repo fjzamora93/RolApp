@@ -56,7 +56,6 @@ fun CharacterDetailScreen(
                 .weight(1f) // ocupar todo el espacio disponible
         )
         BackButton()
-        Footer(Modifier.fillMaxWidth())
     }
 }
 
