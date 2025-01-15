@@ -43,7 +43,7 @@ data class RolCharacter(
     var speed: Range = Range.MEDIO, // calculada a partir de Strength, Size y Dexterity
     var hp: Int = 10, // calculada a partir de Constitution y size
     var currentHp: Int = hp,
-    var ap: Int = 0, // calculada a partir de inteligencia, sabiduría o pow
+    var ap: Int = 1, // calculada a partir de inteligencia, sabiduría o pow
     var currentAp: Int = ap,
     var level: Int = 1,
 
@@ -156,6 +156,8 @@ data class RolCharacter(
         // PUntos de vida es la media entre tamaño y constitución
         this.size = (this.height.value  + this.weight.value) * 2 - 2 // El tamaño toma un valor entre 2 y 18.
         this.hp = (this.size + this.constitution) / 2
+
+        this.ap = this.intelligence + this.wisdom / 2
     }
 
 

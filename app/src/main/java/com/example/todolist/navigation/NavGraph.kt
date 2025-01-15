@@ -10,7 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.todolist.ui.character.CharacterDetailScreen
+import com.example.todolist.ui.character.characterDetail.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
 import com.example.todolist.ui.character.CharacterListScreen
 import com.example.todolist.ui.main.MainScreen

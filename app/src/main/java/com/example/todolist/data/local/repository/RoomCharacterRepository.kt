@@ -20,6 +20,7 @@ class CharacterRepositoryImpl (
     }
 
     override suspend fun updateCharacter(character: RolCharacter) {
+        character.calculateHp()
         characterDao.updateCharacter(character)
     }
 
