@@ -13,6 +13,7 @@ import androidx.navigation.navArgument
 import com.example.todolist.ui.character.characterDetail.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
 import com.example.todolist.ui.character.CharacterListScreen
+import com.example.todolist.ui.items.ItemListScreen
 import com.example.todolist.ui.main.MainScreen
 
 @Composable
@@ -69,6 +70,10 @@ fun NavGraph(
 
             composable(ScreensRoutes.CharacterListScreen.route) {
                 CharacterListScreen()
+            }
+
+            composable(ScreensRoutes.ItemListScreen.route) {
+                ItemListScreen()
             }
 
             // Pantalla de detalle del personaje

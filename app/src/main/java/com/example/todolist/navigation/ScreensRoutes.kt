@@ -8,13 +8,9 @@ sealed class ScreensRoutes(val route: String) {
         fun createRoute(characterId: Int) = "CharacterDetailScreen/$characterId"
     }
 
-
-
-
-
-    // TASKS, ANTIGUO
-    object TaskListScreen: ScreensRoutes("TaskListScreen")
-    object TaskDetailScreen : ScreensRoutes("TaskDetailScreen/{taskId}") {
-        fun createRoute(taskId: Int) = "TaskDetailScreen/$taskId"
+    // ITEMS
+    object ItemListScreen: ScreensRoutes("ItemListScreen")
+    object ItemDetailScreen : ScreensRoutes("ItemDetailScreen/{itemId}") {
+        fun createRoute(itemId: Int) = "ItemDetailScreen/$itemId"
     }
 }

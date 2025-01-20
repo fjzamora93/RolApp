@@ -51,12 +51,6 @@ class CharacterViewModel @Inject constructor(
 
 
 
-    // TODO: Retorna una lista de objetos
-    fun getItems(): List<Item>  {
-        println("Buscando objetos")
-        return emptyList()
-    }
-
     // Función para insertar un nuevo personaje
     fun insertCharacter(rolCharacter: RolCharacter) {
         viewModelScope.launch {

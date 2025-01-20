@@ -25,6 +25,7 @@ import com.example.todolist.ui.screens.components.CharacterCreatorButton
 import com.example.todolist.ui.screens.components.CharacterListButton
 import com.example.todolist.ui.screens.components.Footer
 import com.example.todolist.ui.screens.components.Header
+import com.example.todolist.ui.screens.components.ItemListButton
 
 @Composable
 fun MainScreen(){
@@ -54,6 +55,7 @@ fun MainScreenBody(modifier: Modifier = Modifier){
     Spacer(modifier = Modifier.height(26.dp))
     CharacterCreatorButton()
     CharacterListButton()
+    ItemListButton()
     Spacer(modifier = Modifier.height(26.dp))
 
 }
