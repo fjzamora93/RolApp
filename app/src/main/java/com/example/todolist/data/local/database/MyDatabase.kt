@@ -8,7 +8,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.Skill
-import com.example.todolist.data.local.model.Task
 
 @Database(entities = [RolCharacter::class, Skill::class, Item::class], version = 6)
 abstract class MyDatabase: RoomDatabase() {

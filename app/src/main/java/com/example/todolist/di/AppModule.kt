@@ -2,11 +2,10 @@ package com.example.todolist.di
 
 import android.app.Application
 import androidx.room.Room
-import com.example.todolist.data.local.database.ItemApiService
+import com.example.todolist.data.remote.database.ItemApiService
 import com.example.todolist.data.local.database.MyDatabase
-import com.example.todolist.data.local.repository.CharacterRepositoryImpl
+import com.example.todolist.data.local.repository.LocalCharacterRepository
 import com.example.todolist.domain.repository.CharacterRepository
-import com.example.todolist.domain.repository.TaskRepository
 import com.example.todolist.util.Constants.MY_DATA_BASE
 import dagger.Module
 import dagger.Provides
@@ -43,7 +42,7 @@ object  AppModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl("https://tu-api.com/")
+            .baseUrl("https://api.open5e.com/v2/")
             .client(client)  // Pasa el cliente configurado
             .addConverterFactory(GsonConverterFactory.create())  // Usa el convertidor de Gson
             .build()
@@ -71,7 +70,7 @@ object  AppModule {
     @Provides
     @Singleton
     fun provideCharacterRepository(database: MyDatabase): CharacterRepository {
-        return CharacterRepositoryImpl(database.characterDao())
+        return LocalCharacterRepository(database.characterDao())
     }
 
 

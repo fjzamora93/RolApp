@@ -4,7 +4,12 @@ import com.example.todolist.data.local.database.CharacterDao
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.domain.repository.CharacterRepository
 
-class CharacterRepositoryImpl (
+
+/**
+ * LAS CLASES DE ESTE REPOSITORIO DEBEN IMPLEMENTAR LA INTERFAZ DEL REPOSITORIO domain.repository.CharacterRepository
+ *
+ * */
+class LocalCharacterRepository (
     private val characterDao: CharacterDao
 ) : CharacterRepository {
     override suspend fun getAllCharacters(): List<RolCharacter> {

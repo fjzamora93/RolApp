@@ -2,7 +2,7 @@ package com.example.todolist.ui.items
 
 import androidx.lifecycle.ViewModel
 import com.example.todolist.data.local.model.Item
-import com.example.todolist.data.local.repository.RemoteItemRepository
+import com.example.todolist.data.remote.repository.RemoteItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
-package com.example.todolist.data.local.database
+package com.example.todolist.data.remote.database
 
 import com.example.todolist.data.local.model.Item
-import com.example.todolist.data.local.model.ItemResponse
+import com.example.todolist.data.remote.model.ItemResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
