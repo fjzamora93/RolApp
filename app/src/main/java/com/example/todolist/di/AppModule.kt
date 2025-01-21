@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.todolist.data.remote.database.ItemApiService
 import com.example.todolist.data.local.database.MyDatabase
 import com.example.todolist.data.local.repository.LocalCharacterRepository
+import com.example.todolist.data.remote.database.ApiService
 import com.example.todolist.domain.repository.CharacterRepository
 import com.example.todolist.util.Constants.MY_DATA_BASE
 import dagger.Module
@@ -49,6 +50,13 @@ object  AppModule {
     }
 
     /** INSTANCIA ÚNICA DEL SERVICIO API */
+    @Provides
+    @Singleton
+    fun provideApiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
+    }
+
+
     @Provides
     @Singleton
     fun provideItemApiService(retrofit: Retrofit): ItemApiService {
