@@ -16,30 +16,30 @@ class RemoteItemRepository @Inject constructor(
     private val apiService: ApiService
 ) {
 
-    fun fetchItems(
-        filter: String,
-        onSuccess: (List<Item>) -> Unit,
-        onError: () -> Unit
-    ) {
-        CoroutineScope(Dispatchers.IO).launch {
+    suspend fun fetchItems(filter: String): Result<List<Item>> {
+        return try {
             // Llamamos a la API para obtener los items
-            val call = apiService.getItems() // Si necesitas paginación, pasa un parámetro `page`
-            val apiResponse = call.body() // Aquí recibimos ApiResponse
+            val response = apiService.getItems()
 
-            println("Realizando búsqueda con filtro dentro del REpositorio: $apiResponse y $filter")
+            if (response.isSuccessful) {
+                val apiResponse = response.body()
+                val itemList: List<Item> = apiResponse?.results?.map { mapApiItemToLocal(it) } ?: emptyList()
 
-            withContext(Dispatchers.Main) {
-                if (call.isSuccessful && filter != "error") {
-                    // Extraemos la lista de items de ApiResponse
-                    val itemList: List<Item> = apiResponse?.results?.map { mapApiItemToLocal(it) } ?: emptyList()
-                    println("Items obtenidos: $itemList")
-                    onSuccess(itemList)
+                // Filtramos los resultados si es necesario
+                val filteredItems = if (filter.isNotEmpty()) {
+                    itemList.filter { it.name.contains(filter, ignoreCase = true) }
                 } else {
-                    // Si la respuesta no es exitosa o si hay un filtro de error, manejamos el error
-                    println("Error: ${call.errorBody()?.string()}")
-                    onError()
+                    itemList
                 }
+
+                Result.success(filteredItems)
+            } else {
+                // Manejamos errores HTTP
+                Result.failure(Exception("Error en la respuesta: ${response.code()}"))
             }
+        } catch (e: Exception) {
+            // Manejamos excepciones de red u otras
+            Result.failure(e)
         }
     }
 
