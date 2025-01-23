@@ -26,9 +26,12 @@ import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.CharacterDetailButton
+import com.example.todolist.ui.screens.components.MedievalDivider
+import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.Footer
 import com.example.todolist.ui.screens.layout.Header
 import com.example.todolist.ui.screens.layout.MainLayout
+import com.example.todolist.util.CustomType
 
 @Composable
 fun CharacterListScreen(
@@ -68,36 +71,35 @@ fun CharacterSummary(
     characterViewModel: CharacterViewModel = hiltViewModel(),
 
     ){
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFAF3E0)
+    RegularCard(){
+        Text(
+            text = "Name: ${character.name}",
+            style = CustomType.titleMedium
+
         )
-    ){
-            Column(){
-                Text(text = "Name: ${character.name}")
-                Text(text = "Description: ${character.description}")
-                Spacer(modifier = Modifier.height(8.dp))
 
-                Row(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ){
-                    // Botón para eliminar
-                    Button(onClick = {
-                        characterViewModel.deleteCharacter(character)
-                    }) {
-                        Text("Delete")
-                    }
+        Text(
+            text = "Description: ${character.description}",
+            style = CustomType.bodyMedium
+        )
 
-                    // Botón ver detalles
-                    CharacterDetailButton(idNewCharacter = character.id)
-                }
+        MedievalDivider()
+
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ){
+            // Botón para eliminar
+            Button(onClick = {
+                characterViewModel.deleteCharacter(character)
+            }) {
+                Text("Delete")
             }
+
+            // Botón ver detalles
+            CharacterDetailButton(idNewCharacter = character.id)
         }
+    }
+
 }
 

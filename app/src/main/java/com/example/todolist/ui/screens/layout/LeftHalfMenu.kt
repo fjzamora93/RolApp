@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Architecture
 import androidx.compose.material.icons.filled.EditOff
+import androidx.compose.material.icons.filled.FontDownload
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
@@ -81,6 +82,12 @@ fun LeftHalfDrawer(
                         text = "Creación personaje",
                         onClick = { navigationViewModel.navigate(ScreensRoutes.CharacterCreatorScreen.route) },
                         icon = Icons.Default.EditOff
+                    )
+
+                    MenuOption(
+                        text = "Tipografías y fuentes",
+                        onClick = { navigationViewModel.navigate(ScreensRoutes.FontTemplateScreen.route) },
+                        icon = Icons.Default.FontDownload
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))

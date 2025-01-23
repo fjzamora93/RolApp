@@ -1,7 +1,6 @@
 package com.example.todolist.util
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -10,32 +9,48 @@ import androidx.compose.ui.unit.sp
 import com.example.todolist.R
 
 // Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    ),
+val CustomType = Typography(
 
+    /** Título POR DEFECTO, sin nada especial */
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
+        fontSize = 25.sp,
         lineHeight = 28.sp,
-        letterSpacing = 0.sp
+        letterSpacing = 0.sp,
+        color = MedievalColours.LeatherAged
     ),
 
-    labelSmall = TextStyle(
+    /** Título MUY Medieval - Poco legible */
+    titleMedium = TextStyle(
+        fontFamily = FontFamily(Font(R.font.metamorphus)),
+        fontWeight = FontWeight.Bold, // Peso más grueso para resaltar
+        fontSize = 22.sp, // Un poco más grande que bodyMedium
+        lineHeight = 25.sp, // Altura de línea proporcionalmente mayor
+        letterSpacing = 0.15.sp,
+        color = MedievalColours.LeatherAged
+    ),
+
+    // TÍTULO PEQUEÑO MEDIEVAL - para destacar un texto
+    titleSmall = TextStyle(
+        fontFamily = FontFamily(Font(R.font.medievalsharp)),
+        fontWeight = FontWeight.Bold, // Peso más grueso para resaltar
+        fontSize = 20.sp, // Un poco más grande que bodyMedium
+        lineHeight = 28.sp, // Altura de línea proporcionalmente mayor
+        letterSpacing = 0.15.sp,
+        color = MedievalColours.LeatherAged
+    ),
+
+    // Body STANDAR - sin tipografías extrañas y sin colores extraño
+    bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp,
+        lineHeight = 22.sp,
         letterSpacing = 0.5.sp
     ),
 
-    // Letra normal para el texto
+    // TEXTO DE CUERPO MEDIEVAL - más legible que el titleMedium
     bodyMedium = TextStyle(
         fontFamily = FontFamily(Font(R.font.antiqua)),
         fontWeight = FontWeight.SemiBold, // Peso ligeramente más grueso para destacar
@@ -45,24 +60,28 @@ val Typography = Typography(
         color = MedievalColours.LeatherAged
     ),
 
-    // Letra para títulos pequeños
-    titleSmall = TextStyle(
-        fontFamily = FontFamily(Font(R.font.medievalsharp)),
-        fontWeight = FontWeight.Bold, // Peso más grueso para resaltar
-        fontSize = 20.sp, // Un poco más grande que bodyMedium
-        lineHeight = 28.sp, // Altura de línea proporcionalmente mayor
-        letterSpacing = 0.15.sp,
-        color = MedievalColours.LeatherAged
-),
-
-    titleMedium = TextStyle(
+    // Letra METAMORPHUS MUY Medieval- apta para Números y cifras (poco legible)
+    bodySmall = TextStyle(
         fontFamily = FontFamily(Font(R.font.cincel)),
-        fontWeight = FontWeight.Bold, // Peso más grueso para resaltar
-        fontSize = 25.sp, // Un poco más grande que bodyMedium
-        lineHeight = 28.sp, // Altura de línea proporcionalmente mayor
-        letterSpacing = 0.15.sp,
+        fontWeight = FontWeight.SemiBold, // Peso ligeramente más grueso para destacar
+        fontSize = 16.sp, // Tamaño mediano para lectura cómoda
+        lineHeight = 26.sp, // Altura de línea más espaciosa para claridad
+        letterSpacing = 0.25.sp, // Separación ligera entre letras
         color = MedievalColours.LeatherAged
-),
+    ),
+
+    // Footers y textos de menor importancia. NO tiene ningún estilo
+    labelMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
+    ),
+
+
+
+
 
 
 )

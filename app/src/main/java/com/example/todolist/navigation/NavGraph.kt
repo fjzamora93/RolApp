@@ -15,6 +15,7 @@ import com.example.todolist.ui.character.CharacterCreatorScreen
 import com.example.todolist.ui.character.CharacterListScreen
 import com.example.todolist.ui.items.ItemListScreen
 import com.example.todolist.ui.main.MainScreen
+import com.example.todolist.ui.screens.layout.FontsTemplateScreen
 
 @Composable
 fun NavGraph(
@@ -74,6 +75,10 @@ fun NavGraph(
 
             composable(ScreensRoutes.ItemListScreen.route) {
                 ItemListScreen()
+            }
+
+            composable(ScreensRoutes.FontTemplateScreen.route) {
+                FontsTemplateScreen()
             }
 
             // Pantalla de detalle del personaje

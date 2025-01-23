@@ -53,7 +53,7 @@ fun DefaultTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = CustomType,
         content = content
     )
 }

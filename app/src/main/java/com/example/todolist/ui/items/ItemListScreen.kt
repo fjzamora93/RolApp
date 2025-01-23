@@ -32,16 +32,16 @@ import com.example.todolist.data.local.model.Item
 import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
+import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.Footer
 import com.example.todolist.ui.screens.layout.Header
 import com.example.todolist.ui.screens.layout.MainLayout
+import com.example.todolist.util.CustomType
 
 @Composable
 fun ItemListScreen(){
     MainLayout(){
-        Column(Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+        Column(Modifier.fillMaxSize().padding(16.dp)
         ){
             BackButton()
             ItemListBody()
@@ -89,37 +89,26 @@ fun ItemSummary(
             containerColor = Color(0xFFFAF3E0)
         )
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-                .background(Color(0xFFFAF3E0)) // Fondo crema
-        ) {
+
+        RegularCard(){
             Text(
                 text = "Name: ${item.name}",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF8B4513) // Color marrón oscuro
-                )
+                style = CustomType.titleMedium
             )
             Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = "Range: ${item.range}",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    color = Color(0xFF8B4513)
-                )
+                style = CustomType.bodyMedium
             )
+
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = "Damage Dice: ${item.damageDice}",
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    color = Color(0xFF8B4513)
-                )
+                style = CustomType.bodyMedium
             )
-
         }
+
     }
 }
 

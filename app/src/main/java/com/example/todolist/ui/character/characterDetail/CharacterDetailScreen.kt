@@ -20,38 +20,33 @@ import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.items.ItemListBody
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.layout.Header
+import com.example.todolist.ui.screens.layout.MainLayout
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 @Composable
 fun CharacterDetailScreen(
     characterId : Int,
 ){
-    val navigationViewModel = LocalNavigationViewModel.current
     val characterViewModel: CharacterViewModel = hiltViewModel()
     characterViewModel.getCharacterById(characterId)
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)){
-        Header(
-            onClickMenu = { navigationViewModel.navigate(ScreensRoutes.MainScreen.route) }
-        )
-        DetailCharacterBody(
-            characterViewModel = characterViewModel,
-            Modifier
-                .fillMaxWidth()
-                .weight(1f) // ocupar todo el espacio disponible
-        )
-        BackButton()
+    MainLayout(){
+        Column(Modifier.fillMaxSize().padding(16.dp)
+        ){
+            DetailCharacterBody()
+            BackButton()
+        }
     }
 }
 
+
 @Composable
 fun DetailCharacterBody(
-    characterViewModel: CharacterViewModel,
-    modifier: Modifier = Modifier
+    characterViewModel: CharacterViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
     // Si el personaje no está seleccionado, mostramos un texto vacío o de espera
@@ -61,23 +56,20 @@ fun DetailCharacterBody(
         // Mantén un solo estado compartido
         var editableCharacter by remember { mutableStateOf(selectedCharacter!!) }
 
-        LazyColumn(modifier = modifier.fillMaxWidth()) {
-            item {
-                UpdateCharacterButton(editableCharacter)
 
-                // CAMPOS DE TEXTO
-                InfoSection(
-                    editableCharacter = editableCharacter,
-                    onCharacterChange = { editableCharacter = it }
-                )
+        UpdateCharacterButton(editableCharacter)
 
-                // CAMPOS NUMÉRICOS Y STATS
-                StatSection(
-                    editableCharacter = editableCharacter,
-                    onCharacterChange = { editableCharacter = it }
-                )
-            }
-        }
+        // CAMPOS DE TEXTO
+        InfoSection(
+            editableCharacter = editableCharacter,
+            onCharacterChange = { editableCharacter = it }
+        )
+
+        // CAMPOS NUMÉRICOS Y STATS
+        StatSection(
+            editableCharacter = editableCharacter,
+            onCharacterChange = { editableCharacter = it }
+        )
     }
 }
 

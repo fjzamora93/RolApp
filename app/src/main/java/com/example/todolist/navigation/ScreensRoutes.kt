@@ -8,6 +8,11 @@ sealed class ScreensRoutes(val route: String) {
         fun createRoute(characterId: Int) = "CharacterDetailScreen/$characterId"
     }
 
+
+    // TEST Y TEMPLATES
+    object FontTemplateScreen : ScreensRoutes("FontTemplateScreen")
+
+
     // ITEMS
     object ItemListScreen: ScreensRoutes("ItemListScreen")
     object ItemDetailScreen : ScreensRoutes("ItemDetailScreen/{itemId}") {

@@ -8,9 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.Button
@@ -43,39 +41,27 @@ import com.example.todolist.ui.screens.components.BackButton
 // Importación de otros componentes
 import com.example.todolist.ui.screens.layout.Footer
 import com.example.todolist.ui.screens.layout.Header
+import com.example.todolist.ui.screens.layout.MainLayout
 
 @Composable
-fun CharacterCreatorScreen(
-
-) {
-    val characterViewModel: CharacterViewModel = hiltViewModel()
-
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)){
-        Header(onClickMenu = { })
-        Body(
-            characterViewModel = characterViewModel,
+fun CharacterCreatorScreen() {
+    MainLayout {
+        Column(
             Modifier
-                .fillMaxWidth()
-                .weight(1f) // ocupar todo el espacio disponible
-        )
-
-        Footer(Modifier.fillMaxWidth())
+                .fillMaxSize()
+                .padding(16.dp)){
+            Body()
         }
     }
+}
 
 
 @Composable
 fun Body(
-    characterViewModel: CharacterViewModel,
-    modifier:Modifier
+    modifier:Modifier = Modifier.fillMaxWidth()
 ){
     Column(modifier = modifier.fillMaxWidth()){
-        CharacterCreatorForm(
-            characterViewModel = characterViewModel,
-        )
+        CharacterCreatorForm()
 
     }
 }
@@ -83,7 +69,7 @@ fun Body(
 @Composable
 fun InsertCharacterButton(
     newCharacter: RolCharacter,
-    characterViewModel: CharacterViewModel,
+    characterViewModel: CharacterViewModel = hiltViewModel(),
 ) {
     val navigationViewModel = LocalNavigationViewModel.current
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
@@ -115,10 +101,7 @@ fun InsertCharacterButton(
 
 
 @Composable
-fun CharacterCreatorForm(
-    characterViewModel: CharacterViewModel,
-){
-    var selectedCharacter by remember { mutableStateOf(characterViewModel.selectedCharacter.value) }
+fun CharacterCreatorForm(){
 
     var name by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
@@ -133,13 +116,14 @@ fun CharacterCreatorForm(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+
     ) {
 
         // Nombre y edad
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             Column(
@@ -172,7 +156,9 @@ fun CharacterCreatorForm(
 
         // Altura y peso
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
@@ -201,7 +187,9 @@ fun CharacterCreatorForm(
 
         // Raza y clase
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ){
@@ -212,7 +200,7 @@ fun CharacterCreatorForm(
                     label = "Clase",
                     selectedValue = rolClass,
                     onValueChange = { rolClass = it },
-                    values = RolClass.values(),
+                    values = RolClass.entries.toTypedArray(),
                 )
             }
             Column(
@@ -236,15 +224,10 @@ fun CharacterCreatorForm(
                 height = height,
                 weight = weight,
                 age = age
-            ),
-            characterViewModel = characterViewModel,
+            )
         )
     }
 }
-
-
-
-
 
 
 // DROP DOWN
@@ -285,74 +268,3 @@ fun <T> DropdownSelector(
 
 
 
-
-@Composable
-fun CharacterDetailSample(characterViewModel: CharacterViewModel){
-    var selectedCharacter = characterViewModel.selectedCharacter.value
-
-    selectedCharacter?.let { character ->
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(text = "Name: ${character.name}")
-            Text(text = "Description: ${character.description}")
-        }
-    } ?: run {
-        // Mostrar un mensaje si no hay personaje seleccionado
-        Text("No character selected")
-    }
-}
-
-
-
-//
-//// LISTA DE PERSONAJES -> NO UTILIZAR DE MOMENTO
-//@Composable
-//fun CharacterList(
-//    characterViewModel: CharacterViewModel,
-//    modifier: Modifier
-//) {
-//    val scrollState = rememberScrollState()
-//    val navigationViewModel = LocalNavigationViewModel.current
-//
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        modifier = Modifier
-//            .padding(16.dp)
-//            .verticalScroll(scrollState) // Habilita el scroll
-//    ) {
-//
-//        // Mostrar los personajes
-//        val characters = characterViewModel.characters.value
-//        characters?.let {
-//            it.forEach { character ->
-//                Text(text = "Name: ${character.name}")
-//                Text(text = "Description: ${character.description}")
-//                Spacer(modifier = Modifier.height(8.dp)) // Espaciado entre elementos
-//
-//                Row(
-//                    modifier = Modifier.padding(16.dp),
-//                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-//                ){
-//                    // Botón para eliminar
-//                    Button(onClick = {
-//                        characterViewModel.deleteCharacter(character)
-//                    }) {
-//                        Text("Delete")
-//                    }
-//
-//                    // Botón ver detalles
-//                    Button(onClick = {
-//                        navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(character.id))
-//                    }) {
-//                        Text("Ver detalles")
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-//}
-//
