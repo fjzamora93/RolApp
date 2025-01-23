@@ -36,7 +36,11 @@ fun CharacterListScreen(
         Modifier
             .fillMaxSize()
             .padding(16.dp)){
-        Header(Modifier.fillMaxWidth())
+        Header(
+            onClickMenu = {
+                navigationViewModel.navigate(ScreensRoutes.MainScreen.route)
+            }
+        )
         Text("Lista de personajes: ")
 
         CharacterListBody(
@@ -53,7 +57,6 @@ fun CharacterListScreen(
 
 
 
-// LISTA DE PERSONAJES -> NO UTILIZAR DE MOMENTO
 @Composable
 fun CharacterListBody(
     characterViewModel: CharacterViewModel,

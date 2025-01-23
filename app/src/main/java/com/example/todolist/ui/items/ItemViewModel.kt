@@ -28,8 +28,8 @@ class ItemViewModel @Inject constructor(
 
     fun getItems(
         name: String = "",
-        onSuccess: (List<Item>) -> Unit,
-        onError: () -> Unit
+        onSuccess: (List<Item>) -> Unit = { },
+        onError: () -> Unit = { }
     ) {
         viewModelScope.launch {
             val result = repository.fetchItems(name)

@@ -63,7 +63,7 @@ fun CharacterCreatorScreen(
         Modifier
             .fillMaxSize()
             .padding(16.dp)){
-        Header(Modifier.fillMaxWidth())
+        Header(onClickMenu = { })
         Body(
             characterViewModel = characterViewModel,
             Modifier

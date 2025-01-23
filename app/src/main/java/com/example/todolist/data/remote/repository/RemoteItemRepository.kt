@@ -11,16 +11,16 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
+
 class RemoteItemRepository @Inject constructor(
     private val itemApiService: ItemApiService,
     private val apiService: ApiService
 ) {
 
     suspend fun fetchItems(filter: String): Result<List<Item>> {
+        // El bloque return try nos devolverá la última sentencia que haya en el try o catch.
         return try {
-            // Llamamos a la API para obtener los items
             val response = apiService.getItems()
-
             if (response.isSuccessful) {
                 val apiResponse = response.body()
                 val itemList: List<Item> = apiResponse?.results?.map { mapApiItemToLocal(it) } ?: emptyList()

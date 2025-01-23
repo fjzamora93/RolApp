@@ -48,7 +48,9 @@ fun CharacterDetailScreen(
         Modifier
             .fillMaxSize()
             .padding(16.dp)){
-        Header(Modifier.fillMaxWidth())
+        Header(
+            onClickMenu = { navigationViewModel.navigate(ScreensRoutes.MainScreen.route) }
+        )
         DetailCharacterBody(
             characterViewModel = characterViewModel,
             Modifier

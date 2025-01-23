@@ -26,24 +26,25 @@ import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 
 @Composable
-fun Header(modifier: Modifier = Modifier) {
+fun Header(
+    modifier: Modifier = Modifier,
+    onClickMenu : () -> Unit
+) {
     val activity = LocalContext.current as Activity
-    val drawerState = rememberDrawerState(DrawerValue.Closed) // Controlamos el estado del Drawer
-    val scope = rememberCoroutineScope() // Usamos la coroutine para manejar el Drawer
-    val navigationViewModel = LocalNavigationViewModel.current
 
     Row(
         modifier = modifier
-            .fillMaxWidth() // Ocupa todo el ancho disponible
-            .padding(8.dp), // Espaciado opcional
-        horizontalArrangement = Arrangement.SpaceBetween // Espacia los elementos entre los extremos
+            .fillMaxWidth()
+            .padding(8.dp)
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Menú de la aplicación
         Icon(
             imageVector = Icons.Default.Menu,
             contentDescription = "open menu",
             modifier = Modifier
-                .clickable { onClickMenu(navigationViewModel) }
+                .clickable { onClickMenu() }
         )
 
         // Cerrar la aplicación
