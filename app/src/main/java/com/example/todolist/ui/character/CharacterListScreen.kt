@@ -9,76 +9,79 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.CharacterDetailButton
-import com.example.todolist.ui.screens.components.Footer
-import com.example.todolist.ui.screens.components.Header
+import com.example.todolist.ui.screens.layout.Footer
+import com.example.todolist.ui.screens.layout.Header
+import com.example.todolist.ui.screens.layout.MainLayout
 
 @Composable
 fun CharacterListScreen(
 
 ){
-    val navigationViewModel = LocalNavigationViewModel.current
-    val characterViewModel: CharacterViewModel = hiltViewModel()
-
-
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)){
-        Header(
-            onClickMenu = {
-                navigationViewModel.navigate(ScreensRoutes.MainScreen.route)
-            }
-        )
+    MainLayout(){
         Text("Lista de personajes: ")
-
-        CharacterListBody(
-            characterViewModel = characterViewModel,
-            Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
+        CharacterListBody()
         BackButton()
-
-        Footer(Modifier.fillMaxWidth())
     }
 }
 
 
 
+
 @Composable
 fun CharacterListBody(
-    characterViewModel: CharacterViewModel,
-    modifier: Modifier
+    characterViewModel: CharacterViewModel = hiltViewModel(),
+    modifier: Modifier = Modifier.fillMaxWidth()
 ) {
-    val scrollState = rememberScrollState()
-    val navigationViewModel = LocalNavigationViewModel.current
+    val characters = characterViewModel.characters.value
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(scrollState) // Habilita el scroll
     ) {
-
-        // Mostrar los personajes
-        val characters = characterViewModel.characters.value
         characters?.let {
             it.forEach { character ->
+                CharacterSummary(character)
+                }
+            }
+        }
+    }
+
+@Composable
+fun CharacterSummary(
+    character: RolCharacter,
+    characterViewModel: CharacterViewModel = hiltViewModel(),
+
+    ){
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFFFAF3E0)
+        )
+    ){
+            Column(){
                 Text(text = "Name: ${character.name}")
                 Text(text = "Description: ${character.description}")
-                Spacer(modifier = Modifier.height(8.dp)) // Espaciado entre elementos
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
                     modifier = Modifier.padding(16.dp),
@@ -93,11 +96,8 @@ fun CharacterListBody(
 
                     // Botón ver detalles
                     CharacterDetailButton(idNewCharacter = character.id)
-                    }
                 }
-
             }
         }
-    }
-
+}
 

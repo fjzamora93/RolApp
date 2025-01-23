@@ -2,14 +2,14 @@ package com.example.todolist.ui.items
 
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -25,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,48 +32,20 @@ import com.example.todolist.data.local.model.Item
 import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
-import com.example.todolist.ui.screens.components.CharacterDetailButton
-import com.example.todolist.ui.screens.components.Footer
-import com.example.todolist.ui.screens.components.Header
+import com.example.todolist.ui.screens.layout.Footer
+import com.example.todolist.ui.screens.layout.Header
+import com.example.todolist.ui.screens.layout.MainLayout
 
 @Composable
-fun ItemListScreen(
-
-){
-    val navigationViewModel = LocalNavigationViewModel.current
-    val characterViewModel: CharacterViewModel = hiltViewModel()
-    val itemViewModel: ItemViewModel = hiltViewModel()
-
-
-    Column(
-        Modifier
+fun ItemListScreen(){
+    MainLayout(){
+        Column(Modifier
             .fillMaxSize()
-            .padding(16.dp)){
-        Header(
-            onClickMenu = { }
-        )
-        Text("Lista de Objetos: ")
-
-        Button(
-            onClick = {
-                itemViewModel.getItems(
-                    name = "",
-                    onSuccess = { weapons ->
-                        println("Armas recibidas: $weapons")
-                    },
-                    onError = {
-                        println("Error al obtener las armas")
-                    }
-                )
-            }
-        ) {
-            Text("Cargar Objetos")
+            .padding(16.dp)
+        ){
+            BackButton()
+            ItemListBody()
         }
-
-        ItemListBody()
-        BackButton()
-
-        Footer(Modifier.fillMaxWidth())
     }
 }
 
@@ -92,24 +63,14 @@ fun ItemListBody(
         onError = { }
     )
 
-    val scrollState = rememberScrollState()
-    val navigationViewModel = LocalNavigationViewModel.current
+    val items by itemViewModel.itemList.observeAsState()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .padding(16.dp)
-            .verticalScroll(scrollState) // Habilita el scroll
-    ) {
-
-        // Mostrar los objetos
-        val items by itemViewModel.itemList.observeAsState()
-
+    Column(){
+        Text("Lista de Objetos: ")
         items?.let {
             it.forEach { item ->
                 ItemSummary(item)
             }
-
         }
     }
 }
@@ -125,7 +86,7 @@ fun ItemSummary(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFFFAF3E0) // Fondo crema
+            containerColor = Color(0xFFFAF3E0)
         )
     ) {
         Column(
