@@ -96,7 +96,7 @@ fun AddButton(
     onClick : () -> Unit,
 ){
     IconButton(
-        onClick = { onClick }
+        onClick = onClick
         ) {
         Icon(
             imageVector = Icons.Default.Add,

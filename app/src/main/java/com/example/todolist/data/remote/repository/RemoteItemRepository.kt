@@ -46,7 +46,7 @@ class RemoteItemRepository @Inject constructor(
     // Función para mapear el modelo de la API (ApiItemResponse) al modelo local (Item)
     private fun mapApiItemToLocal(apiItem: ItemResponse): Item {
         return Item(
-            key = apiItem.key,
+            itemId = apiItem.key,
             url = apiItem.url,
             isVersatile = apiItem.isVersatile,
             isMartial = apiItem.isMartial,

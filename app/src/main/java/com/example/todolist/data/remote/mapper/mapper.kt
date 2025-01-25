@@ -6,7 +6,7 @@ import com.example.todolist.data.remote.model.ItemResponse
 
 fun mapApiItemToLocal(itemResponse: ItemResponse): Item {
     return Item(
-        key = itemResponse.key,
+        itemId = itemResponse.key,
         url = itemResponse.url,
         isVersatile = itemResponse.isVersatile,
         isMartial = itemResponse.isMartial,

@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "itemTable")
 data class Item(
     @PrimaryKey(autoGenerate = false)
-    @ColumnInfo(name = "itemKey")
-    val key: String,
+    @ColumnInfo(name = "itemId")
+    val itemId: String,
 
     @ColumnInfo(name = "url")
     val url: String,

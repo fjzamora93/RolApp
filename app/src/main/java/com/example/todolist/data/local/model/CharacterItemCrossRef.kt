@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 
 @Entity(
-    tableName = "character_item_cross_ref",
+    tableName = "character_item_table",
     primaryKeys = ["characterId", "itemId"],
     foreignKeys = [
         ForeignKey(
@@ -15,7 +15,7 @@ import androidx.room.ForeignKey
         ),
         ForeignKey(
             entity = Item::class,
-            parentColumns = ["id"],
+            parentColumns = ["itemId"],
             childColumns = ["itemId"],
             onDelete = ForeignKey.CASCADE
         )
@@ -23,5 +23,5 @@ import androidx.room.ForeignKey
 )
 data class CharacterItemCrossRef(
     val characterId: Int,
-    val itemId: Int
+    val itemId: String
 )

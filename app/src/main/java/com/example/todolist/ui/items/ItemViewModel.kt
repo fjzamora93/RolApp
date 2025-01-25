@@ -1,13 +1,12 @@
 package com.example.todolist.ui.items
 
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
+import com.example.todolist.data.local.repository.LocalCharacterRepository
 import com.example.todolist.data.remote.repository.RemoteItemRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -15,7 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(
-    private val repository: RemoteItemRepository
+    private val remoteItemRepository: RemoteItemRepository,
+    private val localCharacterRepository: LocalCharacterRepository
+
 ) : ViewModel() {
 
     private val _itemList = MutableLiveData<List<Item>>()
@@ -25,13 +26,16 @@ class ItemViewModel @Inject constructor(
     val itemDetail: LiveData<Item?> = _itemDetail
 
 
-    fun getItemsToCharacter(
+    fun addItemToCharacter(
         currentCharacter: RolCharacter,
         currentItem: Item,
 //        onSuccess: (List<Item>) -> Unit = { },
 //        onError: () -> Unit = { }
     ){
-
+        viewModelScope.launch {
+            println("AÑADIENDO ${currentItem.name} AL PERSONAJE: ${currentCharacter.name}")
+            localCharacterRepository.getCharacterWithRelations(currentCharacter.id)
+        }
     }
 
 
@@ -41,7 +45,7 @@ class ItemViewModel @Inject constructor(
         onError: () -> Unit = { }
     ) {
         viewModelScope.launch {
-            val result = repository.fetchItems(name)
+            val result = remoteItemRepository.fetchItems(name)
             result.onSuccess {
                 items ->
                 _itemList.value = items
@@ -50,8 +54,10 @@ class ItemViewModel @Inject constructor(
                 onError()
             }
 
-        println("LISTA ACTUALIZADA EN EL ITEM VIEW MODEL: ${itemList.value}")
+        //println("LISTA ACTUALIZADA EN EL ITEM VIEW MODEL: ${itemList.value}")
         }
-
     }
+
+
+
 }

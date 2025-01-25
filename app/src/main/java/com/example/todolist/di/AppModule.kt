@@ -1,7 +1,10 @@
 package com.example.todolist.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
+import com.example.todolist.data.local.database.CharacterDao
+import com.example.todolist.data.local.database.ItemDao
 import com.example.todolist.data.remote.database.ItemApiService
 import com.example.todolist.data.local.database.MyDatabase
 import com.example.todolist.data.local.repository.LocalCharacterRepository
@@ -11,6 +14,7 @@ import com.example.todolist.util.Constants.MY_DATA_BASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -81,6 +85,15 @@ object  AppModule {
         return LocalCharacterRepository(database.characterDao())
     }
 
-
+    @Provides
+    @Singleton
+    fun provideCharacterDao(database: MyDatabase): CharacterDao {
+        return database.characterDao()
+    }
+    @Provides
+    @Singleton
+    fun provideItemDao(database: MyDatabase): ItemDao {
+        return database.getItemDao()
+    }
 
 }

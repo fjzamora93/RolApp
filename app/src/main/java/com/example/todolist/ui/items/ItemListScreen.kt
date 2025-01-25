@@ -1,6 +1,7 @@
 package com.example.todolist.ui.items
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.Item
+import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.screens.components.AddButton
 import com.example.todolist.ui.screens.components.BackButton
@@ -79,6 +81,8 @@ fun ItemListBody(
 @Composable
 fun ItemSummary(
     item: Item,
+    itemViewModel: ItemViewModel = hiltViewModel(),
+    characterViewModel: CharacterViewModel = LocalCharacterViewModel.current
 ) {
     Card(
         modifier = Modifier
@@ -93,7 +97,16 @@ fun ItemSummary(
 
         RegularCard(){
             Row(){
-                AddButton( onClick = { println("Hola") } )
+                if (characterViewModel.selectedCharacter.value != null){
+                    AddButton( onClick = {
+                        println("Añadiendo desde la screen")
+                        itemViewModel.addItemToCharacter(
+                            currentCharacter = characterViewModel.selectedCharacter.value!!,
+                            currentItem = item
+                        )
+                    })
+                }
+
 
                 Text(
                     text = "Name: ${item.name}",

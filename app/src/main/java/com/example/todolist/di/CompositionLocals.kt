@@ -15,3 +15,6 @@ val LocalNavigationViewModel = compositionLocalOf<NavigationViewModel> {
 val LocalCharacterViewModel = compositionLocalOf<CharacterViewModel> {
     error("LocalCharacterViewModel no está disponible. Asegúrate de proporcionarlo.")
 }
+
+
+// INCLUIR USER CUANDO ESTÉ CREADA LA CLASE CORRESPONDIENTE
