@@ -25,6 +25,15 @@ class ItemViewModel @Inject constructor(
     val itemDetail: LiveData<Item?> = _itemDetail
 
 
+    fun getItemsToCharacter(
+        currentCharacter: RolCharacter,
+        currentItem: Item,
+//        onSuccess: (List<Item>) -> Unit = { },
+//        onError: () -> Unit = { }
+    ){
+
+    }
+
 
     fun getItems(
         name: String = "",

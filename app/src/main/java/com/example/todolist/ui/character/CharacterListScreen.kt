@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.RolCharacter
-import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.CharacterDetailButton

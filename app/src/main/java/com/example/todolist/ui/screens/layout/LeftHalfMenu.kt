@@ -33,7 +33,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.util.MedievalColours
 

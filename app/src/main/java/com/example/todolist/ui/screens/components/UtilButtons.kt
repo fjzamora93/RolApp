@@ -90,6 +90,26 @@ fun MinusButton(
 }
 
 
+
+@Composable
+fun AddButton(
+    onClick : () -> Unit,
+){
+    IconButton(
+        onClick = { onClick }
+        ) {
+        Icon(
+            imageVector = Icons.Default.Add,
+            contentDescription = "Add",
+            modifier = Modifier
+                .size(24.dp) // Tamaño del ícono
+                .shadow(4.dp, CircleShape), // Sombra para dar relieve
+            tint = MedievalColours.IronDark
+        )
+    }
+}
+
+
 fun medievalButtonStyleSquare(): Modifier {
     return Modifier
         .size(40.dp) // Ajustar el tamaño
@@ -107,3 +127,5 @@ fun medievalButtonStyleRounded(): Modifier {
         .border(2.dp, Color(0xFFDAA520), CircleShape)
         .padding(8.dp)
 }
+
+

@@ -3,6 +3,7 @@ package com.example.todolist.ui.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,8 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.Item
-import com.example.todolist.navigation.LocalNavigationViewModel
 import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.screens.components.AddButton
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.Footer
@@ -91,10 +92,15 @@ fun ItemSummary(
     ) {
 
         RegularCard(){
-            Text(
-                text = "Name: ${item.name}",
-                style = CustomType.titleMedium
-            )
+            Row(){
+                AddButton( onClick = { println("Hola") } )
+
+                Text(
+                    text = "Name: ${item.name}",
+                    style = CustomType.titleMedium
+                )
+            }
+
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(

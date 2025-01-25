@@ -5,14 +5,18 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.todolist.di.LocalCharacterViewModel
+import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.ui.character.characterDetail.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
 import com.example.todolist.ui.character.CharacterListScreen
+import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.items.ItemListScreen
 import com.example.todolist.ui.main.MainScreen
 import com.example.todolist.ui.screens.layout.FontsTemplateScreen
@@ -21,10 +25,14 @@ import com.example.todolist.ui.screens.layout.FontsTemplateScreen
 fun NavGraph(
     navController: NavHostController
 ) {
-    // Proveer el NavigationViewModel en todo el árbol de composables dentro de NavGraph
+    // Proveer CONSTANTES en el árbol de composables dentro de NavGraph (la navegación, el usuario, un carrito de la compra... lo que va a ser común)
     val navigationViewModel: NavigationViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
+    val characterViewModel: CharacterViewModel = hiltViewModel()
 
-    CompositionLocalProvider(LocalNavigationViewModel provides navigationViewModel) {
+    CompositionLocalProvider(
+        LocalNavigationViewModel provides navigationViewModel,
+        LocalCharacterViewModel provides characterViewModel
+    ) {
         // Declaramos el objeto que va a ser observado
         val navigationEvent by navigationViewModel.navigationEvent.observeAsState()
 
@@ -53,7 +61,8 @@ fun NavGraph(
             }
         }
 
-        // Aquí va el NavHost, donde defines las rutas de las pantallas
+
+        // Equivalente a un enrutador, compuesto por un CONTROLLER + Ruta de navegación
         NavHost(
             navController = navController,
             startDestination = ScreensRoutes.MainScreen.route

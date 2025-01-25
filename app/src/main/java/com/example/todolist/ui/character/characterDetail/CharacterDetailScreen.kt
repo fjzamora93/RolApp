@@ -17,7 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.RolCharacter
-import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.di.LocalCharacterViewModel
+import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.items.ItemListBody
@@ -29,8 +30,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @Composable
 fun CharacterDetailScreen(
     characterId : Int,
+    characterViewModel: CharacterViewModel  = LocalCharacterViewModel.current,
 ){
-    val characterViewModel: CharacterViewModel = hiltViewModel()
+
     characterViewModel.getCharacterById(characterId)
 
     MainLayout(){
@@ -45,7 +47,7 @@ fun CharacterDetailScreen(
 
 @Composable
 fun DetailCharacterBody(
-    characterViewModel: CharacterViewModel = hiltViewModel(),
+    characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
@@ -70,16 +72,19 @@ fun DetailCharacterBody(
             editableCharacter = editableCharacter,
             onCharacterChange = { editableCharacter = it }
         )
+
+        println("El personaje es: ${editableCharacter.name}")
     }
 }
 
 
 @Composable
 fun UpdateCharacterButton(
-    updatedCharacter: RolCharacter
+    updatedCharacter: RolCharacter,
+    characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
 ){
     val navigationViewModel = LocalNavigationViewModel.current
-    val characterViewModel: CharacterViewModel = hiltViewModel()
+
 
     Button(
         onClick = {

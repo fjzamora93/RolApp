@@ -5,6 +5,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.todolist.R
 
@@ -18,7 +19,8 @@ val CustomType = Typography(
         fontSize = 25.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp,
-        color = MedievalColours.LeatherAged
+        color = MedievalColours.LeatherAged,
+        textAlign = TextAlign.Center
     ),
 
     /** Título MUY Medieval - Poco legible */

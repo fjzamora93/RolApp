@@ -34,7 +34,7 @@ import com.example.todolist.data.local.model.Race
 import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.RolClass
-import com.example.todolist.navigation.LocalNavigationViewModel
+import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 

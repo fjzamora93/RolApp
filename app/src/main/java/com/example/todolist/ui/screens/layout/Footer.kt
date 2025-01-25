@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.todolist.util.CustomType
 
 @Composable
 fun Footer(modifier: Modifier = Modifier) {
@@ -56,24 +57,14 @@ fun Footer(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        // Texto del footer
-        Text(
-            text = "RolApp: La app para gestionar juegos de rol",
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = Color(0xFF666666),
-                textAlign = TextAlign.Center
-            )
-        )
+
 
         Spacer(modifier = Modifier.size(8.dp))
 
         // Copyright
         Text(
             text = "© 2025 RolApp. Todos los derechos reservados.",
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = Color(0xFF999999),
-                textAlign = TextAlign.Center
-            )
+            style = CustomType.labelMedium
         )
     }
 }
