@@ -1,8 +1,10 @@
 package com.example.todolist.data.local.repository
 
 import com.example.todolist.data.local.database.CharacterDao
+import com.example.todolist.data.local.database.ItemDao
 import com.example.todolist.data.local.database.RolCharacterWithAllRelations
 import com.example.todolist.data.local.model.CharacterItemCrossRef
+import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.domain.repository.CharacterRepository
 import javax.inject.Inject
@@ -13,8 +15,8 @@ import javax.inject.Inject
  *
  * */
 class LocalCharacterRepository @Inject constructor(
-    private val characterDao: CharacterDao
-
+    private val characterDao: CharacterDao,
+    private val itemDao: ItemDao
 ) : CharacterRepository {
 
     override suspend fun getAllCharacters(): List<RolCharacter> {
@@ -44,16 +46,23 @@ class LocalCharacterRepository @Inject constructor(
         return characterDao.getCharacterWithRelations(characterId)
     }
 
-    override suspend fun addItemToCharacter(characterId: Int, itemId: String) {
-        println("Recuperando en el repositorio: ${characterDao.getCharacterWithRelations(characterId)}")
-        val characterId = 1 // ID del personaje
-        val itemId = "item123" // ID del item
+    override suspend fun addItemToCharacter(character: RolCharacter, item: Item) {
+        val characterId = character.id
+        val itemId = item.itemId
 
+        itemDao.insertItem(item)
         // Crear la instancia de la relación
         val crossRef = CharacterItemCrossRef(characterId, itemId)
 
         // Insertar la relación en la tabla intermedia
         characterDao.addItemToCharacter(crossRef)
+
+
+        val characterWithRelations = characterDao.getCharacterWithRelations(characterId)
+        val characterItems = characterWithRelations?.items ?: emptyList()
+        println(characterItems)
+
+
     }
 
 }

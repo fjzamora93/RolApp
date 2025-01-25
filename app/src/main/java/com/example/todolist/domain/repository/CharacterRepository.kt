@@ -1,5 +1,6 @@
 package com.example.todolist.domain.repository
 import com.example.todolist.data.local.database.RolCharacterWithAllRelations
+import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
 
 interface CharacterRepository {
@@ -11,6 +12,6 @@ interface CharacterRepository {
 
     // Para obtener las relaciones de un personaje
     suspend fun getCharacterWithRelations(characterId: Int): RolCharacterWithAllRelations?
-    suspend fun addItemToCharacter(characterId: Int, itemId: String)
+    suspend fun addItemToCharacter(character: RolCharacter, item: Item)
 
 }

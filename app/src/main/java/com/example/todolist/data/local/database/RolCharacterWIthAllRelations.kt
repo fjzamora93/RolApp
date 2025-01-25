@@ -17,7 +17,11 @@ data class RolCharacterWithAllRelations(
     @Relation(
         parentColumn = "id", // columna de la entidad principal
         entityColumn = "itemId", // columna de la entidad relacionada
-        entity = Item::class
+        associateBy = Junction(
+            CharacterItemCrossRef::class,
+            parentColumn = "characterId",
+            entityColumn = "itemId"
+        )
     )
     val items: List<Item>,
 

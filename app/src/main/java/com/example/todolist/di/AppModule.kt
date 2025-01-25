@@ -82,7 +82,10 @@ object  AppModule {
     @Provides
     @Singleton
     fun provideCharacterRepository(database: MyDatabase): CharacterRepository {
-        return LocalCharacterRepository(database.characterDao())
+        return LocalCharacterRepository(
+            database.characterDao(),
+            database.getItemDao()
+        )
     }
 
     @Provides
@@ -95,5 +98,7 @@ object  AppModule {
     fun provideItemDao(database: MyDatabase): ItemDao {
         return database.getItemDao()
     }
+
+
 
 }

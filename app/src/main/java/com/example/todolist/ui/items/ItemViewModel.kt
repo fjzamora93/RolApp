@@ -34,7 +34,7 @@ class ItemViewModel @Inject constructor(
     ){
         viewModelScope.launch {
             println("AÑADIENDO ${currentItem.name} AL PERSONAJE: ${currentCharacter.name}")
-            localCharacterRepository.getCharacterWithRelations(currentCharacter.id)
+            localCharacterRepository.addItemToCharacter(currentCharacter, currentItem)
         }
     }
 
