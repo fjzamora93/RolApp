@@ -17,6 +17,7 @@ import com.example.todolist.ui.character.characterDetail.CharacterDetailScreen
 import com.example.todolist.ui.character.CharacterCreatorScreen
 import com.example.todolist.ui.character.CharacterListScreen
 import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.character.characterDetail.CharacterInventoryScreen
 import com.example.todolist.ui.items.ItemListScreen
 import com.example.todolist.ui.main.MainScreen
 import com.example.todolist.ui.screens.layout.FontsTemplateScreen
@@ -88,6 +89,10 @@ fun NavGraph(
 
             composable(ScreensRoutes.FontTemplateScreen.route) {
                 FontsTemplateScreen()
+            }
+
+            composable(ScreensRoutes.InventoryScreen.route) {
+                CharacterInventoryScreen()
             }
 
             // Pantalla de detalle del personaje

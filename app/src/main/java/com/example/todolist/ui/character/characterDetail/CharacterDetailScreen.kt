@@ -19,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.di.LocalNavigationViewModel
+import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.items.ItemListBody
@@ -48,6 +49,7 @@ fun CharacterDetailScreen(
 @Composable
 fun DetailCharacterBody(
     characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
+    navigation: NavigationViewModel = LocalNavigationViewModel.current,
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
@@ -60,6 +62,11 @@ fun DetailCharacterBody(
 
 
         UpdateCharacterButton(editableCharacter)
+        Button(
+            onClick = { navigation.navigate(ScreensRoutes.InventoryScreen.route) }
+        ){
+            Text("Consultar inventario")
+        }
 
         // CAMPOS DE TEXTO
         InfoSection(

@@ -26,6 +26,9 @@ class CharacterViewModel @Inject constructor(
     private val _selectedCharacter = MutableLiveData<RolCharacter?>()
     val selectedCharacter: LiveData<RolCharacter?> = _selectedCharacter
 
+    private val _selectedCharacterItems = MutableLiveData<List<Item>>()
+    val selectedCharacterItems: LiveData<List<Item>> = _selectedCharacterItems
+
 
     init {
         getAllCharacters()
@@ -35,9 +38,12 @@ class CharacterViewModel @Inject constructor(
     fun getCharacterById(characterId: Int) {
         viewModelScope.launch {
             val rolCharacter = characterRepository.getCharacterById(characterId)
+            val characterItems = characterRepository.getCharacterWithRelations(characterId)?.items
+
             // Aquí puedes actualizar el UI con el personaje encontrado
             _selectedCharacter.value = rolCharacter
-            println("Personaje encontrado: $_selectedCharacter.value")
+            _selectedCharacterItems.value = characterItems ?: emptyList()
+            println("Personaje: ${_selectedCharacter.value?.name} " + "Inventario ${_selectedCharacterItems.value}")
         }
     }
 

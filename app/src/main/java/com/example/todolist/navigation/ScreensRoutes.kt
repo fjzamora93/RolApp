@@ -15,6 +15,7 @@ sealed class ScreensRoutes(val route: String) {
 
     // ITEMS
     object ItemListScreen: ScreensRoutes("ItemListScreen")
+    object InventoryScreen: ScreensRoutes("InventoryScreen")
     object ItemDetailScreen : ScreensRoutes("ItemDetailScreen/{itemId}") {
         fun createRoute(itemId: Int) = "ItemDetailScreen/$itemId"
     }
