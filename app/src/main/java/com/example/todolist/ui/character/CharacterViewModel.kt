@@ -79,6 +79,7 @@ class CharacterViewModel @Inject constructor(
     fun updateCharacter(rolCharacter: RolCharacter) {
         viewModelScope.launch {
             characterRepository.updateCharacter(rolCharacter)
+            _selectedCharacter.value = rolCharacter
             println("Personaje actualizado: $rolCharacter")
         }
     }

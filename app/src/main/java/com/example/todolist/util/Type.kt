@@ -35,11 +35,11 @@ val CustomType = Typography(
 
     // TÍTULO PEQUEÑO MEDIEVAL - para destacar un texto
     titleSmall = TextStyle(
-        fontFamily = FontFamily(Font(R.font.medievalsharp)),
-        fontWeight = FontWeight.Bold, // Peso más grueso para resaltar
-        fontSize = 20.sp, // Un poco más grande que bodyMedium
-        lineHeight = 28.sp, // Altura de línea proporcionalmente mayor
-        letterSpacing = 0.15.sp,
+        fontFamily = FontFamily(Font(R.font.cincel)),
+        fontWeight = FontWeight.SemiBold, // Peso ligeramente más grueso para destacar
+        fontSize = 16.sp, // Tamaño mediano para lectura cómoda
+        lineHeight = 26.sp, // Altura de línea más espaciosa para claridad
+        letterSpacing = 0.25.sp, // Separación ligera entre letras
         color = MedievalColours.LeatherAged
     ),
 
@@ -64,7 +64,7 @@ val CustomType = Typography(
 
     // Letra METAMORPHUS MUY Medieval- apta para Números y cifras (poco legible)
     bodySmall = TextStyle(
-        fontFamily = FontFamily(Font(R.font.cincel)),
+        fontFamily = FontFamily(Font(R.font.medievalsharp)),
         fontWeight = FontWeight.SemiBold, // Peso ligeramente más grueso para destacar
         fontSize = 16.sp, // Tamaño mediano para lectura cómoda
         lineHeight = 26.sp, // Altura de línea más espaciosa para claridad

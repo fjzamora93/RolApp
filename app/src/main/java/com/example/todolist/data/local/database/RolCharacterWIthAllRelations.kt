@@ -9,31 +9,26 @@ import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.Skill
 
 data class RolCharacterWithAllRelations(
-
-    // Relación de muchos a muchos
     @Embedded val rolCharacter: RolCharacter,
 
-    // Relación de muchos a muchos
+    // RELACIÓN DE MUCHOS A MUCHOS
     @Relation(
-        parentColumn = "id", // columna de la entidad principal
-        entityColumn = "itemId", // columna de la entidad relacionada
+        parentColumn = "id", // id en la tabla RolCharacter
+        entityColumn = "id", // id de la tabla CharacterItemCrossRef que referencia a Item
         associateBy = Junction(
             CharacterItemCrossRef::class,
-            parentColumn = "characterId",
-            entityColumn = "itemId"
+            parentColumn = "characterId", // id en CharacterItemCrossRef que referencia a RolCharacter
+            entityColumn = "itemId" // id en CharacterItemCrossRef que referencia a Item
         )
     )
     val items: List<Item>,
 
 
-    // Relación de 1:1
+    // RELACIÓN DE UNO A MUCHOS (PENDIENTE DE IMPLEMENTAR)
     @Relation(
         parentColumn = "id",
         entityColumn = "characterId"
     )
-    val skills: List<Skill>, // Lista de habilidades
-
-
-
+    val skills: List<Skill>,
 )
 

@@ -10,7 +10,7 @@ interface CharacterRepository {
     suspend fun updateCharacter(character: RolCharacter)
     suspend fun deleteCharacter(character: RolCharacter)
 
-    // Para obtener las relaciones de un personaje
+    // RELACIONES CROSS-REF
     suspend fun getCharacterWithRelations(characterId: Int): RolCharacterWithAllRelations?
     suspend fun addItemToCharacter(character: RolCharacter, item: Item)
 

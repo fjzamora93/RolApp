@@ -29,17 +29,20 @@ fun InfoSection(
     editableCharacter: RolCharacter,
     onCharacterChange: (RolCharacter) -> Unit
 ){
+
     CharacterTextField(
-        label = "Nombre",
+        label = "Nombre: ",
         value = editableCharacter.name,
         onValueChange = { onCharacterChange(editableCharacter.copy(name = it)) }
     )
 
     CharacterTextField(
-        label = "Descripcion",
+        label = "",
         value = editableCharacter.description,
         onValueChange = { onCharacterChange(editableCharacter.copy(description = it)) }
     )
+
+
 }
 
 
@@ -70,17 +73,17 @@ fun CharacterTextField(
             }
         }
     } else {
-        Column(modifier = modifier.padding(8.dp)) {
-            Text(text = label, style = MaterialTheme.typography.titleMedium)
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                Text(text = value, style = MaterialTheme.typography.bodyMedium)
-                IconButton(onClick = { isEdditing = true }) {
-                    Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
-                }
+        Row(
+            modifier = modifier.padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = label, style = MaterialTheme.typography.bodyMedium)
+            Text(text = value, style = MaterialTheme.typography.labelMedium)
+            IconButton(onClick = { isEdditing = true }) {
+                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit")
             }
+            Spacer(modifier = Modifier.height(4.dp))
+
         }
     }
 }

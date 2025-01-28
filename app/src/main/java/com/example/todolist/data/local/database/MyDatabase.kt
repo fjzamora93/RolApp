@@ -14,7 +14,7 @@ import com.example.todolist.data.local.model.CharacterItemCrossRef
     RolCharacter::class,
     Skill::class,
     Item::class, CharacterItemCrossRef::class
-                     ], version = 9)
+                     ], version = 10)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getItemDao(): ItemDao
     abstract fun characterDao(): CharacterDao

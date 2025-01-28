@@ -53,6 +53,7 @@ fun DetailCharacterBody(
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
+
     // Si el personaje no está seleccionado, mostramos un texto vacío o de espera
     if (selectedCharacter == null) {
         Text("Cargando personaje...")
@@ -60,46 +61,26 @@ fun DetailCharacterBody(
         // Mantén un solo estado compartido
         var editableCharacter by remember { mutableStateOf(selectedCharacter!!) }
 
+        CharacterMenu()
 
-        UpdateCharacterButton(editableCharacter)
-        Button(
-            onClick = { navigation.navigate(ScreensRoutes.InventoryScreen.route) }
-        ){
-            Text("Consultar inventario")
-        }
 
         // CAMPOS DE TEXTO
         InfoSection(
             editableCharacter = editableCharacter,
-            onCharacterChange = { editableCharacter = it }
+            onCharacterChange = {
+                editableCharacter = it
+                characterViewModel.updateCharacter(it)
+            }
         )
 
         // CAMPOS NUMÉRICOS Y STATS
         StatSection(
             editableCharacter = editableCharacter,
-            onCharacterChange = { editableCharacter = it }
+            onCharacterChange = {
+                editableCharacter = it
+                characterViewModel.updateCharacter(it)
+            }
         )
 
-        println("El personaje es: ${editableCharacter.name}")
-    }
-}
-
-
-@Composable
-fun UpdateCharacterButton(
-    updatedCharacter: RolCharacter,
-    characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
-){
-    val navigationViewModel = LocalNavigationViewModel.current
-
-
-    Button(
-        onClick = {
-            println("Personaje a actualizar: ${updatedCharacter}")
-            characterViewModel.updateCharacter(updatedCharacter)
-            navigationViewModel.navigate(ScreensRoutes.CharacterListScreen.route)
-        }
-    ){
-        Text("Actualizar")
     }
 }

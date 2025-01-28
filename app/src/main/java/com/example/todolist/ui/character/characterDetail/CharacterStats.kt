@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.ui.screens.components.MinusButton
 import com.example.todolist.ui.screens.components.PlusButton
+import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.util.MedievalColours
 
 
@@ -55,40 +56,47 @@ fun StatSection(
         onValueChanged = { onCharacterChange(editableCharacter.copy(currentAp = it)) }
     )
 
+    RegularCard(){
+        Column(horizontalAlignment = Alignment.CenterHorizontally ){
+            Text(text = "Stats", style = MaterialTheme.typography.titleMedium)
 
-    CharacterNumberField(
-        label = "Fuerza",
-        value = editableCharacter.strength,
-        onValueChange = { onCharacterChange(editableCharacter.copy(strength = it)) }
-    )
-    CharacterNumberField(
-        label = "Destreza",
-        value = editableCharacter.dexterity,
-        onValueChange = { onCharacterChange(editableCharacter.copy(dexterity = it)) }
-    )
+            CharacterNumberField(
+                label = "Fuerza",
+                value = editableCharacter.strength,
+                onValueChange = { onCharacterChange(editableCharacter.copy(strength = it)) }
+            )
+            CharacterNumberField(
+                label = "Destreza",
+                value = editableCharacter.dexterity,
+                onValueChange = { onCharacterChange(editableCharacter.copy(dexterity = it)) }
+            )
 
-    CharacterNumberField(
-        label = "Constitucion",
-        value = editableCharacter.constitution,
-        onValueChange = { onCharacterChange(editableCharacter.copy(constitution = it)) }
-    )
+            CharacterNumberField(
+                label = "Constitucion",
+                value = editableCharacter.constitution,
+                onValueChange = { onCharacterChange(editableCharacter.copy(constitution = it)) }
+            )
 
-    CharacterNumberField(
-        label = "Inteligencia",
-        value = editableCharacter.intelligence,
-        onValueChange = { onCharacterChange(editableCharacter.copy(intelligence = it)) }
-    )
-    CharacterNumberField(
-        label = "Sabiduría",
-        value = editableCharacter.wisdom,
-        onValueChange = { onCharacterChange(editableCharacter.copy(wisdom = it)) }
-    )
+            CharacterNumberField(
+                label = "Inteligencia",
+                value = editableCharacter.intelligence,
+                onValueChange = { onCharacterChange(editableCharacter.copy(intelligence = it)) }
+            )
+            CharacterNumberField(
+                label = "Sabiduría",
+                value = editableCharacter.wisdom,
+                onValueChange = { onCharacterChange(editableCharacter.copy(wisdom = it)) }
+            )
 
-    CharacterNumberField(
-        label = "Carisma",
-        value = editableCharacter.charisma,
-        onValueChange = { onCharacterChange(editableCharacter.copy(charisma = it)) }
-    )
+            CharacterNumberField(
+                label = "Carisma",
+                value = editableCharacter.charisma,
+                onValueChange = { onCharacterChange(editableCharacter.copy(charisma = it)) }
+            )
+        }
+        }
+
+
 }
 
 @Composable

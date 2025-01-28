@@ -14,18 +14,14 @@ import com.example.todolist.data.local.model.RolCharacter;
 
 @Dao
 interface CharacterDao {
+
+    // QUERYS SIMPLES
     @Query("SELECT * FROM rolCharacterTable")
     suspend fun getAllCharacters(): List<RolCharacter>
 
     @Transaction
     @Query("SELECT * FROM rolCharacterTable WHERE id = :characterId")
     suspend fun getCharacter(characterId: Int): RolCharacter?
-
-    // Obtener un personaje específico con todas sus relaciones
-    @Transaction
-    @Query("SELECT * FROM rolCharacterTable WHERE id = :characterId")
-    suspend fun getCharacterWithRelations(characterId: Int): RolCharacterWithAllRelations?
-
 
     @Insert
     suspend fun insertCharacter(character: RolCharacter)
@@ -36,7 +32,13 @@ interface CharacterDao {
     @Delete
     suspend fun deleteCharacter(character: RolCharacter)
 
-    // Método para añadir un item a un rol character (relación)
+
+
+    // QUERYS DE CROSS REF
+    @Transaction
+    @Query("SELECT * FROM rolCharacterTable WHERE id = :characterId")
+    suspend fun getCharacterWithRelations(characterId: Int): RolCharacterWithAllRelations?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItemToCharacter(characterItemCrossRef: CharacterItemCrossRef)
 

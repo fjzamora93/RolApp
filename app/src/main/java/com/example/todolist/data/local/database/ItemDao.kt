@@ -13,7 +13,7 @@ interface ItemDao {
     @Query("SELECT * FROM itemTable")
     suspend fun getItemList(): List<Item>
 
-    @Query("SELECT * FROM itemTable WHERE itemId = :itemId")
+    @Query("SELECT * FROM itemTable WHERE id = :itemId")
     suspend fun getTaskById(itemId: String): Item?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

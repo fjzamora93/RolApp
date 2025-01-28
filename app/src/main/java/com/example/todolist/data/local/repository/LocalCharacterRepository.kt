@@ -40,29 +40,15 @@ class LocalCharacterRepository @Inject constructor(
         characterDao.deleteCharacter(character)
     }
 
-    // Obtener un personaje con todas sus relaciones
+    // TODAS LAS RELACIONES
     override suspend fun getCharacterWithRelations(characterId: Int): RolCharacterWithAllRelations? {
-        println("Recuperando en el repositorio: ${characterDao.getCharacterWithRelations(characterId)}")
         return characterDao.getCharacterWithRelations(characterId)
     }
 
     override suspend fun addItemToCharacter(character: RolCharacter, item: Item) {
-        val characterId = character.id
-        val itemId = item.itemId
-
-        itemDao.insertItem(item)
-        // Crear la instancia de la relación
-        val crossRef = CharacterItemCrossRef(characterId, itemId)
-
-        // Insertar la relación en la tabla intermedia
-        characterDao.addItemToCharacter(crossRef)
-
-
-        val characterWithRelations = characterDao.getCharacterWithRelations(characterId)
-        val characterItems = characterWithRelations?.items ?: emptyList()
-        println(characterItems)
-
-
+        itemDao.insertItem(item) // ANtes de insertar la relación, nos aseguramos de que el item, que viene de la API, está dentro de SQLITE
+        val characterCrossRef = CharacterItemCrossRef(character.id, item.id)
+        characterDao.addItemToCharacter(characterCrossRef)
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.todolist.data.local.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 
+// Tabla de cruce
 @Entity(
     tableName = "character_item_table",
     primaryKeys = ["characterId", "itemId"],
@@ -15,7 +16,7 @@ import androidx.room.ForeignKey
         ),
         ForeignKey(
             entity = Item::class,
-            parentColumns = ["itemId"],
+            parentColumns = ["id"],
             childColumns = ["itemId"],
             onDelete = ForeignKey.CASCADE
         )
