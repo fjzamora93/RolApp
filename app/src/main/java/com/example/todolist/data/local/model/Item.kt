@@ -12,85 +12,29 @@ data class Item(
     @ColumnInfo(name = "id")
     val id: String,
 
-    @ColumnInfo(name = "url")
-    val url: String,
-
-    @ColumnInfo(name = "isVersatile")
-    val isVersatile: Boolean,
-
-    @ColumnInfo(name = "isMartial")
-    val isMartial: Boolean,
-
-    @ColumnInfo(name = "isMelee")
-    val isMelee: Boolean,
-
-    @ColumnInfo(name = "rangedAttackPossible")
-    val rangedAttackPossible: Boolean,
-
-    @ColumnInfo(name = "rangeMelee")
-    val rangeMelee: Float,
-
-    @ColumnInfo(name = "isReach")
-    val isReach: Boolean,
-
-    @ColumnInfo(name = "distanceUnit")
-    val distanceUnit: String,
-
     @ColumnInfo(name = "name")
     val name: String,
 
     @ColumnInfo(name = "damageDice")
     val damageDice: String,
 
-    @ColumnInfo(name = "versatileDice")
-    val versatileDice: String?,
+    @ColumnInfo(name = "damageType")
+    val damageType: String,
 
-    @ColumnInfo(name = "reach")
-    val reach: Float,
+    @ColumnInfo(name = "goldValue")
+    val goldValue: Int = 0,
+
+    @ColumnInfo(name = "url")
+    val url: String,
+
+    @ColumnInfo(name = "rangedAttackPossible")
+    val rangedAttackPossible: Boolean,
 
     @ColumnInfo(name = "range")
     val range: Float,
 
-    @ColumnInfo(name = "longRange")
-    val longRange: Float,
-
-    @ColumnInfo(name = "isFinesse")
-    val isFinesse: Boolean,
-
-    @ColumnInfo(name = "isThrown")
-    val isThrown: Boolean,
-
-    @ColumnInfo(name = "isTwoHanded")
-    val isTwoHanded: Boolean,
-
-    @ColumnInfo(name = "requiresAmmunition")
-    val requiresAmmunition: Boolean,
-
-    @ColumnInfo(name = "requiresLoading")
-    val requiresLoading: Boolean,
-
-    @ColumnInfo(name = "isHeavy")
-    val isHeavy: Boolean,
-
-    @ColumnInfo(name = "isLight")
-    val isLight: Boolean,
-
-    @ColumnInfo(name = "isLance")
-    val isLance: Boolean,
-
-    @ColumnInfo(name = "isNet")
-    val isNet: Boolean,
-
-    @ColumnInfo(name = "isSimple")
-    val isSimple: Boolean,
-
-    @ColumnInfo(name = "isImprovised")
-    val isImprovised: Boolean,
-
     @ColumnInfo(name = "document")
     val document: String,
 
-    @ColumnInfo(name = "damageType")
-    val damageType: String
 )
 

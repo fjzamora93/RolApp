@@ -3,10 +3,9 @@ package com.example.todolist.data.local.model
 import androidx.room.Entity
 import androidx.room.ForeignKey
 
-// Tabla de cruce
 @Entity(
-    tableName = "character_item_table",
-    primaryKeys = ["characterId", "itemId"],
+    tableName = "character_spell_table",
+    primaryKeys = ["characterId", "spellId"],
     foreignKeys = [
         ForeignKey(
             entity = RolCharacter::class,
@@ -15,15 +14,14 @@ import androidx.room.ForeignKey
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
-            entity = Item::class,
+            entity = Spell::class,
             parentColumns = ["id"],
-            childColumns = ["itemId"],
+            childColumns = ["spellId"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class CharacterItemCrossRef(
+data class CharacterSpellCrossRef(
     val characterId: Int,
-    val itemId: String
+    val spellId: String
 )
-

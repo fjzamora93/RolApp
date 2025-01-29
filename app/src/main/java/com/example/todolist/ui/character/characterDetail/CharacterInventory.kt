@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,7 +30,9 @@ import com.example.todolist.ui.screens.layout.MainLayout
 fun CharacterInventoryScreen(){
     MainLayout(){
         Column(
-            Modifier.fillMaxSize().padding(16.dp)
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp)
         ){
             CharacterInventoryBody()
             BackButton()
@@ -87,9 +90,12 @@ fun InventoryItemCard(item: Item, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "Alcance: ${item.reach}",
+                text = "Precio: ${item.goldValue}",
                 style = MaterialTheme.typography.bodyMedium
             )
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "vender")
+            }
         }
     }
 }

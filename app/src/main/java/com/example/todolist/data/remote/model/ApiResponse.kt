@@ -6,5 +6,7 @@ data class ApiResponse(
     @SerializedName("count") val count: Int,
     @SerializedName("next") val next: String?,
     @SerializedName("previous") val previous: String?,
-    @SerializedName("results") val results: List<ItemResponse> // Lista de items
+
+    @SerializedName("results") val results: List<Map<String, Any>>
+
 )

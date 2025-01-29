@@ -1,33 +1,35 @@
 package com.example.todolist.data.remote.repository
 
-import com.example.todolist.data.remote.database.ItemApiService
-import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.remote.database.ApiService
-import com.example.todolist.data.remote.model.ItemResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.todolist.data.local.model.Item
+import com.example.todolist.data.remote.model.ApiResponse
+
 import javax.inject.Inject
 
 
 
+
+
+
+
 class RemoteItemRepository @Inject constructor(
-    private val itemApiService: ItemApiService,
     private val apiService: ApiService
 ) {
 
-    suspend fun fetchItems(filter: String): Result<List<Item>> {
-        // El bloque return try nos devolverá la última sentencia que haya en el try o catch.
-        return try {
+    suspend fun fetchItems(filter: String): Result<List<Item>> {        return try {
             val response = apiService.getItems()
             if (response.isSuccessful) {
-                val apiResponse = response.body()
-                val itemList: List<Item> = apiResponse?.results?.map { mapApiItemToLocal(it) } ?: emptyList()
+                val apiResponse: ApiResponse? = response.body()
+                val itemResponse: List<Map<String, Any>> = apiResponse?.results ?: emptyList()
+
+                val itemList: List<Item> = itemResponse.mapNotNull { mapApiItemToLocal(it) }
 
                 // Filtramos los resultados si es necesario
                 val filteredItems = if (filter.isNotEmpty()) {
-                    itemList.filter { it.name.contains(filter, ignoreCase = true) }
+                    itemList.filter {
+                        val name = it.name as? String ?: ""
+                        name.contains(filter, ignoreCase = true)
+                    }
                 } else {
                     itemList
                 }
@@ -44,38 +46,19 @@ class RemoteItemRepository @Inject constructor(
     }
 
     // Función para mapear el modelo de la API (ApiItemResponse) al modelo local (Item)
-    private fun mapApiItemToLocal(apiItem: ItemResponse): Item {
+    private fun mapApiItemToLocal(apiItem: Map<String, Any>): Item {
         return Item(
-            id = apiItem.key,
-            url = apiItem.url,
-            isVersatile = apiItem.isVersatile,
-            isMartial = apiItem.isMartial,
-            isMelee = apiItem.isMelee,
-            rangedAttackPossible = apiItem.rangedAttackPossible,
-            rangeMelee = apiItem.rangeMelee,
-            isReach = apiItem.isReach,
-            distanceUnit = apiItem.distanceUnit,
-            name = apiItem.name,
-            damageDice = apiItem.damageDice,
-            versatileDice = apiItem.versatileDice,
-            reach = apiItem.reach,
-            range = apiItem.range,
-            longRange = apiItem.longRange,
-            isFinesse = apiItem.isFinesse,
-            isThrown = apiItem.isThrown,
-            isTwoHanded = apiItem.isTwoHanded,
-            requiresAmmunition = apiItem.requiresAmmunition,
-            requiresLoading = apiItem.requiresLoading,
-            isHeavy = apiItem.isHeavy,
-            isLight = apiItem.isLight,
-            isLance = apiItem.isLance,
-            isNet = apiItem.isNet,
-            isSimple = apiItem.isSimple,
-            isImprovised = apiItem.isImprovised,
-            document = apiItem.document,
-            // Si damageType es una URL o un objeto, extráele solo el valor relevante
-            damageType = apiItem.damageType
+            id = apiItem["key"] as? String ?: "",
+            url = apiItem["url"] as? String ?: "",
+            rangedAttackPossible = apiItem["ranged_attack_possible"] as? Boolean ?: false,
+            name = apiItem["name"] as? String ?: "",
+            damageDice = apiItem["damage_dice"] as? String ?: "",
+            range = (apiItem["range"] as? Number)?.toFloat() ?: 0f,
+            document = apiItem["document"] as? String ?: "",
+            damageType = apiItem["damage_type"] as? String ?: "",
+            goldValue = 0
         )
     }
+
 
 }

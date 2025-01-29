@@ -10,11 +10,17 @@ import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.Skill
 import com.example.todolist.data.local.model.CharacterItemCrossRef
+import com.example.todolist.data.local.model.CharacterSpellCrossRef
+import com.example.todolist.data.local.model.Spell
+
 @Database(entities = [
     RolCharacter::class,
     Skill::class,
-    Item::class, CharacterItemCrossRef::class
-                     ], version = 10)
+    Item::class,
+    Spell::class,
+    CharacterItemCrossRef::class,
+    CharacterSpellCrossRef::class
+                     ], version = 12)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getItemDao(): ItemDao
     abstract fun characterDao(): CharacterDao

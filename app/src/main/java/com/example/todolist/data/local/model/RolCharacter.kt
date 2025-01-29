@@ -17,7 +17,7 @@ data class RolCharacter(
     var height: Range = Range.MEDIO,
     var weight: Range = Range.MEDIO,
     var age: Int = 18,
-
+    var gold: Int = 0,
 
     // Arrays (pendientes de implementar)
     @Ignore var skills: List<Skill> = emptyList(),

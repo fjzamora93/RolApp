@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.room.Room
 import com.example.todolist.data.local.database.CharacterDao
 import com.example.todolist.data.local.database.ItemDao
-import com.example.todolist.data.remote.database.ItemApiService
 import com.example.todolist.data.local.database.MyDatabase
 import com.example.todolist.data.local.repository.LocalCharacterRepository
 import com.example.todolist.data.remote.database.ApiService
@@ -53,6 +52,8 @@ object  AppModule {
             .build()
     }
 
+
+
     /** INSTANCIA ÚNICA DEL SERVICIO API */
     @Provides
     @Singleton
@@ -61,11 +62,6 @@ object  AppModule {
     }
 
 
-    @Provides
-    @Singleton
-    fun provideItemApiService(retrofit: Retrofit): ItemApiService {
-        return retrofit.create(ItemApiService::class.java)
-    }
 
     @Provides
     @Singleton
