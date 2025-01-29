@@ -20,10 +20,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.todolist.data.local.model.Item
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.todolist.data.local.model.Spell
 import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.ui.character.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
+import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.MainLayout
 
 
@@ -45,20 +47,22 @@ fun CharacterSpellScreen(){
 @Composable
 fun CharacterSpellBody(
     characterViewModel: CharacterViewModel = LocalCharacterViewModel.current,
+    spellViewModel: SpellViewModel = hiltViewModel(),
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
-    val inventoryItems by characterViewModel.selectedCharacterItems.observeAsState()
-    // Si el personaje no está seleccionado, mostramos un texto vacío o de espera
-    if (inventoryItems == null) {
+    val spellList by spellViewModel.spellList.observeAsState()
+    spellViewModel.getSpellsForCharacter(characterViewModel.selectedCharacter.value!!)
+
+    if (spellList == null) {
         Text("Cargando Hechizos...")
     } else {
-        var inventory by remember { mutableStateOf(inventoryItems!!) }
+        var spells by remember { mutableStateOf(spellList!!) }
         Column(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            inventory.forEach { item ->
-                SpellCard(item = item)
+            spells.forEach { spell ->
+                SpellCard(spell = spell)
             }
         }
 
@@ -68,34 +72,31 @@ fun CharacterSpellBody(
 
 
 @Composable
-fun SpellCard(item: Item, modifier: Modifier = Modifier) {
-    Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
-        shape = RoundedCornerShape(8.dp)
-    ) {
+fun SpellCard(spell: Spell, modifier: Modifier = Modifier) {
+    RegularCard(){
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Text(
-                text = item.name,
+                text = spell.name,
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Daño: ${item.damageDice}",
+                text = "Daño: ${spell.desc}",
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "Precio: ${item.goldValue}",
+                text = "Nivel: ${spell.level}",
                 style = MaterialTheme.typography.bodyMedium
             )
+
+            // BOTÓN PARA TIRAR EL DADO Y ACTIVAR EFECTO
             Button(onClick = { /*TODO*/ }) {
-                Text(text = "vender")
+                Text(text = "Ver detalles")
             }
         }
     }

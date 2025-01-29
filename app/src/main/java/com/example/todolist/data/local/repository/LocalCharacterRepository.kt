@@ -51,4 +51,9 @@ class LocalCharacterRepository @Inject constructor(
         characterDao.addItemToCharacter(characterCrossRef)
     }
 
+    suspend fun removeItemFromCharacter(character: RolCharacter, item: Item) {
+        val characterCrossRef = CharacterItemCrossRef(character.id, item.id)
+        characterDao.removeItemFromCharacter(characterCrossRef)
+    }
+
 }

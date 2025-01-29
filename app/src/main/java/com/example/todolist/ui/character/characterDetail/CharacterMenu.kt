@@ -58,7 +58,7 @@ fun CharacterMenu(
             icon = Icons.AutoMirrored.Filled.MenuBook,
             text = "Hechizos",
             onClick = {
-                navigation.navigate(ScreensRoutes.InventoryScreen.route)
+                navigation.navigate(ScreensRoutes.CharacterSpellScreen.route)
             }
         )
 

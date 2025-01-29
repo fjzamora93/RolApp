@@ -20,7 +20,7 @@ import com.example.todolist.data.local.model.Spell
     Spell::class,
     CharacterItemCrossRef::class,
     CharacterSpellCrossRef::class
-                     ], version = 12)
+                     ], version = 13)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getItemDao(): ItemDao
     abstract fun characterDao(): CharacterDao

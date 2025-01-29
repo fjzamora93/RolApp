@@ -42,5 +42,8 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addItemToCharacter(characterItemCrossRef: CharacterItemCrossRef)
 
+    @Delete
+    suspend fun removeItemFromCharacter(characterCrossRef: CharacterItemCrossRef)
+
 
 }

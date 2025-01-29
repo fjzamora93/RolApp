@@ -39,7 +39,6 @@ class SpellViewModel @Inject constructor(
             }.onFailure {
                 println("ALgo salió mal")
             }
-
         }
     }
 

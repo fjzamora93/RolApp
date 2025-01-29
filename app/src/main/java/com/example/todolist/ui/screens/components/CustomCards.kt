@@ -24,7 +24,7 @@ fun RegularCard(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MedievalColours.ParchmentLight
+            containerColor = Color(0xFFFAF3E0)
         )
     ) {
         Column(

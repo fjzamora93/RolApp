@@ -11,11 +11,13 @@ import androidx.compose.runtime.State
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.todolist.data.local.model.Item
+import com.example.todolist.data.local.repository.LocalCharacterRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val characterRepository: CharacterRepository
+    private val characterRepository: CharacterRepository,
+    private val localCharacterRepository: LocalCharacterRepository
 ) : ViewModel() {
 
     // Usamos `mutableStateOf` para el listado de personajes
@@ -92,5 +94,26 @@ class CharacterViewModel @Inject constructor(
             val updatedCharacters = characterRepository.getAllCharacters()
             _characters.value = updatedCharacters
         }
+    }
+
+    fun updateCharacterGold(newGold: Int) {
+        val currentCharacter = _selectedCharacter.value ?: return
+        val updatedCharacter = currentCharacter.copy(gold = newGold)
+        _selectedCharacter.value = updatedCharacter
+        viewModelScope.launch {
+            characterRepository.updateCharacter(updatedCharacter)
+        }
+    }
+
+
+    fun removeItemFromCharacter(
+        currentCharacter: RolCharacter,
+        currentItem: Item,
+    ){
+        viewModelScope.launch {
+            localCharacterRepository.removeItemFromCharacter(currentCharacter, currentItem)
+            _selectedCharacterItems.value = _selectedCharacterItems.value?.filterNot { it == currentItem }
+        }
+
     }
 }

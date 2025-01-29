@@ -57,7 +57,7 @@ class RemoteItemRepository @Inject constructor(
             range = (apiItem["range"] as? Number)?.toFloat() ?: 0f,
             document = apiItem["document"] as? String ?: "",
             damageType = apiItem["damage_type"] as? String ?: "",
-            goldValue = 0
+            goldValue = 10
         )
     }
 
