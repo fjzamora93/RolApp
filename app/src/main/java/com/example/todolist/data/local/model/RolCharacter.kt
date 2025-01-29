@@ -21,8 +21,6 @@ data class RolCharacter(
 
     // Arrays (pendientes de implementar)
     @Ignore var skills: List<Skill> = emptyList(),
-    var spells: String = "",
-    // var customItems: String = "",  // Sección para objetos personalizados
 
     // Stats
     var strength: Int = 10,

@@ -30,8 +30,9 @@ fun InfoSection(
     onCharacterChange: (RolCharacter) -> Unit
 ){
 
+
     CharacterTextField(
-        label = "Nombre: ",
+        label = "lvl: ${editableCharacter.level} ",
         value = editableCharacter.name,
         onValueChange = { onCharacterChange(editableCharacter.copy(name = it)) }
     )

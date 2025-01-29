@@ -16,7 +16,8 @@ class RemoteItemRepository @Inject constructor(
     private val apiService: ApiService
 ) {
 
-    suspend fun fetchItems(filter: String): Result<List<Item>> {        return try {
+    suspend fun fetchItems(filter: String): Result<List<Item>> {
+        return try {
             val response = apiService.getItems()
             if (response.isSuccessful) {
                 val apiResponse: ApiResponse? = response.body()
