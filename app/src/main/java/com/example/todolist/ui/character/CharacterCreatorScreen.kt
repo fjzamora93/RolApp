@@ -3,11 +3,13 @@ package com.example.todolist.ui.character
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -29,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.todolist.data.local.model.Item
+import com.example.todolist.data.local.model.Gender
 import com.example.todolist.data.local.model.Race
 import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
@@ -39,8 +41,6 @@ import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 
 // Importación de otros componentes
-import com.example.todolist.ui.screens.layout.Footer
-import com.example.todolist.ui.screens.layout.Header
 import com.example.todolist.ui.screens.layout.MainLayout
 
 @Composable
@@ -104,13 +104,12 @@ fun InsertCharacterButton(
 fun CharacterCreatorForm(){
 
     var name by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf(Gender.MALE) }
     var rolClass by remember { mutableStateOf(RolClass.NINGUNA) }
     var race by remember { mutableStateOf(Race.HUMANO) }
     var height by remember { mutableStateOf(Range.MEDIO) }
     var weight by remember { mutableStateOf(Range.MEDIO) }
     var age by remember { mutableStateOf(18) }
-    var selectedItems by remember { mutableStateOf<List<Item>>(emptyList()) }
 
     Column(
         modifier = Modifier
@@ -147,11 +146,12 @@ fun CharacterCreatorForm(){
             }
         }
 
-        // Descripción
-        TextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Description") }
+        // Gender
+        GenericDropdown(
+            selectedItem = gender,
+            items = Gender.entries.toList(),
+            onItemSelected = { gender = it },
+            itemToString = { it.toString() }
         )
 
         // Altura y peso
@@ -213,12 +213,13 @@ fun CharacterCreatorForm(){
                     values = Race.values(),
                 )
             }
+
         }
 
         InsertCharacterButton(
             newCharacter = RolCharacter(
                 name = name,
-                description = description,
+                gender = gender,
                 rolClass = rolClass,
                 race = race,
                 height = height,
@@ -263,8 +264,30 @@ fun <T> DropdownSelector(
             )
         }
     }
-
 }
 
 
 
+@Composable
+fun <T> GenericDropdown(
+    selectedItem: T,
+    items: List<T>,
+    onItemSelected: (T) -> Unit,
+    itemToString: (T) -> String = { it.toString() }
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Box(modifier = Modifier.wrapContentSize()) {
+        Button(onClick = { expanded = true }) {
+            Text(text = itemToString(selectedItem))
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            items.forEach { item ->
+                DropdownMenuItem(text = { Text(text = itemToString(item)) }, onClick = {
+                    onItemSelected(item)
+                    expanded = false
+                })
+            }
+        }
+    }
+}

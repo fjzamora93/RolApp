@@ -13,6 +13,7 @@ data class RolCharacter(
     var name: String = "",
     var description: String = "",
     var rolClass: RolClass = RolClass.NINGUNA,
+    var gender: Gender = Gender.MALE,
     var race: Race = Race.HUMANO,
     var height: Range = Range.MEDIO,
     var weight: Range = Range.MEDIO,
@@ -180,3 +181,5 @@ enum class Range(val value: Int) {
         return "$name (valor=$value)"
     }
 }
+
+enum class Gender{MALE, FEMALE, NEUTRAL}

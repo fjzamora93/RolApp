@@ -20,6 +20,12 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +44,7 @@ import com.example.todolist.ui.screens.components.RegularCard
 
 import com.example.todolist.ui.screens.layout.MainLayout
 import com.example.todolist.util.CustomType
+import java.util.Locale
 
 @Composable
 fun CharacterListScreen(
@@ -58,8 +65,7 @@ fun CharacterListBody(
     navigationViewModel: NavigationViewModel = LocalNavigationViewModel.current
 
 ) {
-    val characters = characterViewModel.characters.value
-
+    val characters by characterViewModel.characters.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -67,7 +73,10 @@ fun CharacterListBody(
 
         characters?.let {
             it.forEach { character ->
-                CharacterSummary(character)
+                CharacterSummary(
+                    character,
+                    onDestroyItem = { characterViewModel.deleteCharacter(character) }
+                )
                 }
             }
 
@@ -79,8 +88,11 @@ fun CharacterListBody(
 fun CharacterSummary(
     character: RolCharacter,
     characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
-    navigationViewModel: NavigationViewModel = LocalNavigationViewModel.current
+    navigationViewModel: NavigationViewModel = LocalNavigationViewModel.current,
+    onDestroyItem: () -> Unit = {}
     ){
+    var claseToString = character.rolClass.toString().lowercase(Locale.ROOT)
+
     RegularCard(){
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -89,12 +101,13 @@ fun CharacterSummary(
             Column( modifier = Modifier.weight(1f).wrapContentHeight()){
                 CharacterPortrait(
                     character = character,
-                    context = LocalContext.current)
+                    context = LocalContext.current
+                )
             }
 
             Column(modifier = Modifier.weight(2f).wrapContentHeight() ){
                 Text(
-                    text = "${character.name} - ${character.rolClass} ",
+                    text = "${character.name} - ${claseToString}",
                     style = CustomType.titleMedium
                 )
             }
@@ -112,9 +125,7 @@ fun CharacterSummary(
             NavigationButton(
                 text = "Eliminar",
                 icon = Icons.Default.Delete,
-                onClick = {
-                    characterViewModel.deleteCharacter(character)
-            })
+                onClick = { onDestroyItem() })
 
             NavigationButton(
                 text = "Seleccionar",

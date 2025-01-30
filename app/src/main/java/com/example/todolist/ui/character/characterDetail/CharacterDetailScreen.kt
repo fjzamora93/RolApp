@@ -1,6 +1,7 @@
 package com.example.todolist.ui.character.characterDetail
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,7 +14,9 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.RolCharacter
@@ -64,14 +67,31 @@ fun DetailCharacterBody(
         CharacterMenu()
 
 
-        // CAMPOS DE TEXTO
-        InfoSection(
-            editableCharacter = editableCharacter,
-            onCharacterChange = {
-                editableCharacter = it
-                characterViewModel.updateCharacter(it)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Column(modifier = Modifier.weight(1.5f)){
+                CharacterPortrait(
+                    character = editableCharacter,
+                    context = LocalContext.current
+                )
             }
-        )
+
+            Column(modifier = Modifier.weight(1f)){
+                // CAMPOS DE TEXTO
+                InfoSection(
+                    editableCharacter = editableCharacter,
+                    onCharacterChange = {
+                        editableCharacter = it
+                        characterViewModel.updateCharacter(it)
+                    }
+                )
+            }
+
+        }
+
+
 
         // CAMPOS NUMÉRICOS Y STATS
         StatSection(

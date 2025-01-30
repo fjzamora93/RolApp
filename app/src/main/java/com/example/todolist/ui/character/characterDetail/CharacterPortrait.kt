@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.toLowerCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -23,6 +24,7 @@ import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.CharacterViewModel
+import java.util.Locale
 
 
 @Composable
@@ -33,14 +35,26 @@ fun CharacterPortrait(
     character: RolCharacter
 ) {
     val selectedCharacter by characterViewModel.selectedCharacter.observeAsState()
-    val imagePath = "file:///android_asset/portraits/bardo/humano-bardo-1.png"
+
+    val imageName = "${character.race}-${character.rolClass}-${character.gender}"
+    val imagePath = "file:///android_asset/portraits/${imageName}.png"
+
+
+
     AsyncImage(
-        model = imagePath,
+        model = imagePath.lowercase(Locale.ROOT),
         contentDescription = "Título no disponible",
         modifier = Modifier
             .fillMaxWidth()
             .padding(20.dp)
-            .clickable(onClick = {  navigationViewModel.navigate(ScreensRoutes.CharacterDetailScreen.createRoute(character.id)) })
+            .clickable(onClick = {
+                println(imagePath)
+                navigationViewModel.navigate(
+                    ScreensRoutes.CharacterDetailScreen.createRoute(
+                        character.id
+                    )
+                )
+            })
     )
 
 }

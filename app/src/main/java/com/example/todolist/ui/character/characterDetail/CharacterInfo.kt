@@ -39,10 +39,15 @@ fun InfoSection(
 
     CharacterTextField(
         label = "",
-        value = editableCharacter.description,
+        value = editableCharacter.rolClass.toString(),
         onValueChange = { onCharacterChange(editableCharacter.copy(description = it)) }
     )
 
+    CharacterTextField(
+        label = "",
+        value = editableCharacter.race.toString(),
+        onValueChange = { onCharacterChange(editableCharacter.copy(description = it)) }
+    )
 
 }
 
@@ -60,18 +65,18 @@ fun CharacterTextField(
 
     if (isEdditing) {
         Row(
-            modifier = modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = { isEdditing = false }) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
+            }
             TextField(
                 value = localValue,
                 onValueChange = {
                     localValue = it
                     onValueChange(it)
                 })
-            IconButton(onClick = { isEdditing = false }) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add")
-            }
+
         }
     } else {
         Row(

@@ -13,6 +13,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.repository.LocalCharacterRepository
 import com.example.todolist.data.local.repository.LocalSkillRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,8 +26,9 @@ class CharacterViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Usamos `mutableStateOf` para el listado de personajes
-    private val _characters = mutableStateOf<List<RolCharacter>>(emptyList())
-    val characters: State<List<RolCharacter>> get() = _characters
+    private val _characters = MutableStateFlow<List<RolCharacter>>(emptyList())
+    val characters: StateFlow<List<RolCharacter>> get() = _characters.asStateFlow()
+
 
     // Generalmente usaríamos State para ambos, pero en este caso LiveData funciona mejor (con State no va a cambiar bien)
     private val _selectedCharacter = MutableLiveData<RolCharacter?>()
