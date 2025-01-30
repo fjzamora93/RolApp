@@ -65,10 +65,17 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling:1.7.7")
+
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material:1.7.7")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.8")
+
+    implementation ("androidx.compose.foundation:foundation:1.4.0")
+
+
     annotationProcessor("androidx.room:room-compiler:2.6.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
@@ -135,4 +142,8 @@ dependencies {
     // Room database
     implementation("androidx.room:room-ktx:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
+
+
+    // USO DE IMÁGENES
+
 }

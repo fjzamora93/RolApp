@@ -11,31 +11,33 @@ Pasos a seguir:
 - Crear el fichero JSON en la ruta app/src/main/assets. Esto hará que los ficheros sean accesibles con context dentro del repositorio.
 - Crear un model que respete la estructura del JSON.
 - Implementar la lectura del JSON en una clase del repositorio.
-- Usar el repository en el ViewModel.
+- Crear un interface para nuestro Repository, dentro del package "domain".
+- Dentro de esta clase repository, crear una función que recibe como parámetro un context, **el context se le debe pasar desde el viewModel**.
+- Usar el repository en el ViewModel. Este VIewModel debe tener una tributo context y se lo pasará como parámetro al readFromJson.
 
 
 ## Implementación del método desde una clase REpositorio
 ```kotlin
 
-class LocalRepository(private val context: Context) {
+class LocalSkillRepository  @Inject constructor (
+    private val characterDao: CharacterDao,
+) : SkillRepository {
 
-    fun readFromJson(): List<Skill> {
+    override suspend fun readFromJson(context: Context): List<Skill> {
         val jsonString: String
         try {
-            jsonString = context.assets.open("datos.json")
+            jsonString = context.assets.open("skills.json")
                 .bufferedReader()
                 .use { it.readText() }
         } catch (ex: IOException) {
             ex.printStackTrace()
-            return emptyList() 
+            return emptyList() // Si hay un error, devuelve una lista vacía
         }
 
         // Convertir el JSON en una lista de objetos Ejemplo
         val listType = object : TypeToken<List<Skill>>() {}.type
         return Gson().fromJson(jsonString, listType)
     }
-
-}
 
 ```
 
