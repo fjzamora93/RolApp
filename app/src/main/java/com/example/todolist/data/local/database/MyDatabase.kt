@@ -10,6 +10,7 @@ import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.Skill
 import com.example.todolist.data.local.model.CharacterItemCrossRef
+import com.example.todolist.data.local.model.CharacterSkillCrossRef
 import com.example.todolist.data.local.model.CharacterSpellCrossRef
 import com.example.todolist.data.local.model.Spell
 
@@ -19,8 +20,9 @@ import com.example.todolist.data.local.model.Spell
     Item::class,
     Spell::class,
     CharacterItemCrossRef::class,
-    CharacterSpellCrossRef::class
-                     ], version = 13)
+    CharacterSpellCrossRef::class,
+    CharacterSkillCrossRef::class,
+                     ], version = 15)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getItemDao(): ItemDao
     abstract fun characterDao(): CharacterDao

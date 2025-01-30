@@ -67,7 +67,7 @@ fun CharacterMenu(
             icon = Icons.Default.Brush,
             text = "Habilidades",
             onClick = {
-                navigation.navigate(ScreensRoutes.InventoryScreen.route)
+                navigation.navigate(ScreensRoutes.SkillListScreen.route)
             }
         )
 

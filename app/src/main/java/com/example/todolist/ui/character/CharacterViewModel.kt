@@ -12,12 +12,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.repository.LocalCharacterRepository
+import com.example.todolist.data.local.repository.LocalSkillRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
     private val characterRepository: CharacterRepository,
-    private val localCharacterRepository: LocalCharacterRepository
+    private val localCharacterRepository: LocalCharacterRepository,
+    private val skillRepository: LocalSkillRepository
 ) : ViewModel() {
 
     // Usamos `mutableStateOf` para el listado de personajes
@@ -30,6 +32,8 @@ class CharacterViewModel @Inject constructor(
 
     private val _selectedCharacterItems = MutableLiveData<List<Item>>()
     val selectedCharacterItems: LiveData<List<Item>> = _selectedCharacterItems
+
+
 
 
     init {
@@ -116,4 +120,7 @@ class CharacterViewModel @Inject constructor(
         }
 
     }
+
+
+
 }

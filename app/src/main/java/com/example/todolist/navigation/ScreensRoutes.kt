@@ -8,7 +8,7 @@ sealed class ScreensRoutes(val route: String) {
     object CharacterDetailScreen : ScreensRoutes("CharacterDetailScreen/{characterId}") {
         fun createRoute(characterId: Int) = "CharacterDetailScreen/$characterId"
     }
-
+    object SkillListScreen : ScreensRoutes("SkillListScreen")
 
     // TEST Y TEMPLATES
     object FontTemplateScreen : ScreensRoutes("FontTemplateScreen")

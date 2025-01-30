@@ -22,7 +22,7 @@ import com.example.todolist.di.LocalNavigationViewModel
 import com.example.todolist.navigation.NavigationViewModel
 import com.example.todolist.navigation.ScreensRoutes
 import com.example.todolist.ui.character.CharacterViewModel
-import com.example.todolist.ui.items.ItemListBody
+import com.example.todolist.ui.character.items.ItemListBody
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.layout.Header
 import com.example.todolist.ui.screens.layout.MainLayout

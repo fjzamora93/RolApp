@@ -1,4 +1,4 @@
-package com.example.todolist.ui.items
+package com.example.todolist.ui.character.items
 
 
 import android.util.Log

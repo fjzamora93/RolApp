@@ -1,4 +1,4 @@
-package com.example.todolist.ui.spells
+package com.example.todolist.ui.character.spells
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

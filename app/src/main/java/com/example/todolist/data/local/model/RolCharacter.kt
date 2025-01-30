@@ -19,8 +19,6 @@ data class RolCharacter(
     var age: Int = 18,
     var gold: Int = 0,
 
-    // Arrays (pendientes de implementar)
-    @Ignore var skills: List<Skill> = emptyList(),
 
     // Stats
     var strength: Int = 10,

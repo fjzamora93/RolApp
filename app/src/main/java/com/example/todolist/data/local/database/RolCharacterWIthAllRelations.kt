@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Junction
 import androidx.room.Relation
 import com.example.todolist.data.local.model.CharacterItemCrossRef
+import com.example.todolist.data.local.model.CharacterSkillCrossRef
 import com.example.todolist.data.local.model.CharacterSpellCrossRef
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.local.model.RolCharacter
@@ -43,7 +44,12 @@ data class RolCharacterWithAllRelations(
     // RELACIÓN DE UNO A MUCHOS (PENDIENTE DE IMPLEMENTAR)
     @Relation(
         parentColumn = "id",
-        entityColumn = "characterId"
+        entityColumn = "id",
+        associateBy = Junction(
+            CharacterSkillCrossRef::class,
+            parentColumn = "characterId",
+            entityColumn = "skillId"
+        )
     )
     val skills: List<Skill>,
 )

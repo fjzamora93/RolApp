@@ -1,24 +1,40 @@
 
 
 # Lectura de Archivos JSON o CSV
-En aplicaciones móviles, es común leer archivos en formatos como JSON o CSV. Puedes utilizar bibliotecas como Gson o Moshi para leer archivos JSON, y Apache Commons CSV o simplemente las funciones de Kotlin para CSV.
 
+Dentro de la arquitectura de un proyecto MVVM, la lectura de ficheros se debe realizar dentro del paquete "repository". EN nuestro caso, como trabajamos con repositorio local y remoto, estaría en el siguietne directorio:
+
+data.local.repository.LecturaFicheros
+
+Pasos a seguir:
+- Arriba a la izquierda, cambiar el modo de vista de Android a Project o Project FIles, esto nos permitirá ver estructura de carpetas secundarias.
+- Crear el fichero JSON en la ruta app/src/main/assets. Esto hará que los ficheros sean accesibles con context dentro del repositorio.
+- Crear un model que respete la estructura del JSON.
+- Implementar la lectura del JSON en una clase del repositorio.
+- Usar el repository en el ViewModel.
+
+
+## Implementación del método desde una clase REpositorio
 ```kotlin
 
-import com.google.gson.Gson
-import java.io.FileReader
+class LocalRepository(private val context: Context) {
 
-data class User(val name: String, val age: Int)
+    fun readFromJson(): List<Skill> {
+        val jsonString: String
+        try {
+            jsonString = context.assets.open("datos.json")
+                .bufferedReader()
+                .use { it.readText() }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            return emptyList() 
+        }
 
-fun readJsonFile(filePath: String): User? {
-    return try {
-        val fileReader = FileReader(filePath)
-        val gson = Gson()
-        gson.fromJson(fileReader, User::class.java)  // Convertir el JSON en objeto
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
+        // Convertir el JSON en una lista de objetos Ejemplo
+        val listType = object : TypeToken<List<Skill>>() {}.type
+        return Gson().fromJson(jsonString, listType)
     }
+
 }
 
 ```

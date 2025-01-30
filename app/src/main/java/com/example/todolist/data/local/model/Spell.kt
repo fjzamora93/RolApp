@@ -18,4 +18,5 @@ data class Spell(
     var level: Int = 0,
     var targetCount: Int = 0,
     var range: Double = 0.0,
-    )
+
+)
