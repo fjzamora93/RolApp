@@ -13,16 +13,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.ui.character.characterDetail.CharacterDetailScreen
-import com.example.todolist.ui.character.CharacterCreatorScreen
-import com.example.todolist.ui.character.CharacterListScreen
-import com.example.todolist.ui.character.CharacterViewModel
-import com.example.todolist.ui.character.items.CharacterInventoryScreen
-import com.example.todolist.ui.character.items.ItemListScreen
-import com.example.todolist.ui.character.skills.SkillListScreen
-import com.example.todolist.ui.main.MainScreen
+import com.example.todolist.ui.screens.character.characterDetail.CharacterDetailScreen
+import com.example.todolist.ui.screens.character.CharacterCreatorScreen
+import com.example.todolist.ui.screens.character.CharacterListScreen
+import com.example.todolist.ui.viewmodels.CharacterViewModel
+import com.example.todolist.ui.screens.character.items.CharacterInventoryScreen
+import com.example.todolist.ui.screens.character.items.ItemListScreen
+import com.example.todolist.ui.screens.character.skills.SkillListScreen
+import com.example.todolist.ui.screens.MainScreen
 import com.example.todolist.ui.screens.layout.FontsTemplateScreen
-import com.example.todolist.ui.character.spells.CharacterSpellScreen
+import com.example.todolist.ui.screens.character.spells.CharacterSpellScreen
 
 @Composable
 fun NavGraph(

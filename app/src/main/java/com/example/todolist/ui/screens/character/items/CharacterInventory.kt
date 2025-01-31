@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.MonetizationOn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -30,10 +29,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.Item
 import com.example.todolist.di.LocalCharacterViewModel
-import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.viewmodels.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.MainLayout
+import com.example.todolist.ui.viewmodels.ItemViewModel
 import com.example.todolist.util.MedievalColours
 
 @Composable
@@ -53,7 +53,7 @@ fun CharacterInventoryScreen(){
 
 @Composable
 fun CharacterInventoryBody(
-    characterViewModel: CharacterViewModel   = LocalCharacterViewModel.current,
+    characterViewModel: CharacterViewModel = LocalCharacterViewModel.current,
     modifier: Modifier = Modifier.fillMaxWidth()
 ) {
     val inventoryItems by characterViewModel.selectedCharacterItems.observeAsState()

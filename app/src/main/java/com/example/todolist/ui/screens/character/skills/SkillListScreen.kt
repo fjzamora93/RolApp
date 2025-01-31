@@ -12,7 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -20,12 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todolist.data.local.model.Skill
-import com.example.todolist.data.local.model.Spell
 import com.example.todolist.di.LocalCharacterViewModel
-import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.viewmodels.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.components.RegularCard
 import com.example.todolist.ui.screens.layout.MainLayout
+import com.example.todolist.ui.viewmodels.SkillViewModel
 
 
 @Composable

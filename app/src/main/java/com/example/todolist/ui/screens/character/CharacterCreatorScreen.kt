@@ -42,6 +42,7 @@ import com.example.todolist.ui.screens.components.BackButton
 
 // Importación de otros componentes
 import com.example.todolist.ui.screens.layout.MainLayout
+import com.example.todolist.ui.viewmodels.CharacterViewModel
 
 @Composable
 fun CharacterCreatorScreen() {
