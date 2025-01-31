@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.todolist.R
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.navigation.ScreensRoutes
+import com.example.todolist.ui.navigation.ScreensRoutes
 
 import com.example.todolist.ui.screens.layout.MainLayout
 import com.example.todolist.util.MedievalColours

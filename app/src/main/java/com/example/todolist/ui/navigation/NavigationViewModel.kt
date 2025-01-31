@@ -1,4 +1,4 @@
-package com.example.todolist.navigation
+package com.example.todolist.ui.navigation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -25,7 +25,8 @@ class NavigationViewModel : ViewModel() {
         _navigationEvent.value = NavigationEvent.NavigateAndPopUp(
             currentRoute,
             popUpToRoute,
-            inclusive = false)
+            inclusive = false
+        )
     }
 
     fun clearNavigationEvent() {

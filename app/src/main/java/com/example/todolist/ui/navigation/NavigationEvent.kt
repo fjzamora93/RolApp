@@ -1,4 +1,4 @@
-package com.example.todolist.navigation
+package com.example.todolist.ui.navigation
 
 sealed class NavigationEvent {
     data class Navigate(val route: String) : NavigationEvent()

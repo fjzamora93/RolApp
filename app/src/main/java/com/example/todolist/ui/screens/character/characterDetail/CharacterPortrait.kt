@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.characterDetail
+package com.example.todolist.ui.screens.character.characterDetail
 
 import android.content.Context
 import androidx.compose.foundation.clickable
@@ -13,8 +13,8 @@ import coil.compose.AsyncImage
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.navigation.NavigationViewModel
-import com.example.todolist.navigation.ScreensRoutes
+import com.example.todolist.ui.navigation.NavigationViewModel
+import com.example.todolist.ui.navigation.ScreensRoutes
 import com.example.todolist.ui.viewmodels.CharacterViewModel
 import java.util.Locale
 

@@ -1,2 +1,2 @@
-package com.example.todolist.ui.character.items
+package com.example.todolist.ui.screens.character.items
 

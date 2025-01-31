@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character
+package com.example.todolist.ui.screens.character
 
 
 import androidx.compose.foundation.clickable
@@ -37,7 +37,7 @@ import com.example.todolist.data.local.model.Range
 import com.example.todolist.data.local.model.RolCharacter
 import com.example.todolist.data.local.model.RolClass
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.navigation.ScreensRoutes
+import com.example.todolist.ui.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.BackButton
 
 // Importación de otros componentes

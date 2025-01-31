@@ -1,6 +1,5 @@
-package com.example.todolist.data.remote.database
+package com.example.todolist.data.remote.service
 
-import com.example.todolist.data.local.model.Item
 import com.example.todolist.data.remote.model.ApiResponse
 import retrofit2.Response
 import retrofit2.http.GET

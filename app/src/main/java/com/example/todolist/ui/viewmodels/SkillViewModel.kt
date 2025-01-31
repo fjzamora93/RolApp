@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.skills
+package com.example.todolist.ui.viewmodels
 
 import android.content.Context
 import androidx.compose.runtime.mutableStateOf

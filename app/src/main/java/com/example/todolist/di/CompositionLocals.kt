@@ -1,8 +1,8 @@
 package com.example.todolist.di
 
 import androidx.compose.runtime.compositionLocalOf
-import com.example.todolist.navigation.NavigationViewModel
-import com.example.todolist.ui.character.CharacterViewModel
+import com.example.todolist.ui.navigation.NavigationViewModel
+import com.example.todolist.ui.viewmodels.CharacterViewModel
 
 // CONSTANTES DE VIEWMODELS QUE VAN A SER COMPARTIDAS EN TODAS LAS PANTALLAS
 

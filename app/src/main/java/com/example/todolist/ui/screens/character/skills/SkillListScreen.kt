@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.skills
+package com.example.todolist.ui.screens.character.skills
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

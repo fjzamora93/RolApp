@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.characterDetail
+package com.example.todolist.ui.screens.character.characterDetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.todolist.di.LocalCharacterViewModel
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.navigation.NavigationViewModel
+import com.example.todolist.ui.navigation.NavigationViewModel
 import com.example.todolist.ui.viewmodels.CharacterViewModel
 import com.example.todolist.ui.screens.components.BackButton
 import com.example.todolist.ui.screens.layout.MainLayout

@@ -1,21 +1,19 @@
 package com.example.todolist.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
 import com.example.todolist.data.local.database.CharacterDao
 import com.example.todolist.data.local.database.ItemDao
 import com.example.todolist.data.local.database.MyDatabase
 import com.example.todolist.data.local.repository.LocalCharacterRepository
 import com.example.todolist.data.local.repository.LocalSkillRepository
-import com.example.todolist.data.remote.database.ApiService
+import com.example.todolist.data.remote.service.ApiService
 import com.example.todolist.domain.repository.CharacterRepository
 import com.example.todolist.domain.repository.SkillRepository
 import com.example.todolist.util.Constants.MY_DATA_BASE
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

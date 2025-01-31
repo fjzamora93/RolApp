@@ -1,4 +1,4 @@
-package com.example.todolist.navigation
+package com.example.todolist.ui.navigation
 
 sealed class ScreensRoutes(val route: String) {
     object MainScreen : ScreensRoutes("MainScreen")

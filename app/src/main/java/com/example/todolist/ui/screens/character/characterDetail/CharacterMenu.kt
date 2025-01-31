@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.characterDetail
+package com.example.todolist.ui.screens.character.characterDetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,8 +10,8 @@ import androidx.compose.material.icons.filled.Brush
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.todolist.di.LocalNavigationViewModel
-import com.example.todolist.navigation.NavigationViewModel
-import com.example.todolist.navigation.ScreensRoutes
+import com.example.todolist.ui.navigation.NavigationViewModel
+import com.example.todolist.ui.navigation.ScreensRoutes
 import com.example.todolist.ui.screens.components.MenuMedievalButton
 
 

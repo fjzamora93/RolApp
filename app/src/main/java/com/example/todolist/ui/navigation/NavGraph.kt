@@ -1,4 +1,4 @@
-package com.example.todolist.navigation
+package com.example.todolist.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider

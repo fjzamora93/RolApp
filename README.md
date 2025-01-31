@@ -2,6 +2,33 @@
 
 RolApp es una aplicación para manejo de juegos de Rol que permite a los usuarios crear, actualizar, eliminar y organizar los personajes y las campañas. Este proyecto utiliza Kotlin y Jetpack Compose para la interfaz de usuario, y está estructurado siguiendo el patrón de arquitectura MVVM (Model-View-ViewModel). La inyección de dependencias se maneja con Dagger Hilt.
 
+```
+📦 Proyecto
+├── 📂 data
+│   ├── 📂 local
+│   │   ├── 📂 database
+│   │   ├── 📂 model
+│   │   ├── 📂 repository
+│   │
+│   ├── 📂 remote
+│       ├── 📂 service
+│       ├── 📂 model
+│       ├── 📂 repository
+│
+├── 📂 di
+│
+├── 📂 domain
+│   ├── 📂 model
+│   ├── 📂 repository
+│
+├── 📂 util
+│
+├── 📂 ui
+│   ├── 📂 navigation
+│   ├── 📂 screens
+│   ├── 📂 viewmodels
+```
+
 ## Características
 
 - Crear, editar y eliminar personajes

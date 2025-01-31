@@ -1,7 +1,7 @@
 package com.example.todolist.data.remote.repository
 
 import com.example.todolist.data.local.model.Spell
-import com.example.todolist.data.remote.database.ApiService
+import com.example.todolist.data.remote.service.ApiService
 import com.example.todolist.data.remote.model.ApiResponse
 import javax.inject.Inject
 

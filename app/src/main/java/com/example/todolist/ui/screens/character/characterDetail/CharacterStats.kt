@@ -1,4 +1,4 @@
-package com.example.todolist.ui.character.characterDetail
+package com.example.todolist.ui.screens.character.characterDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

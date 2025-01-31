@@ -1,13 +1,11 @@
-package com.example.todolist.ui.character
+package com.example.todolist.ui.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todolist.domain.repository.CharacterRepository
 import com.example.todolist.data.local.model.RolCharacter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.State
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.todolist.data.local.model.Item
