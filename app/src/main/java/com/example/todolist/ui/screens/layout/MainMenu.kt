@@ -34,19 +34,18 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.todolist.di.LocalNavigationViewModel
+import com.example.todolist.ui.navigation.NavigationViewModel
 import com.example.todolist.ui.navigation.ScreensRoutes
 import com.example.todolist.util.MedievalColours
 
 
 @Composable
-fun LeftHalfDrawer(
+fun MainMenu(
     drawerState: DrawerState,
     onClose: () -> Unit,
+    navigationViewModel: NavigationViewModel = LocalNavigationViewModel.current,
     content: @Composable () -> Unit,
-
-    ) {
-
-    val navigationViewModel = LocalNavigationViewModel.current
+) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {

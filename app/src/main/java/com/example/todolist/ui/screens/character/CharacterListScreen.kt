@@ -35,9 +35,7 @@ import com.example.todolist.util.CustomType
 import java.util.Locale
 
 @Composable
-fun CharacterListScreen(
-
-){
+fun CharacterListScreen(){
     MainLayout(){
         CharacterListBody()
     }
@@ -50,15 +48,12 @@ fun CharacterListScreen(
 fun CharacterListBody(
     characterViewModel: CharacterViewModel = hiltViewModel(),
     modifier: Modifier = Modifier.fillMaxWidth(),
-    navigationViewModel: NavigationViewModel = LocalNavigationViewModel.current
-
 ) {
     val characters by characterViewModel.characters.collectAsState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text("Lista de personajes: ", style = CustomType.titleLarge)
-
         characters?.let {
             it.forEach { character ->
                 CharacterSummary(
@@ -67,7 +62,6 @@ fun CharacterListBody(
                 )
                 }
             }
-
         BackButton()
         }
     }

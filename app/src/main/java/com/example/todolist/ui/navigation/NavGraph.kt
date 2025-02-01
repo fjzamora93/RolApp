@@ -28,7 +28,7 @@ import com.example.todolist.ui.screens.character.spells.CharacterSpellScreen
 fun NavGraph(
     navController: NavHostController
 ) {
-    // Proveer CONSTANTES en el árbol de composables dentro de NavGraph (la navegación, el usuario, un carrito de la compra... lo que va a ser común)
+    // Proveer instancias GLOBALES en el árbol de composables dentro de NavGraph (la navegación, el usuario, un carrito de la compra... lo que va a ser común)
     val navigationViewModel: NavigationViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     val characterViewModel: CharacterViewModel = hiltViewModel()
 
@@ -36,36 +36,10 @@ fun NavGraph(
         LocalNavigationViewModel provides navigationViewModel,
         LocalCharacterViewModel provides characterViewModel
     ) {
-        // Declaramos el objeto que va a ser observado
-        val navigationEvent by navigationViewModel.navigationEvent.observeAsState()
+        // (LAUNCHEDEFECT) Llamamos a la función que va a detectar cualquier eventos de navegación
+        HandleNavigationEvents(navController, navigationViewModel)
 
-        // Este LaunchedEffect es un OBSERVADOR que se disparará ante cualquier evento de navegación
-        LaunchedEffect(navigationEvent) {
-            //println("Navegando a la ruta: $navigationEvent")
-            navigationEvent?.let { event ->
-                when (event) {
-                    is NavigationEvent.Navigate -> {
-                        navController.navigate(event.route) {
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                    is NavigationEvent.NavigateAndPopUp -> {
-                        navController.navigate(event.route) {
-                            popUpTo(event.popUpToRoute) {
-                                inclusive = event.inclusive
-                            }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    }
-                }
-                navigationViewModel.clearNavigationEvent()
-            }
-        }
-
-
-        // Equivalente a un enrutador, compuesto por un CONTROLLER + Ruta de navegación
+        // El NavHost define qué Screen se va a renderizar ante cada Ruta, dependiendo del LaunchedEffect de arriba
         NavHost(
             navController = navController,
             startDestination = ScreensRoutes.MainScreen.route

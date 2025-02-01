@@ -4,12 +4,8 @@ import android.app.Application
 import com.example.todolist.data.local.database.MyDatabase
 import dagger.hilt.android.HiltAndroidApp
 
-// Esta clase permite la gestión global de dependencias con Hilt
+/**
+ * MyApplication actúa como el punto de entrada de la inyección de dependencias. Al estar anotada con @HiltAndroidApp, habilita Hilt en toda la app.
+ * */
 @HiltAndroidApp
-class MyApplication: Application(){
-    override fun onCreate() {
-        super.onCreate()
-        // Initialize the database here
-        MyDatabase.getDatabase(this)
-    }
-}
+class MyApplication: Application(){}

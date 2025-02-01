@@ -19,26 +19,29 @@ class NavigationViewModel : ViewModel() {
         _navigationEvent.value = NavigationEvent.Navigate(route)
     }
 
-    fun navigateAndPopUp(currentRoute: String, popUpToRoute: String, inclusive: Boolean) {
-        _routeStack.remove(currentRoute)
-
-        _navigationEvent.value = NavigationEvent.NavigateAndPopUp(
-            currentRoute,
-            popUpToRoute,
-            inclusive = false
-        )
-    }
 
     fun clearNavigationEvent() {
         _navigationEvent.value = null
     }
 
-    // Nuevo método para navegar hacia atrás
+    /**
+     * Método para navegar hacia atrás. Accede al stack de rutas que hemos visitado eliminando la ruta actual,
+     * guardando justo la anterior y navegando hacia esta última.
+     *
+     * Si no hay más rutas que visitar porque no hay una anterior, simplemente navegamos a la pantalla principal.
+     * */
     fun goBack() {
         if (_routeStack.size > 1) {
             var currentRoute = _routeStack.removeAt(_routeStack.size - 1)
             var previousRoute = _routeStack.last()
-            this.navigateAndPopUp(currentRoute, previousRoute, true)
+
+            _routeStack.remove(currentRoute)
+            _navigationEvent.value = NavigationEvent.NavigateAndPopUp(
+                currentRoute,
+                previousRoute,
+                inclusive = false
+            )
+
             println("La ruta ANTERIOR es... $previousRoute El tamaño es : ${_routeStack.size}")
             _navigationEvent.value = NavigationEvent.Navigate(previousRoute)
         } else {

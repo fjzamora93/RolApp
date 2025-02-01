@@ -30,7 +30,7 @@ fun MainLayout(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
 
-    LeftHalfDrawer(
+    MainMenu(
         drawerState = drawerState,
         onClose = {
             coroutineScope.launch { drawerState.close() }
